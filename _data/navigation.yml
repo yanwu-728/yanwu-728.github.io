@@ -6,14 +6,14 @@ main:
   # - title: "Talks"
   #   url: /talks/    
 
-  - title: "Notes"
-    url: /notes/    
+  # - title: "Notes"
+  #   url: /notes/    
     
   # - title: "Portfolio"
   #   url: /portfolio/
         
-  - title: "Blog Posts"
-    url: /year-archive/
+  - title: "Notes"
+    url: /yearly-archive/
     
 #  - title: "CV"
 #     url: /cv/
