@@ -71,12 +71,12 @@ a:hover {
 /* Layout: 2 Columns (Sidebar Left, Content Right) */
 .page-container {
   width: 100%;
-  max-width: 980px;
+  max-width: 1160px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 3.5rem 2rem;
   display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 4rem;
+  grid-template-columns: 210px 1fr;
+  gap: 3rem;
   align-items: start;
 }
 
@@ -399,9 +399,9 @@ a:hover {
 }
 
 .step-btn {
-  font-size: 0.72rem;
+  font-size: 0.76rem;
   font-family: var(--font-mono);
-  padding: 0.35rem 0.2rem;
+  padding: 0.38rem 0.25rem;
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text-muted);
@@ -410,8 +410,6 @@ a:hover {
   text-align: center;
   transition: all 0.15s ease;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .step-btn:hover {
