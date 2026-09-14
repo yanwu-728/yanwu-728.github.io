@@ -44,6 +44,79 @@ const SITE_DATA = {
     ]
   },
 
+  // Interactive Journey Data (Jiamusi -> Tianjin -> Sparta NJ -> Tianjin -> Boston -> South Bay)
+  journey: {
+    cities: {
+      jiamusi: { name: "Jiamusi, Heilongjiang", x: 232.9, y: 78.1, label: "Jiamusi" },
+      tianjin: { name: "Tianjin, China", x: 205.2, y: 99.3, label: "Tianjin" },
+      sparta: { name: "Sparta, NJ", x: 560.2, y: 94.1, label: "Sparta, NJ" },
+      boston: { name: "Boston, MA (MIT)", x: 567.8, y: 90.4, label: "Boston" },
+      southbay: { name: "South Bay, CA", x: 460.3, y: 104.3, label: "South Bay" }
+    },
+    steps: [
+      {
+        id: 0,
+        cityKey: "jiamusi",
+        tag: "Birthplace",
+        age: "Age 0",
+        title: "Born in Jiamusi, Heilongjiang",
+        desc: "I was born in Jiamusi (佳木斯), Heilongjiang province in northeastern China.",
+        routeLabel: "Birthplace",
+        arc: null
+      },
+      {
+        id: 1,
+        cityKey: "tianjin",
+        tag: "Growing Up",
+        age: "Age 3",
+        title: "Moved to Tianjin",
+        desc: "Moved to Tianjin at age 3 and grew up along the Haihe river.",
+        routeLabel: "Jiamusi → Tianjin (~1,100 km)",
+        arc: "M 232.9,78.1 Q 215,74 205.2,99.3"
+      },
+      {
+        id: 2,
+        cityKey: "sparta",
+        tag: "High School",
+        age: "Age 15",
+        title: "Moved to Sparta, New Jersey",
+        desc: "Crossed the Pacific to attend high school in Sparta, New Jersey at age 15.",
+        routeLabel: "Tianjin → Sparta, NJ (~11,000 km)",
+        arc: "M 205.2,99.3 Q 382.7,10 560.2,94.1"
+      },
+      {
+        id: 3,
+        cityKey: "tianjin",
+        tag: "Pandemic Return",
+        age: "Age 19",
+        title: "Returned to Tianjin",
+        desc: "Moved back home to Tianjin at age 19 due to the 2020 pandemic.",
+        routeLabel: "Sparta, NJ → Tianjin (~11,000 km)",
+        arc: "M 560.2,94.1 Q 382.7,24 205.2,99.3"
+      },
+      {
+        id: 4,
+        cityKey: "boston",
+        tag: "College & Grad School",
+        age: "Age 20",
+        title: "Moved to Boston for MIT",
+        desc: "Moved to Boston at age 20 for college and master's at MIT (Course 6-3 CS & Course 18 Math).",
+        routeLabel: "Tianjin → Boston, MA (~11,100 km)",
+        arc: "M 205.2,99.3 Q 386.5,6 567.8,90.4"
+      },
+      {
+        id: 5,
+        cityKey: "southbay",
+        tag: "Present",
+        age: "Age 23",
+        title: "Moved to South Bay, California",
+        desc: "Moved to the South Bay at age 23 to join Google DeepMind working on Antigravity.",
+        routeLabel: "Boston → South Bay, CA (~4,300 km)",
+        arc: "M 567.8,90.4 Q 514.0,62 460.3,104.3"
+      }
+    ]
+  },
+
   // Experience entries
   experience: [
     {
