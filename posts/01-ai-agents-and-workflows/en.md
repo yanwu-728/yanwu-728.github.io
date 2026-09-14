@@ -22,3 +22,11 @@ Applications in:
 - **Coding**: Test-driven loops, compiler feedback, and repository-scale navigation.
 - **Healthcare & Clinical Workflows**: High-stakes reasoning where multi-step verification and domain grounding are critical.
 - **Education**: Adaptive pedagogical dialogue, interactive simulations, and personalized feedback.
+
+### Visualizing the Verification Loop
+
+Here is an example of embedding an image or diagram in your blog post using standard markdown syntax `![Alt Text](path/to/image)`:
+
+![Autonomous Agent Execution & Verification Loop](assets/images/agent-loop.svg)
+
+Each step feeds back into the prompt context, allowing the agent to course-correct in response to compiler errors or unexpected environment states.

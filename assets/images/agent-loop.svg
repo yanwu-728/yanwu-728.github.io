@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" width="100%" height="100%">
+  <defs>
+    <style>
+      .box { fill: #fafafa; stroke: #111111; stroke-width: 1.5; rx: 4; }
+      .box-accent { fill: #ffffff; stroke: #111111; stroke-width: 2; rx: 4; }
+      .text-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; font-size: 13px; font-weight: 700; fill: #111111; }
+      .text-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #555555; }
+      .arrow { stroke: #111111; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+      .arrow-dash { stroke: #555555; stroke-width: 1.5; stroke-dasharray: 4,3; fill: none; marker-end: url(#arrowhead-dash); }
+      .tag { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; fill: #777777; }
+    </style>
+    <marker id="arrowhead" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <polygon points="0 0, 7 3.5, 0 7" fill="#111111" />
+    </marker>
+    <marker id="arrowhead-dash" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <polygon points="0 0, 7 3.5, 0 7" fill="#555555" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="720" height="280" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" rx="6" />
+
+  <!-- Title Badge -->
+  <text x="32" y="36" class="tag">FIGURE 1.1 · AGENT EXECUTION &amp; VERIFICATION CYCLE</text>
+
+  <!-- Step 1: User / Goal -->
+  <rect x="32" y="70" width="130" height="80" class="box" />
+  <text x="48" y="102" class="text-title">1. Plan &amp; Decompose</text>
+  <text x="48" y="122" class="text-sub">Goal breakdown &amp;</text>
+  <text x="48" y="136" class="text-sub">action sequencing</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <path d="M 162 110 L 196 110" class="arrow" />
+
+  <!-- Step 2: Tool Execution -->
+  <rect x="204" y="70" width="140" height="80" class="box-accent" />
+  <text x="220" y="102" class="text-title">2. Tool Execution</text>
+  <text x="220" y="122" class="text-sub">Terminal, compiler,</text>
+  <text x="220" y="136" class="text-sub">APIs &amp; file I/O</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <path d="M 344 110 L 378 110" class="arrow" />
+
+  <!-- Step 3: Observation -->
+  <rect x="386" y="70" width="140" height="80" class="box" />
+  <text x="402" y="102" class="text-title">3. Observe Output</text>
+  <text x="402" y="122" class="text-sub">Parse errors, logs &amp;</text>
+  <text x="402" y="136" class="text-sub">environment state</text>
+
+  <!-- Arrow 3 -> 4 -->
+  <path d="M 526 110 L 560 110" class="arrow" />
+
+  <!-- Step 4: Verification / Solution -->
+  <rect x="568" y="70" width="120" height="80" class="box-accent" />
+  <text x="584" y="102" class="text-title">4. Verify &amp; Finish</text>
+  <text x="584" y="122" class="text-sub">Deterministic check</text>
+  <text x="584" y="136" class="text-sub">passes criteria</text>
+
+  <!-- Feedback Loop (Step 3 -> Step 1) -->
+  <path d="M 456 150 L 456 215 L 97 215 L 97 158" class="arrow-dash" />
+  <rect x="220" y="202" width="160" height="26" fill="#ffffff" stroke="#dddddd" rx="3" />
+  <text x="232" y="219" class="tag">Feedback &amp; Course-Correction</text>
+</svg>

@@ -11,4 +11,6 @@ summary: Orange 4-year-old boy · 'joo-jahng' · Bureau Chief
 
 Hanging out with Juzhang (局长, pronounced *"joo-jahng"*—literally 'bureau chief'), my orange 4-year-old cat who faithfully oversees all coding sprints, problem-solving, and nap schedules.
 
+![Juzhang (局长) on duty](assets/images/juzhang.jpg)
+
 He has a strict policy on code quality: if a bug takes too long to fix, he steps directly onto the keyboard to suggest immediate debugging breaks.

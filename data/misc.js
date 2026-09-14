@@ -16,12 +16,12 @@ registerMisc([
     "en": {
       "title": "Life with Juzhang (局长)",
       "summary": "Orange 4-year-old boy · 'joo-jahng' · Bureau Chief",
-      "content": "Hanging out with Juzhang (局长, pronounced *\"joo-jahng\"*—literally 'bureau chief'), my orange 4-year-old cat who faithfully oversees all coding sprints, problem-solving, and nap schedules.\n\nHe has a strict policy on code quality: if a bug takes too long to fix, he steps directly onto the keyboard to suggest immediate debugging breaks."
+      "content": "Hanging out with Juzhang (局长, pronounced *\"joo-jahng\"*—literally 'bureau chief'), my orange 4-year-old cat who faithfully oversees all coding sprints, problem-solving, and nap schedules.\n\n![Juzhang (局长) on duty](assets/images/juzhang.jpg)\n\nHe has a strict policy on code quality: if a bug takes too long to fix, he steps directly onto the keyboard to suggest immediate debugging breaks."
     },
     "zh": {
       "title": "与局长的日常",
       "summary": "4岁橘猫小男孩 · 局长 · 居家代码监督员",
-      "content": "陪伴着局长（Juzhang，一只4岁大的橘猫），他每天都忠实地监督着所有写代码、攻克难题以及午休的作息。\n\n他对代码质量有着严格的要求：如果一个 bug 修复花了太长时间，他就会径直走上键盘，建议立刻进入强制休息状态。"
+      "content": "陪伴着局长（Juzhang，一只4岁大的橘猫），他每天都忠实地监督着所有写代码、攻克难题以及午休的作息。\n\n![局长（Juzhang）在岗执勤中](assets/images/juzhang.jpg)\n\n他对代码质量有着严格的要求：如果一个 bug 修复花了太长时间，他就会径直走上键盘，建议立刻进入强制休息状态。"
     },
     "image": "assets/images/juzhang.jpg"
   },

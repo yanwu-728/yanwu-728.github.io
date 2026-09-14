@@ -208,6 +208,9 @@ function openBlogPost(postId, fromTab = 'writing', updateHistory = true) {
     backBtn.innerHTML = t(backKey);
   }
 
+  const hasMarkdownImg = /!\[.*?\]\(.*?\)/.test(postData.content || '');
+  const imgHtml = (blog.image && !hasMarkdownImg) ? `<img src="${blog.image}" alt="${postData.title}" class="single-post-image" />` : '';
+
   if (container) {
     container.innerHTML = `
       <h1 class="single-post-title">${postData.title}</h1>
@@ -223,6 +226,8 @@ function openBlogPost(postId, fromTab = 'writing', updateHistory = true) {
         <div class="single-post-summary-title">${t('summary_heading')}</div>
         <p class="single-post-summary-text">${postData.summary}</p>
       </div>
+
+      ${imgHtml}
 
       <div class="single-post-body">
         ${formatSimpleMarkdown(postData.content)}
@@ -264,7 +269,8 @@ function openMiscPost(miscId, fromTab = 'misc', updateHistory = true) {
     const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
     return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
   }).join(' ');
-  const imgHtml = item.image ? `<img src="${item.image}" alt="${miscData.title}" class="single-post-image" />` : '';
+  const hasMarkdownImg = /!\[.*?\]\(.*?\)/.test(miscData.content || miscData.note || '');
+  const imgHtml = (item.image && !hasMarkdownImg) ? `<img src="${item.image}" alt="${miscData.title}" class="single-post-image" />` : '';
 
   if (backBtn) {
     const backKey = previousTabBeforeMisc === 'about' ? 'back_to_about' : 'back_to_misc';
@@ -728,6 +734,17 @@ function formatSimpleMarkdown(text) {
     } else if (trimmed.startsWith('# ')) {
       if (inList) { result.push('</ul>'); inList = false; }
       result.push(`<h1>${formatInlineStyles(trimmed.substring(2))}</h1>`);
+    } else if (/^!\[(.*?)\]\((.*?)\)$/.test(trimmed)) {
+      if (inList) { result.push('</ul>'); inList = false; }
+      const imgMatch = trimmed.match(/^!\[(.*?)\]\((.*?)\)$/);
+      const alt = imgMatch[1];
+      const src = imgMatch[2];
+      result.push(`
+        <figure class="post-figure">
+          <img src="${src}" alt="${alt}" class="post-inline-image" loading="lazy" />
+          ${alt ? `<figcaption class="post-caption">${alt}</figcaption>` : ''}
+        </figure>
+      `);
     } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
       if (!inList) { result.push('<ul>'); inList = true; }
       result.push(`<li>${formatInlineStyles(trimmed.substring(2))}</li>`);
@@ -750,5 +767,7 @@ function formatInlineStyles(str) {
   return str
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/`([^`]+)`/g, '<code style="background: var(--bg-hover); padding: 0.1rem 0.35rem; font-family: var(--font-mono); font-size: 0.88em; border-radius: 3px;">$1</code>');
+    .replace(/`([^`]+)`/g, '<code style="background: var(--bg-hover); padding: 0.1rem 0.35rem; font-family: var(--font-mono); font-size: 0.88em; border-radius: 3px;">$1</code>')
+    .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="post-inline-image" loading="lazy" />')
+    .replace(/(?<!\!)\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 }
