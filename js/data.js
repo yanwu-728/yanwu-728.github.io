@@ -6,7 +6,6 @@
 const SITE_DATA = {
   profile: {
     name: "Yan Wu",
-    preferredName: "Sherry",
     title: "Software Engineer at Google DeepMind",
     team: "Antigravity",
     previous: "Windsurf",
@@ -33,7 +32,7 @@ const SITE_DATA = {
       "I'm a software engineer at Google DeepMind working on Antigravity. Before this, I was at Windsurf building agentic developer tools.",
       "I graduated from MIT with a Bachelor's in CS and Math in May 2024, and completed my Master's in CS in January 2025.",
       "Originally from Tianjin, China, I'm currently based in South Bay, California. Broadly, I'm interested in AI—specifically AI agents, agentic workflows, and world models—with applications across software engineering, healthcare, and education.",
-      "In my spare time, you can spot me trying out different boba places, visiting newly opened local restaurants, hanging out with my cat (Juzhang / 局长, pronounced \"joo-jahng\", an orange 4-year-old boy), and trying out different fitness classes and sports (and losing interest quickly too)."
+      "Outside of work, you'll mostly find me hunting down good boba, checking out new local food spots, hanging out with my cat (Juzhang / 局长, pronounced \"joo-jahng\", an orange 4-year-old boy), or picking up random sports and fitness classes (and quitting them just as fast)."
     ],
     interests: [
       "AI Agents & Agentic Workflows",
@@ -110,7 +109,7 @@ const SITE_DATA = {
         tag: "Present",
         year: "2025",
         title: "Moved to South Bay, California",
-        desc: "Moved to the South Bay in 2025 to join Google DeepMind working on Antigravity.",
+        desc: "Moved to the South Bay in 2025 after graduation.",
         routeLabel: "Boston → South Bay, CA (~4,300 km)",
         arc: "M 567.8,90.4 Q 514.0,62 460.3,104.3"
       }
@@ -122,34 +121,30 @@ const SITE_DATA = {
     {
       role: "Software Engineer",
       company: "Google DeepMind",
-      team: "Antigravity",
       period: "2025 — Present",
-      location: "South Bay, CA",
-      description: "Working on Antigravity, focusing on autonomous agentic coding, verification loops, and developer systems."
+      location: "Mountain View, CA",
+      description: "Building Antigravity."
     },
     {
       role: "Software Engineer",
       company: "Windsurf",
-      team: "Agentic Developer Tools",
-      period: "2024 — 2025",
+      period: "2025",
       location: "Mountain View, CA",
-      description: "Built agentic coding workflows, fast context engines, and developer interaction paradigms."
+      description: "Worked on Windsurf IDE."
     },
     {
       role: "M.Eng in Computer Science",
       company: "Massachusetts Institute of Technology (MIT)",
-      team: "EECS Department",
-      period: "Graduated Jan 2025",
+      period: "2024 - 2025",
       location: "Cambridge, MA",
-      description: "Graduate coursework and research in machine learning systems, algorithms, and computational theory."
+      description: "Did some research and teaching in machine learning."
     },
     {
       role: "B.S. in Computer Science & Mathematics",
       company: "Massachusetts Institute of Technology (MIT)",
-      team: "Course 6-3 & Course 18",
-      period: "Graduated May 2024",
+      period: "2020 - 2024",
       location: "Cambridge, MA",
-      description: "Double major in Computer Science and Mathematics. Grounded in discrete algorithms, algebra, analysis, probability, and systems."
+      description: "Took some classes in CS and math."
     }
   ],
 

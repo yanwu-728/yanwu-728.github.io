@@ -336,7 +336,7 @@ function renderFullContent() {
           <span class="entry-title">${item.role}</span>
           <span class="entry-period">${item.period}</span>
         </div>
-        <div class="entry-company">${item.company} &middot; ${item.team} (${item.location})</div>
+        <div class="entry-company">${item.company} &middot; (${item.location})</div>
         <p class="entry-desc">${item.description}</p>
       </div>
     `).join('');
