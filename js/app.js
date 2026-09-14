@@ -72,7 +72,13 @@ function applyLanguage(lang, saveToStorage = true) {
     playBtn.innerHTML = isJourneyPlaying ? t('journey_pause') : t('journey_play');
   }
 
-  // 5. Re-render dynamic sections
+  // 5. Update AI translation notice visibility
+  const noticeEl = document.getElementById('aiTranslationNotice');
+  if (noticeEl) {
+    noticeEl.style.display = lang === 'zh' ? 'block' : 'none';
+  }
+
+  // 6. Re-render dynamic sections
   renderBio();
   updateJourneyLanguage();
   renderPreviews();
@@ -210,6 +216,7 @@ function openBlogPost(postId, fromTab = 'writing', updateHistory = true) {
         ${readTimeStr ? ` &middot; <span>${readTimeStr}</span>` : ''}
         ${blog.topic ? ` &middot; <span>${blog.topic}</span>` : ''}
         ${tagsHtml ? ` &middot; ${tagsHtml}` : ''}
+        ${lang === 'zh' ? ` &middot; <span class="ai-trans-badge">${t('ai_trans_badge')}</span>` : ''}
       </div>
       
       <div class="single-post-summary-box">
@@ -271,6 +278,7 @@ function openMiscPost(miscId, fromTab = 'misc', updateHistory = true) {
         <span>${item.date}</span>
         ${readTimeStr ? ` &middot; <span>${readTimeStr}</span>` : ''}
         ${tagsHtml ? ` &middot; ${tagsHtml}` : ''}
+        ${lang === 'zh' ? ` &middot; <span class="ai-trans-badge">${t('ai_trans_badge')}</span>` : ''}
       </div>
       
       ${miscData.summary ? `

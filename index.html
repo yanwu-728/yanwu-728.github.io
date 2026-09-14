@@ -20,10 +20,15 @@
       <div class="sidebar-header">
         <div class="sidebar-top-row">
           <img src="assets/images/headshot.png" alt="Yan Wu" class="author-avatar" />
-          <div class="lang-switch" role="group" aria-label="Language Switcher">
-            <button id="langEnBtn" class="lang-btn active" onclick="switchLanguage('en')">EN</button>
-            <span class="lang-divider">/</span>
-            <button id="langZhBtn" class="lang-btn" onclick="switchLanguage('zh')">中文</button>
+          <div class="lang-switch-container">
+            <div class="lang-switch" role="group" aria-label="Language Switcher">
+              <button id="langEnBtn" class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+              <span class="lang-divider">/</span>
+              <button id="langZhBtn" class="lang-btn" onclick="switchLanguage('zh')">中文</button>
+            </div>
+            <div id="aiTranslationNotice" class="ai-trans-notice" style="display: none;" data-i18n="ai_trans_notice">
+              * 中文内容由 AI 翻译
+            </div>
           </div>
         </div>
         <h1 class="site-name">Yan Wu</h1>

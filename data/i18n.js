@@ -43,7 +43,9 @@ var I18N = {
     tag_workflows: "workflows",
     tag_coding: "coding",
     tag_world_models: "world-models",
-    tag_simulation: "simulation"
+    tag_simulation: "simulation",
+    ai_trans_notice: "* Translated with AI",
+    ai_trans_badge: "AI Translated"
   },
   zh: {
     role_sidebar: "软件工程师",
@@ -84,7 +86,9 @@ var I18N = {
     tag_workflows: "工作流",
     tag_coding: "代码",
     tag_world_models: "世界模型",
-    tag_simulation: "仿真"
+    tag_simulation: "仿真",
+    ai_trans_notice: "* 中文内容由 AI 翻译",
+    ai_trans_badge: "AI 翻译"
   }
 };
 
