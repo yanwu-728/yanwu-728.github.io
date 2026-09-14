@@ -32,7 +32,8 @@ const SITE_DATA = {
     bio: [
       "I'm a software engineer at Google DeepMind working on Antigravity. Before this, I was at Windsurf building agentic developer tools.",
       "I graduated from MIT with a Bachelor's in CS and Math in May 2024, and completed my Master's in CS in January 2025.",
-      "Originally from Tianjin, China, I'm currently based in South Bay, California. Broadly, I'm interested in AI—specifically AI agents, agentic workflows, and world models—with applications across software engineering, healthcare, and education."
+      "Originally from Tianjin, China, I'm currently based in South Bay, California. Broadly, I'm interested in AI—specifically AI agents, agentic workflows, and world models—with applications across software engineering, healthcare, and education.",
+      "In my spare time, you can spot me trying out different boba places, visiting newly opened local restaurants, hanging out with my cat (Juzhang, an orange 4-year-old boy), and trying out different fitness classes and sports (and losing interest quickly too)."
     ],
     interests: [
       "AI Agents & Agentic Workflows",
@@ -122,15 +123,23 @@ Replace this placeholder with your own notes or papers you've read!
     }
   ],
 
-  // Misc Section: Personal blog posts / notes with tags (e.g. food, travel, visa, cat)
+  // Misc Section: Personal notes with tags (food, travel, visa, cat)
   misc: [
     {
-      id: "cat-adventures",
-      title: "Life with My Cat",
+      id: "juzhang-cat",
+      title: "Life with Juzhang",
       date: "2025",
       tags: ["cat"],
-      highlight: "Feline quirks & daily companion",
-      note: "Notes, daily moments, and observations living with my cat while working on models and code."
+      highlight: "Orange 4-year-old boy",
+      note: "Hanging out with Juzhang, my orange 4-year-old cat who faithfully oversees all coding sprints, problem-solving, and nap schedules."
+    },
+    {
+      id: "boba-and-restaurants",
+      title: "Boba Hunts & Local Eats",
+      date: "2025",
+      tags: ["food"],
+      highlight: "Tasting new boba shops & restaurants",
+      note: "Constantly testing out different boba spots for good tea quality, visiting newly opened restaurants, and trying (and quickly rotating through) new fitness classes and sports."
     },
     {
       id: "us-visa-notes",
@@ -145,16 +154,8 @@ Replace this placeholder with your own notes or papers you've read!
       title: "Tianjin Hometown Flavors: Jianbing Guozi",
       date: "2025",
       tags: ["food"],
-      highlight: "Jianbing Guozi (煎饼馃子) & street breakfast",
+      highlight: "Jianbing Guozi (煎饼馃子)",
       note: "Nothing compares to fresh street-corner Jianbing Guozi made with crispy baocui (薄脆), green mung bean batter, and sweet savory bean sauce."
-    },
-    {
-      id: "south-bay-eats",
-      title: "South Bay Coffee Roasters & Noodle Spots",
-      date: "2025",
-      tags: ["food"],
-      highlight: "Specialty espresso & comforting noodle bowls",
-      note: "Exploring local pour-over spots and cozy ramen/hand-pulled noodle shops in Mountain View, Sunnyvale, and San Jose."
     },
     {
       id: "california-coast",
@@ -162,7 +163,7 @@ Replace this placeholder with your own notes or papers you've read!
       date: "2024",
       tags: ["travel"],
       highlight: "Pacifica, Half Moon Bay, and forest trails",
-      note: "Weekend drives down Highway 1 along the Pacific coast, coastal fog, and hikes through California giant redwoods."
+      note: "Weekend drives down Highway 1 along the Pacific coast, coastal fog, and quiet hikes through California giant redwoods."
     },
     {
       id: "cambridge-mit",
