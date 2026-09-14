@@ -805,3 +805,101 @@ a:hover {
   color: var(--text-muted);
   line-height: 1.5;
 }
+
+/* ==========================================================================
+   Dedicated Single Blog Post Page Styles
+   ========================================================================== */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1.5rem;
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: var(--text);
+}
+
+.single-post-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.single-post-title {
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.single-post-meta {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.single-post-summary-box {
+  background: var(--bg-subtle);
+  border-left: 2px solid var(--border-focus);
+  padding: 0.9rem 1.15rem;
+  margin-bottom: 2rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.single-post-summary-title {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin-bottom: 0.25rem;
+}
+
+.single-post-summary-text {
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.single-post-body {
+  font-size: 1rem;
+  color: var(--text);
+  line-height: 1.8;
+}
+
+.single-post-body h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 1.75rem 0 0.5rem 0;
+  color: var(--text);
+}
+
+.single-post-body h3:first-child {
+  margin-top: 0;
+}
+
+.single-post-body p {
+  margin-bottom: 1rem;
+}
+
+.single-post-body ul, .single-post-body ol {
+  margin: 0.75rem 0 1.25rem 1.5rem;
+}
+
+.single-post-body li {
+  margin-bottom: 0.35rem;
+}

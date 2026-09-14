@@ -1,7 +1,9 @@
 /**
  * Yan Wu - Personal Website Main Script
- * Minimalist, zero-dependency tab switching, tag filtering, interactive journey map, and theme management.
+ * Minimalist, zero-dependency tab switching, tag filtering, dedicated blog reader, and theme management.
  */
+
+let previousTabBeforePost = 'about';
 
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
@@ -49,7 +51,7 @@ function setTheme(theme) {
 }
 
 /* ==========================================================================
-   Tab Navigation
+   Tab Navigation & Post Routing
    ========================================================================== */
 function initTabs() {
   const navItems = document.querySelectorAll('.nav-item');
@@ -61,17 +63,25 @@ function initTabs() {
     });
   });
 
-  const initialHash = window.location.hash.replace('#', '');
-  if (['about', 'experience', 'writing', 'misc'].includes(initialHash)) {
-    switchTab(initialHash, false);
-  }
+  // Handle URL hash on initial load
+  handleHash(window.location.hash);
 
+  // Handle browser back/forward buttons
   window.addEventListener('popstate', () => {
-    const hash = window.location.hash.replace('#', '') || 'about';
-    if (['about', 'experience', 'writing', 'misc'].includes(hash)) {
-      switchTab(hash, false);
-    }
+    handleHash(window.location.hash);
   });
+}
+
+function handleHash(hash) {
+  const cleanHash = (hash || '').replace('#', '');
+  if (cleanHash.startsWith('post/')) {
+    const postId = cleanHash.replace('post/', '');
+    openBlogPost(postId, 'writing', false);
+  } else if (['about', 'experience', 'writing', 'misc'].includes(cleanHash)) {
+    switchTab(cleanHash, false);
+  } else {
+    switchTab('about', false);
+  }
 }
 
 function switchTab(tabId, updateHistory = true) {
@@ -94,11 +104,63 @@ function switchTab(tabId, updateHistory = true) {
     }
   });
 
+  if (tabId !== 'post') {
+    previousTabBeforePost = tabId;
+  }
+
   if (updateHistory) {
     history.pushState(null, '', `#${tabId}`);
   }
 
   window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+/* ==========================================================================
+   Dedicated Blog Post Reader View
+   ========================================================================== */
+function openBlogPost(postId, fromTab = 'writing', updateHistory = true) {
+  const blog = SITE_DATA.blogs.find(b => b.id === postId);
+  if (!blog) {
+    switchTab('writing');
+    return;
+  }
+
+  previousTabBeforePost = fromTab || 'writing';
+
+  const container = document.getElementById('singlePostContainer');
+  const backBtn = document.getElementById('postBackBtn');
+
+  if (backBtn) {
+    const fromLabel = previousTabBeforePost === 'about' ? 'About' : 'Writing';
+    backBtn.innerHTML = `&larr; Back to ${fromLabel}`;
+  }
+
+  if (container) {
+    container.innerHTML = `
+      <h1 class="single-post-title">${blog.title}</h1>
+      <div class="single-post-meta">${blog.date} &middot; ${blog.readTime} read &middot; ${blog.topic}</div>
+      
+      <div class="single-post-summary-box">
+        <div class="single-post-summary-title">Summary</div>
+        <p class="single-post-summary-text">${blog.summary}</p>
+      </div>
+
+      <div class="single-post-body">
+        ${formatSimpleMarkdown(blog.content)}
+      </div>
+    `;
+  }
+
+  // Switch to dedicated post tab
+  switchTab('post', false);
+
+  if (updateHistory) {
+    history.pushState(null, '', `#post/${postId}`);
+  }
+}
+
+function goBackFromPost() {
+  switchTab(previousTabBeforePost || 'writing');
 }
 
 /* ==========================================================================
@@ -165,7 +227,6 @@ function initJourneyMap() {
     });
   }
 
-  // Set initial step
   setJourneyStep(0);
 }
 
@@ -255,7 +316,6 @@ function startJourneyPlay() {
   isJourneyPlaying = true;
   if (playBtn) playBtn.innerHTML = 'Pause &parallel;';
 
-  // If at the end, wrap to start
   if (currentJourneyStep >= SITE_DATA.journey.steps.length - 1) {
     setJourneyStep(0);
   }
@@ -280,7 +340,6 @@ function stopJourneyPlay() {
 }
 
 function jumpToCity(cityKey) {
-  // Find latest step corresponding to this city
   const stepIdx = SITE_DATA.journey.steps.findIndex(s => s.cityKey === cityKey);
   if (stepIdx !== -1) {
     stopJourneyPlay();
@@ -292,10 +351,10 @@ function jumpToCity(cityKey) {
    Render Main Page Previews
    ========================================================================== */
 function renderPreviews() {
-  // 1. Experience Preview (Top 3)
+  // 1. Experience Preview (Most Recent Only!)
   const expContainer = document.getElementById('previewExperience');
   if (expContainer) {
-    const previewItems = SITE_DATA.experience.slice(0, 3);
+    const previewItems = SITE_DATA.experience.slice(0, 1);
     expContainer.innerHTML = previewItems.map(item => `
       <div class="experience-entry">
         <div class="entry-header">
@@ -306,14 +365,14 @@ function renderPreviews() {
     `).join('');
   }
 
-  // 2. Writing Preview (Demo drafts)
+  // 2. Writing Preview (Shows read time & opens dedicated post page)
   const writingContainer = document.getElementById('previewWriting');
   if (writingContainer) {
     writingContainer.innerHTML = SITE_DATA.blogs.map(blog => `
-      <div class="writing-entry" onclick="switchTab('writing')">
+      <div class="writing-entry" onclick="openBlogPost('${blog.id}', 'about')">
         <div class="writing-entry-header">
           <span class="writing-title">${blog.title}</span>
-          <span class="writing-meta">${blog.date}</span>
+          <span class="writing-meta">${blog.date} &middot; ${blog.readTime} read &middot; ${blog.topic}</span>
         </div>
         <p class="writing-summary">${blog.summary}</p>
       </div>
@@ -359,24 +418,21 @@ function renderFullContent() {
     `).join('');
   }
 
-  // Full Writing
+  // Full Writing (Shows read time & opens dedicated post page)
   const fullWriting = document.getElementById('fullWriting');
   if (fullWriting) {
     fullWriting.innerHTML = SITE_DATA.blogs.map(blog => `
-      <div class="writing-entry" onclick="togglePostInline('${blog.id}')">
+      <div class="writing-entry" onclick="openBlogPost('${blog.id}', 'writing')">
         <div class="writing-entry-header">
           <span class="writing-title">${blog.title}</span>
-          <span class="writing-meta">${blog.date} &middot; ${blog.topic}</span>
+          <span class="writing-meta">${blog.date} &middot; ${blog.readTime} read &middot; ${blog.topic}</span>
         </div>
         <p class="writing-summary">${blog.summary}</p>
-        <div id="content-${blog.id}" class="writing-content-inline">
-          ${formatSimpleMarkdown(blog.content)}
-        </div>
       </div>
     `).join('');
   }
 
-  // Full Misc (defaults to 'all')
+  // Full Misc
   renderMiscEntries('all');
 }
 
@@ -422,14 +478,6 @@ function setupMiscTagFilters() {
       renderMiscEntries(tag);
     });
   });
-}
-
-/* Inline expand/collapse for blog posts */
-function togglePostInline(postId) {
-  const contentEl = document.getElementById(`content-${postId}`);
-  if (contentEl) {
-    contentEl.classList.toggle('open');
-  }
 }
 
 function formatSimpleMarkdown(text) {
