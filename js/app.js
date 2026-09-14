@@ -1,6 +1,6 @@
 /**
  * Yan Wu - Personal Website Main Script
- * Minimalist, zero-dependency tab switching, tag filtering, dedicated blog reader, interactive journey map, and bilingual EN/ZH support.
+ * Minimalist, zero-dependency tab switching, tag filtering, dedicated blog & misc readers, interactive journey map, and bilingual EN/ZH support.
  * Light mode only.
  */
 
@@ -9,7 +9,11 @@ var currentJourneyStep = 0;
 var journeyTimer = null;
 var isJourneyPlaying = false;
 var previousTabBeforePost = 'about';
+var previousTabBeforeMisc = 'misc';
 var currentActivePostId = null;
+var currentActiveMiscId = null;
+var activeWritingTag = 'all';
+var activeMiscTag = 'all';
 
 document.addEventListener('DOMContentLoaded', () => {
   initLanguage();
@@ -17,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderBio();
   renderPreviews();
   renderFullContent();
+  setupWritingTagFilters();
   setupMiscTagFilters();
   initJourneyMap();
 });
@@ -72,10 +77,15 @@ function applyLanguage(lang, saveToStorage = true) {
   updateJourneyLanguage();
   renderPreviews();
   renderFullContent();
+  setupWritingTagFilters();
+  setupMiscTagFilters();
 
-  // 6. If currently inside a single blog post, refresh its language view
+  // 6. Refresh active post view if open
   if (currentActivePostId) {
     openBlogPost(currentActivePostId, previousTabBeforePost, false);
+  }
+  if (currentActiveMiscId) {
+    openMiscPost(currentActiveMiscId, previousTabBeforeMisc, false);
   }
 }
 
@@ -117,6 +127,9 @@ function handleHash(hash) {
   if (cleanHash.startsWith('post/')) {
     const postId = cleanHash.replace('post/', '');
     openBlogPost(postId, 'writing', false);
+  } else if (cleanHash.startsWith('misc/')) {
+    const miscId = cleanHash.replace('misc/', '');
+    openMiscPost(miscId, 'misc', false);
   } else if (['about', 'experience', 'writing', 'misc'].includes(cleanHash)) {
     switchTab(cleanHash, false);
   } else {
@@ -148,6 +161,10 @@ function switchTab(tabId, updateHistory = true) {
     previousTabBeforePost = tabId;
     currentActivePostId = null;
   }
+  if (tabId !== 'misc-detail') {
+    previousTabBeforeMisc = tabId;
+    currentActiveMiscId = null;
+  }
 
   if (updateHistory) {
     history.pushState(null, '', `#${tabId}`);
@@ -175,6 +192,10 @@ function openBlogPost(postId, fromTab = 'writing', updateHistory = true) {
 
   const postData = blog[lang] || blog.en;
   const readTimeStr = (blog.readTime && blog.readTime[lang]) || (blog.readTime && blog.readTime.en) || '';
+  const tagsHtml = (blog.tags || []).map(tKey => {
+    const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
+    return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
+  }).join(' ');
 
   if (backBtn) {
     const backKey = previousTabBeforePost === 'about' ? 'back_to_about' : 'back_to_writing';
@@ -184,7 +205,12 @@ function openBlogPost(postId, fromTab = 'writing', updateHistory = true) {
   if (container) {
     container.innerHTML = `
       <h1 class="single-post-title">${postData.title}</h1>
-      <div class="single-post-meta">${blog.date} &middot; ${readTimeStr} &middot; ${blog.topic}</div>
+      <div class="single-post-meta">
+        <span>${blog.date}</span>
+        ${readTimeStr ? ` &middot; <span>${readTimeStr}</span>` : ''}
+        ${blog.topic ? ` &middot; <span>${blog.topic}</span>` : ''}
+        ${tagsHtml ? ` &middot; ${tagsHtml}` : ''}
+      </div>
       
       <div class="single-post-summary-box">
         <div class="single-post-summary-title">${t('summary_heading')}</div>
@@ -206,6 +232,70 @@ function openBlogPost(postId, fromTab = 'writing', updateHistory = true) {
 
 function goBackFromPost() {
   switchTab(previousTabBeforePost || 'writing');
+}
+
+/* ==========================================================================
+   Dedicated Misc Post Reader View
+   ========================================================================== */
+function openMiscPost(miscId, fromTab = 'misc', updateHistory = true) {
+  const item = SITE_DATA.misc.find(m => m.id === miscId);
+  if (!item) {
+    switchTab('misc');
+    return;
+  }
+
+  currentActiveMiscId = miscId;
+  previousTabBeforeMisc = fromTab || 'misc';
+
+  const container = document.getElementById('singleMiscContainer');
+  const backBtn = document.getElementById('miscBackBtn');
+  const lang = getLang();
+
+  const miscData = item[lang] || item.en;
+  const readTimeStr = (item.readTime && item.readTime[lang]) || (item.readTime && item.readTime.en) || '';
+  const tagsHtml = (item.tags || []).map(tKey => {
+    const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
+    return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
+  }).join(' ');
+  const imgHtml = item.image ? `<img src="${item.image}" alt="${miscData.title}" class="single-post-image" />` : '';
+
+  if (backBtn) {
+    const backKey = previousTabBeforeMisc === 'about' ? 'back_to_about' : 'back_to_misc';
+    backBtn.innerHTML = t(backKey);
+  }
+
+  if (container) {
+    container.innerHTML = `
+      <h1 class="single-post-title">${miscData.title}</h1>
+      <div class="single-post-meta">
+        <span>${item.date}</span>
+        ${readTimeStr ? ` &middot; <span>${readTimeStr}</span>` : ''}
+        ${tagsHtml ? ` &middot; ${tagsHtml}` : ''}
+      </div>
+      
+      ${miscData.summary ? `
+      <div class="single-post-summary-box">
+        <div class="single-post-summary-title">${t('summary_heading')}</div>
+        <p class="single-post-summary-text">${miscData.summary}</p>
+      </div>` : ''}
+
+      ${imgHtml}
+
+      <div class="single-post-body">
+        ${formatSimpleMarkdown(miscData.content || miscData.note)}
+      </div>
+    `;
+  }
+
+  switchTab('misc-detail', false);
+
+  if (updateHistory) {
+    history.pushState(null, '', `#misc/${miscId}`);
+  }
+}
+
+function goBackFromMisc() {
+  switchTab(previousTabBeforeMisc || 'misc');
 }
 
 /* ==========================================================================
@@ -399,41 +489,50 @@ function renderPreviews() {
     }).join('');
   }
 
-  // 2. Writing Preview (Shows read time & opens dedicated post page)
+  // 2. Writing Preview (Shows read time, summary & tags; opens dedicated post)
   const writingContainer = document.getElementById('previewWriting');
   if (writingContainer) {
     writingContainer.innerHTML = SITE_DATA.blogs.map(blog => {
       const postData = blog[lang] || blog.en;
       const readTimeStr = (blog.readTime && blog.readTime[lang]) || (blog.readTime && blog.readTime.en) || '';
+      const tagsHtml = (blog.tags || []).map(tKey => {
+        const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
+        return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
+      }).join(' ');
+
       return `
         <div class="writing-entry" onclick="openBlogPost('${blog.id}', 'about')">
           <div class="writing-entry-header">
             <span class="writing-title">${postData.title}</span>
-            <span class="writing-meta">${blog.date} &middot; ${readTimeStr} &middot; ${blog.topic}</span>
+            <span class="writing-meta">${blog.date} &middot; ${readTimeStr}</span>
           </div>
           <p class="writing-summary">${postData.summary}</p>
+          ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
         </div>
       `;
     }).join('');
   }
 
-  // 3. Misc Preview (Top 3 with tags and photo if available)
+  // 3. Misc Preview (Card matching writing format; opens dedicated misc reader)
   const miscContainer = document.getElementById('previewMisc');
   if (miscContainer) {
     const previewMisc = SITE_DATA.misc.slice(0, 3);
     miscContainer.innerHTML = previewMisc.map(item => {
       const miscData = item[lang] || item.en;
-      const tagHtml = (item.tags || []).map(tKey => `<span class="misc-tag">#${t('tag_' + tKey) || tKey}</span>`).join('');
-      const imgHtml = item.image ? `<img src="${item.image}" alt="${miscData.title}" class="misc-card-thumb" />` : '';
+      const readTimeStr = (item.readTime && item.readTime[lang]) || (item.readTime && item.readTime.en) || '';
+      const tagsHtml = (item.tags || []).map(tKey => {
+        const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
+        return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
+      }).join(' ');
+
       return `
-        <div class="misc-entry" onclick="switchTab('misc')" style="cursor: pointer;">
-          <div class="misc-header">
-            <span class="misc-title">${miscData.title}</span>
-            <span class="misc-location">${item.date}</span>
+        <div class="writing-entry" onclick="openMiscPost('${item.id}', 'about')">
+          <div class="writing-entry-header">
+            <span class="writing-title">${miscData.title}</span>
+            <span class="writing-meta">${item.date}${readTimeStr ? ' &middot; ' + readTimeStr : ''}</span>
           </div>
-          <p class="misc-note">${miscData.note}</p>
-          ${imgHtml}
-          <div class="misc-tag-list">${tagHtml}</div>
+          <p class="writing-summary">${miscData.summary || miscData.note}</p>
+          ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
         </div>
       `;
     }).join('');
@@ -446,7 +545,7 @@ function renderPreviews() {
 function renderFullContent() {
   const lang = getLang();
 
-  // Full Experience
+  // 1. Full Experience
   const fullExp = document.getElementById('fullExperience');
   if (fullExp) {
     fullExp.innerHTML = SITE_DATA.experience.map(item => {
@@ -464,31 +563,108 @@ function renderFullContent() {
     }).join('');
   }
 
-  // Full Writing
-  const fullWriting = document.getElementById('fullWriting');
-  if (fullWriting) {
-    fullWriting.innerHTML = SITE_DATA.blogs.map(blog => {
-      const postData = blog[lang] || blog.en;
-      const readTimeStr = (blog.readTime && blog.readTime[lang]) || (blog.readTime && blog.readTime.en) || '';
-      return `
-        <div class="writing-entry" onclick="openBlogPost('${blog.id}', 'writing')">
-          <div class="writing-entry-header">
-            <span class="writing-title">${postData.title}</span>
-            <span class="writing-meta">${blog.date} &middot; ${readTimeStr} &middot; ${blog.topic}</span>
-          </div>
-          <p class="writing-summary">${postData.summary}</p>
-        </div>
-      `;
-    }).join('');
-  }
+  // 2. Full Writing & Tags
+  renderWritingEntries(activeWritingTag);
 
-  // Full Misc
-  renderMiscEntries('all');
+  // 3. Full Misc & Tags
+  renderMiscEntries(activeMiscTag);
 }
 
 /* ==========================================================================
-   Render Tagged Misc Entries
+   Writing Section: Tag Filters & Card List
    ========================================================================== */
+function setupWritingTagFilters() {
+  const filterContainer = document.getElementById('writingTagFilters');
+  if (!filterContainer) return;
+
+  // Extract all unique tags across blogs
+  const allTags = new Set(['all']);
+  (SITE_DATA.blogs || []).forEach(b => {
+    (b.tags || []).forEach(t => allTags.add(t));
+  });
+
+  filterContainer.innerHTML = Array.from(allTags).map(tKey => {
+    const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
+    const label = tKey === 'all' ? t('tag_all') : (t(i18nKey) || tKey);
+    const activeClass = tKey === activeWritingTag ? 'active' : '';
+    return `<button class="tag-filter-btn ${activeClass}" data-tag="${tKey}">${label}</button>`;
+  }).join('');
+
+  filterContainer.querySelectorAll('.tag-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterContainer.querySelectorAll('.tag-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeWritingTag = btn.getAttribute('data-tag');
+      renderWritingEntries(activeWritingTag);
+    });
+  });
+}
+
+function renderWritingEntries(filterTag = 'all') {
+  const fullWriting = document.getElementById('fullWriting');
+  if (!fullWriting) return;
+  const lang = getLang();
+
+  const filtered = filterTag === 'all'
+    ? SITE_DATA.blogs
+    : SITE_DATA.blogs.filter(b => (b.tags || []).includes(filterTag));
+
+  if (filtered.length === 0) {
+    fullWriting.innerHTML = `<p style="color: var(--text-dim); font-size: 0.88rem; padding: 1rem 0;">No articles found under #${filterTag}.</p>`;
+    return;
+  }
+
+  fullWriting.innerHTML = filtered.map(blog => {
+    const postData = blog[lang] || blog.en;
+    const readTimeStr = (blog.readTime && blog.readTime[lang]) || (blog.readTime && blog.readTime.en) || '';
+    const tagsHtml = (blog.tags || []).map(tKey => {
+      const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
+      return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
+    }).join(' ');
+
+    return `
+      <div class="writing-entry" onclick="openBlogPost('${blog.id}', 'writing')">
+        <div class="writing-entry-header">
+          <span class="writing-title">${postData.title}</span>
+          <span class="writing-meta">${blog.date} &middot; ${readTimeStr}</span>
+        </div>
+        <p class="writing-summary">${postData.summary}</p>
+        ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+/* ==========================================================================
+   Misc Section: Tag Filters & Card List (Matching Writing Format)
+   ========================================================================== */
+function setupMiscTagFilters() {
+  const filterContainer = document.getElementById('miscTagFilters');
+  if (!filterContainer) return;
+
+  // Extract all unique tags across misc items
+  const allTags = new Set(['all']);
+  (SITE_DATA.misc || []).forEach(m => {
+    (m.tags || []).forEach(t => allTags.add(t));
+  });
+
+  filterContainer.innerHTML = Array.from(allTags).map(tKey => {
+    const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
+    const label = tKey === 'all' ? t('tag_all') : (t(i18nKey) || tKey);
+    const activeClass = tKey === activeMiscTag ? 'active' : '';
+    return `<button class="tag-filter-btn ${activeClass}" data-tag="${tKey}">${label}</button>`;
+  }).join('');
+
+  filterContainer.querySelectorAll('.tag-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterContainer.querySelectorAll('.tag-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeMiscTag = btn.getAttribute('data-tag');
+      renderMiscEntries(activeMiscTag);
+    });
+  });
+}
+
 function renderMiscEntries(filterTag = 'all') {
   const fullMisc = document.getElementById('fullMisc');
   if (!fullMisc) return;
@@ -499,40 +675,34 @@ function renderMiscEntries(filterTag = 'all') {
     : SITE_DATA.misc.filter(item => (item.tags || []).includes(filterTag));
 
   if (filtered.length === 0) {
-    fullMisc.innerHTML = `<p style="color: var(--text-dim); font-size: 0.88rem;">No entries found for tag #${filterTag}.</p>`;
+    fullMisc.innerHTML = `<p style="color: var(--text-dim); font-size: 0.88rem; padding: 1rem 0;">No entries found for #${filterTag}.</p>`;
     return;
   }
 
   fullMisc.innerHTML = filtered.map(item => {
     const miscData = item[lang] || item.en;
-    const tagHtml = (item.tags || []).map(tKey => `<span class="misc-tag">#${t('tag_' + tKey) || tKey}</span>`).join('');
-    const imgHtml = item.image ? `<img src="${item.image}" alt="${miscData.title}" class="misc-card-img" />` : '';
+    const readTimeStr = (item.readTime && item.readTime[lang]) || (item.readTime && item.readTime.en) || '';
+    const tagsHtml = (item.tags || []).map(tKey => {
+      const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
+      return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
+    }).join(' ');
+
     return `
-      <div class="misc-entry">
-        <div class="misc-header">
-          <span class="misc-title">${miscData.title}</span>
-          <span class="misc-location">${item.date}</span>
+      <div class="writing-entry" onclick="openMiscPost('${item.id}', 'misc')">
+        <div class="writing-entry-header">
+          <span class="writing-title">${miscData.title}</span>
+          <span class="writing-meta">${item.date}${readTimeStr ? ' &middot; ' + readTimeStr : ''}</span>
         </div>
-        <p class="misc-note">${miscData.note}</p>
-        ${imgHtml}
-        <div class="misc-tag-list">${tagHtml}</div>
+        <p class="writing-summary">${miscData.summary || miscData.note}</p>
+        ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
       </div>
     `;
   }).join('');
 }
 
-function setupMiscTagFilters() {
-  const filterBtns = document.querySelectorAll('#miscTagFilters .tag-filter-btn');
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const tag = btn.getAttribute('data-tag');
-      renderMiscEntries(tag);
-    });
-  });
-}
-
+/* ==========================================================================
+   Simple Markdown Formatter
+   ========================================================================== */
 function formatSimpleMarkdown(text) {
   if (!text) return '';
   let lines = text.trim().split('\n');

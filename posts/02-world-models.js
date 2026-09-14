@@ -8,6 +8,7 @@ registerBlogPost({
   isDemo: true,
   date: "Jan 2025",
   topic: "World Models",
+  tags: ["world-models", "simulation"],
   readTime: {
     en: "2 min read",
     zh: "2分钟阅读"

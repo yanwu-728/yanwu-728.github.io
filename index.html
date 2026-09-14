@@ -230,6 +230,9 @@
           <strong>Demo placeholder:</strong> The notes below are starter templates focused on agents, workflows, and world models. You can add new posts in <code>posts/</code> anytime.
         </div>
 
+        <!-- Writing Tag Filters -->
+        <div class="tag-filters" id="writingTagFilters" role="tablist" aria-label="Filter writing by tag"></div>
+
         <div id="fullWriting" class="writing-list"></div>
       </section>
 
@@ -249,7 +252,7 @@
           <button class="tag-filter-btn" data-tag="cat" data-i18n="tag_cat">cat</button>
         </div>
 
-        <div id="fullMisc" class="misc-list"></div>
+        <div id="fullMisc" class="writing-list misc-list"></div>
       </section>
 
       <!-- Dedicated Tab 5: Single Blog Post Reader View -->
@@ -259,6 +262,15 @@
         </button>
         
         <article class="single-post-view" id="singlePostContainer"></article>
+      </section>
+
+      <!-- Dedicated Tab 6: Single Misc Reader View -->
+      <section id="tab-misc-detail" class="tab-panel">
+        <button id="miscBackBtn" class="back-link" onclick="goBackFromMisc()">
+          &larr; Back to Misc
+        </button>
+        
+        <article class="single-post-view" id="singleMiscContainer"></article>
       </section>
 
     </main>

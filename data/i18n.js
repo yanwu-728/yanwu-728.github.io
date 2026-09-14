@@ -37,7 +37,13 @@ var I18N = {
     read_suffix: "read",
     back_to_writing: "\u2190 Back to Writing",
     back_to_about: "\u2190 Back to About",
-    summary_heading: "Summary"
+    back_to_misc: "\u2190 Back to Misc",
+    summary_heading: "Summary",
+    tag_agents: "agents",
+    tag_workflows: "workflows",
+    tag_coding: "coding",
+    tag_world_models: "world-models",
+    tag_simulation: "simulation"
   },
   zh: {
     role_sidebar: "软件工程师",
@@ -72,7 +78,13 @@ var I18N = {
     read_suffix: "阅读",
     back_to_writing: "\u2190 返回写作",
     back_to_about: "\u2190 返回关于",
-    summary_heading: "内容总结"
+    back_to_misc: "\u2190 返回随笔",
+    summary_heading: "内容总结",
+    tag_agents: "智能体",
+    tag_workflows: "工作流",
+    tag_coding: "代码",
+    tag_world_models: "世界模型",
+    tag_simulation: "仿真"
   }
 };
 

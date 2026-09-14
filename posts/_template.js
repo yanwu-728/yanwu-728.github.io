@@ -15,6 +15,8 @@ registerBlogPost({
   // Metadata
   date: "2025",
   topic: "AI / Tech",
+  // Add tags for easy filtering (e.g. ["agents", "workflows", "coding"])
+  tags: ["tag1", "tag2"],
   readTime: {
     en: "4 min read",
     zh: "4分钟阅读"

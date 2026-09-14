@@ -8,6 +8,7 @@ registerBlogPost({
   isDemo: true,
   date: "Feb 2025",
   topic: "AI Agents",
+  tags: ["agents", "workflows", "coding"],
   readTime: {
     en: "3 min read",
     zh: "3分钟阅读"
