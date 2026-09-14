@@ -6,8 +6,8 @@
 registerProfile({
   name: "Yan Wu",
   social: {
-    github: "https://github.com/yanwu-728",
     linkedin: "https://www.linkedin.com/in/yan-wu-01",
+    github: "https://github.com/yanwu-728",
     scholar: "https://scholar.google.com/citations?user=_gzU1DUAAAAJ&hl=en"
   },
   en: {

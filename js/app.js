@@ -329,11 +329,171 @@ function initJourneyMap() {
     resetBtn.addEventListener('click', () => {
       stopJourneyPlay();
       setJourneyStep(0);
+      resetMapViewBox();
     });
   }
 
+  setupMapDragging();
+
   // Set initial step to Birthplace (Jiamusi 2001)
   setJourneyStep(0);
+}
+
+/* ==========================================================================
+   Draggable & Zoomable Map Implementation
+   ========================================================================== */
+var resetMapViewBox = function() {};
+
+function setupMapDragging() {
+  const svg = document.getElementById('worldMapSvg');
+  const viewport = document.querySelector('.map-viewport');
+  const zoomInBtn = document.getElementById('mapZoomInBtn');
+  const zoomOutBtn = document.getElementById('mapZoomOutBtn');
+
+  if (!svg || !viewport) return;
+
+  const baseW = 760;
+  const baseH = 360;
+  let view = { x: 0, y: 0, w: baseW, h: baseH };
+
+  let isPointerDown = false;
+  let hasMoved = false;
+  let wasDragging = false;
+  let startClientX = 0;
+  let startClientY = 0;
+  let startViewX = 0;
+  let startViewY = 0;
+
+  function updateViewBox() {
+    const minW = 160;
+    const maxW = baseW * 1.1;
+
+    view.w = Math.max(minW, Math.min(maxW, view.w));
+    view.h = view.w * (baseH / baseW);
+
+    const minX = -view.w * 0.4;
+    const maxX = baseW - view.w * 0.6;
+    const minY = -view.h * 0.3;
+    const maxY = baseH - view.h * 0.7;
+
+    view.x = Math.max(minX, Math.min(maxX, view.x));
+    view.y = Math.max(minY, Math.min(maxY, view.y));
+
+    svg.setAttribute('viewBox', `${view.x.toFixed(1)} ${view.y.toFixed(1)} ${view.w.toFixed(1)} ${view.h.toFixed(1)}`);
+  }
+
+  resetMapViewBox = function() {
+    view = { x: 0, y: 0, w: baseW, h: baseH };
+    svg.setAttribute('viewBox', `0 0 ${baseW} ${baseH}`);
+  };
+
+  viewport.addEventListener('pointerdown', (e) => {
+    if (e.target.closest && e.target.closest('.map-zoom-controls')) return;
+
+    isPointerDown = true;
+    hasMoved = false;
+    startClientX = e.clientX;
+    startClientY = e.clientY;
+    startViewX = view.x;
+    startViewY = view.y;
+
+    if (viewport.setPointerCapture) {
+      try {
+        viewport.setPointerCapture(e.pointerId);
+      } catch (_) {}
+    }
+  });
+
+  viewport.addEventListener('pointermove', (e) => {
+    if (!isPointerDown) return;
+
+    const dx = e.clientX - startClientX;
+    const dy = e.clientY - startClientY;
+
+    if (!hasMoved && Math.hypot(dx, dy) > 4) {
+      hasMoved = true;
+      wasDragging = true;
+      viewport.classList.add('is-dragging');
+    }
+
+    if (hasMoved) {
+      const rect = svg.getBoundingClientRect ? svg.getBoundingClientRect() : { width: 760, height: 360, left: 0, top: 0 };
+      const scaleX = view.w / (rect.width || 760);
+      const scaleY = view.h / (rect.height || 360);
+
+      view.x = startViewX - dx * scaleX;
+      view.y = startViewY - dy * scaleY;
+      updateViewBox();
+    }
+  });
+
+  function onPointerEnd(e) {
+    if (!isPointerDown) return;
+    isPointerDown = false;
+    viewport.classList.remove('is-dragging');
+
+    if (viewport.releasePointerCapture && e.pointerId !== undefined) {
+      try {
+        viewport.releasePointerCapture(e.pointerId);
+      } catch (_) {}
+    }
+
+    if (hasMoved) {
+      setTimeout(() => {
+        wasDragging = false;
+      }, 60);
+    }
+  }
+
+  viewport.addEventListener('pointerup', onPointerEnd);
+  viewport.addEventListener('pointercancel', onPointerEnd);
+
+  viewport.addEventListener('click', (e) => {
+    if (wasDragging) {
+      e.stopPropagation();
+      e.preventDefault();
+      wasDragging = false;
+    }
+  }, true);
+
+  function zoomAt(factor, clientX, clientY) {
+    const rect = svg.getBoundingClientRect ? svg.getBoundingClientRect() : { width: 760, height: 360, left: 0, top: 0 };
+    const cx = clientX !== undefined ? (clientX - rect.left) / (rect.width || 760) : 0.5;
+    const cy = clientY !== undefined ? (clientY - rect.top) / (rect.height || 360) : 0.5;
+
+    const currentPointX = view.x + cx * view.w;
+    const currentPointY = view.y + cy * view.h;
+
+    const newW = view.w / factor;
+    const newH = newW * (baseH / baseW);
+
+    view.x = currentPointX - cx * newW;
+    view.y = currentPointY - cy * newH;
+    view.w = newW;
+    view.h = newH;
+
+    updateViewBox();
+  }
+
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      zoomAt(1.35);
+    });
+  }
+
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      zoomAt(0.75);
+    });
+  }
+
+  viewport.addEventListener('dblclick', (e) => {
+    if (e.target.closest && e.target.closest('.map-zoom-controls')) return;
+    if (e.preventDefault) e.preventDefault();
+    zoomAt(1.4, e.clientX, e.clientY);
+  });
 }
 
 function updateJourneyLanguage() {
