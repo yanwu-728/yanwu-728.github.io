@@ -29,9 +29,16 @@ const SITE_DATA = {
       linkedin: "https://www.linkedin.com/in/yan-wu-01"
     },
     bio: [
-      "I'm a software engineer at Google DeepMind working on Antigravity. Before this, I was at Windsurf working on agentic developer tools.",
+      "I'm a software engineer at Google DeepMind working on Antigravity. Before this, I was at Windsurf building agentic developer tools.",
       "I graduated from MIT with a Bachelor's in CS and Math in May 2024, and completed my Master's in CS in January 2025.",
-      "Originally from Tianjin, China, I'm currently based in the South Bay, California. My technical interests focus on autonomous AI agents, code intelligence, systems, and mathematics."
+      "Originally from Tianjin, China, I'm currently based in South Bay, California. Broadly, I'm interested in AI—specifically AI agents, agentic workflows, and world models—with applications across software engineering, healthcare, and education."
+    ],
+    interests: [
+      "AI Agents & Agentic Workflows",
+      "World Models & Environment Simulation",
+      "Software Engineering & Code Intelligence",
+      "AI for Healthcare & Education",
+      "Mathematical Foundations & Optimization"
     ]
   },
 
@@ -43,7 +50,7 @@ const SITE_DATA = {
       team: "Antigravity",
       period: "2025 — Present",
       location: "South Bay, CA",
-      description: "Working on Antigravity, focusing on autonomous agentic coding and developer systems."
+      description: "Working on Antigravity, focusing on autonomous agentic coding, verification loops, and developer systems."
     },
     {
       role: "Software Engineer",
@@ -51,7 +58,7 @@ const SITE_DATA = {
       team: "Agentic Developer Tools",
       period: "2024 — 2025",
       location: "Mountain View, CA",
-      description: "Built agentic coding systems, real-time context engines, and IDE developer workflows."
+      description: "Built agentic coding workflows, fast context engines, and developer interaction paradigms."
     },
     {
       role: "M.Eng in Computer Science",
@@ -71,50 +78,45 @@ const SITE_DATA = {
     }
   ],
 
-  // Blog / Writing entries (Demo placeholders for Yan to write)
+  // Blog / Writing entries (Demo placeholders aligned with your interests for you to write)
   blogs: [
     {
-      id: "demo-post-feedback-loops",
+      id: "demo-post-agents-and-workflows",
       isDemo: true,
-      title: "[Demo] Notes on Environment Feedback Loops in Coding Agents",
+      title: "[Demo] On AI Agents, Workflows, and Tool Execution Loops",
       date: "Feb 2025",
       readTime: "3 min",
-      topic: "Agentic AI",
-      summary: "Placeholder draft note on why execution grounding and verifier loops define autonomous coding performance.",
+      topic: "AI Agents",
+      summary: "Starter draft on why agentic workflows and multi-turn verification loops outperform static generation in coding and complex domains.",
       content: `
-This is a starter demo post. You can replace this content with your own writing.
+This is a starter template. Replace this text with your own essay or notes!
 
-### Core Idea
+### From Single-Prompt to Autonomous Workflows
 
-Autocomplete predicts the next token. An agent executes a loop:
-1. **Plan**: Inspect repository structure and dependencies.
-2. **Execute**: Edit files, run test suites, check compiler output.
-3. **Correct**: Parse errors, refine hypotheses, and verify invariants.
+Agentic leverage comes from how reliably a model can plan, execute tools, observe feedback, and self-correct across multi-turn environments. 
 
-### Next Steps
-
-Add your own technical posts, papers, and essays directly by editing \`js/data.js\`.
+Applications in:
+- **Coding**: Test-driven loops, compiler feedback, and repository-scale navigation.
+- **Healthcare & Clinical Workflows**: High-stakes reasoning where multi-step verification and domain grounding are critical.
+- **Education**: Adaptive pedagogical dialogue, interactive simulations, and personalized feedback.
       `
     },
     {
-      id: "demo-post-math-reflections",
+      id: "demo-post-world-models",
       isDemo: true,
-      title: "[Demo] Reflections on Course 18: Geometry of Representations",
+      title: "[Demo] World Models: Simulating State, Physics, and Logic",
       date: "Jan 2025",
       readTime: "2 min",
-      topic: "Math & Theory",
-      summary: "Placeholder draft note on geometric intuition and linear algebra in high-dimensional representations.",
+      topic: "World Models",
+      summary: "Starter draft on predictive world models, simulation environments, and grounded decision making.",
       content: `
-This is a starter demo post.
+This is a starter template.
 
-### Reflections
+### World Models & Environments
 
-Mathematical intuition from MIT Course 18 often clarifies high-dimensional representation dynamics:
-- Distance metrics and spectral properties in latent space.
-- Low-rank structures and parameter efficiency.
-- Optimization geometries across loss surfaces.
+To act effectively, agents need accurate models of how the world responds to their actions—whether that world is a compiler environment, a physiological simulator, or an interactive educational tool.
 
-Replace this placeholder with your own notes or mathematical explorations!
+Replace this placeholder with your own notes or papers you've read!
       `
     }
   ],
