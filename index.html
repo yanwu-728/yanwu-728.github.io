@@ -77,9 +77,22 @@
         <!-- Interactive World Map & Journey Section -->
         <div class="journey-card">
           <div class="journey-header">
-            <div>
+            <div class="journey-title-group">
               <span class="preview-title">Roots &amp; Journey</span>
-              <p class="journey-subtitle">Jiamusi (2001) &rarr; Tianjin (2004) &rarr; Sparta (2016) &rarr; Tianjin (2020) &rarr; Boston (2021) &rarr; South Bay (2025)</p>
+              <!-- Clickable Location Names on Top -->
+              <div class="journey-crumbs" id="journeyCrumbs" role="tablist" aria-label="Journey timeline locations">
+                <button class="crumb-btn active" onclick="setJourneyStep(0)">Jiamusi (2001)</button>
+                <span class="crumb-arrow">&rarr;</span>
+                <button class="crumb-btn" onclick="setJourneyStep(1)">Tianjin (2004)</button>
+                <span class="crumb-arrow">&rarr;</span>
+                <button class="crumb-btn" onclick="setJourneyStep(2)">Sparta (2016)</button>
+                <span class="crumb-arrow">&rarr;</span>
+                <button class="crumb-btn" onclick="setJourneyStep(3)">Tianjin (2020)</button>
+                <span class="crumb-arrow">&rarr;</span>
+                <button class="crumb-btn" onclick="setJourneyStep(4)">Boston (2021)</button>
+                <span class="crumb-arrow">&rarr;</span>
+                <button class="crumb-btn" onclick="setJourneyStep(5)">South Bay (2025)</button>
+              </div>
             </div>
             <div class="journey-controls">
               <button id="journeyPlayBtn" class="journey-btn" title="Auto-play Journey">Play &blacktriangleright;</button>
@@ -95,6 +108,7 @@
               <line x1="0" y1="180" x2="760" y2="180" stroke="var(--border)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.5" />
               <line x1="380" y1="0" x2="380" y2="360" stroke="var(--border)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.5" />
 
+              <!-- Continents (Pacific-centered) -->
               <g class="world-continents">
                 <path class="world-land" d="M 21.1,19.4 L 52.8,16.6 L 84.4,19.4 L 109.8,5.5 L 126.7,5.5 L 168.9,-2.8 L 200.6,-5.5 L 242.8,8.3 L 274.4,11.1 L 316.7,16.6 L 337.8,24.9 L 358.9,27.7 L 369.4,41.5 L 299.8,52.6 L 289.2,63.7 L 259.7,47.1 L 253.3,60.9 L 247.0,83.1 L 236.4,88.6 L 228.0,99.7 L 221.7,102.5 L 230.1,110.8 L 223.8,113.5 L 221.7,105.2 L 206.9,99.7 L 209.0,105.2 L 211.1,110.8 L 215.3,119.1 L 209.0,138.5 L 198.4,146.8 L 185.8,149.5 L 183.7,180.0 L 175.2,185.5 L 177.3,204.9 L 168.9,193.8 L 168.9,171.7 L 160.4,163.4 L 149.9,146.8 L 141.4,149.5 L 130.9,163.4 L 126.7,180.0 L 120.3,185.5 L 114.0,166.2 L 101.3,144.0 L 88.7,138.5 L 78.1,138.5 L 73.9,160.6 L 59.1,171.7 L 50.7,171.7 L 38.0,144.0 L 29.6,124.6 L 33.8,108.0 L 19.0,94.2 L 21.1,80.3 L 29.6,85.8 L 40.1,77.5 L 59.1,91.4 L 67.6,77.5 L 59.1,58.2 L 38.0,52.6 L 21.1,41.5 L 21.1,19.4 Z" data-name="Eurasia" />
                 <path class="world-land" d="M 257.6,83.1 L 263.9,88.6 L 255.4,94.2 L 255.4,108.0 L 244.9,113.5 L 234.3,116.3 L 232.2,113.5 L 244.9,108.0 L 253.3,96.9 L 257.6,83.1 Z" data-name="Japan" />
@@ -104,12 +118,52 @@
                 <path class="world-land" d="M 25.3,119.1 L 29.6,130.2 L 35.9,146.8 L 50.7,174.5 L 65.4,177.2 L 52.8,202.2 L 40.1,221.5 L 42.2,238.2 L 40.1,252.0 L 27.4,276.9 L 12.7,301.8 L 0.0,301.8 L 0.0,263.1 L 0.0,235.4 L 0.0,207.7 L 0.0,180.0 L 0.0,152.3 L 0.0,124.6 L 25.3,119.1 Z" data-name="AfricaEast" />
               </g>
 
-              <g id="journeyArcsLayer"></g>
-              <g id="cityMarkersLayer"></g>
+              <!-- Travel Arcs (Pre-rendered) -->
+              <g id="journeyArcsLayer">
+                <path id="journeyArc-1" class="journey-arc-path" d="M 232.9,78.1 Q 215,74 205.2,99.3" />
+                <path id="journeyArc-2" class="journey-arc-path" d="M 205.2,99.3 Q 382.7,10 560.2,94.1" />
+                <path id="journeyArc-3" class="journey-arc-path" d="M 560.2,94.1 Q 382.7,24 205.2,99.3" />
+                <path id="journeyArc-4" class="journey-arc-path" d="M 205.2,99.3 Q 386.5,6 567.8,90.4" />
+                <path id="journeyArc-5" class="journey-arc-path" d="M 567.8,90.4 Q 514.0,62 460.3,104.3" />
+              </g>
+
+              <!-- Cities (Pre-rendered) -->
+              <g id="cityMarkersLayer">
+                <!-- Jiamusi -->
+                <g class="city-marker-group" onclick="setJourneyStep(0)">
+                  <circle id="pulse-jiamusi" class="city-pulse-ring" cx="232.9" cy="78.1" r="6" />
+                  <circle id="dot-jiamusi" class="city-point" cx="232.9" cy="78.1" r="3.5" />
+                  <text id="label-jiamusi" class="city-name-text" x="240.9" y="76.1" text-anchor="start">Jiamusi</text>
+                </g>
+                <!-- Tianjin -->
+                <g class="city-marker-group" onclick="setJourneyStep(1)">
+                  <circle id="pulse-tianjin" class="city-pulse-ring" cx="205.2" cy="99.3" r="6" />
+                  <circle id="dot-tianjin" class="city-point" cx="205.2" cy="99.3" r="3.5" />
+                  <text id="label-tianjin" class="city-name-text" x="197.2" y="102.3" text-anchor="end">Tianjin</text>
+                </g>
+                <!-- South Bay -->
+                <g class="city-marker-group" onclick="setJourneyStep(5)">
+                  <circle id="pulse-southbay" class="city-pulse-ring" cx="460.3" cy="104.3" r="6" />
+                  <circle id="dot-southbay" class="city-point" cx="460.3" cy="104.3" r="3.5" />
+                  <text id="label-southbay" class="city-name-text" x="452.3" y="107.3" text-anchor="end">South Bay</text>
+                </g>
+                <!-- Sparta, NJ -->
+                <g class="city-marker-group" onclick="setJourneyStep(2)">
+                  <circle id="pulse-sparta" class="city-pulse-ring" cx="560.2" cy="94.1" r="6" />
+                  <circle id="dot-sparta" class="city-point" cx="560.2" cy="94.1" r="3.5" />
+                  <text id="label-sparta" class="city-name-text" x="552.2" y="107.1" text-anchor="end">Sparta, NJ</text>
+                </g>
+                <!-- Boston -->
+                <g class="city-marker-group" onclick="setJourneyStep(4)">
+                  <circle id="pulse-boston" class="city-pulse-ring" cx="567.8" cy="90.4" r="6" />
+                  <circle id="dot-boston" class="city-point" cx="567.8" cy="90.4" r="3.5" />
+                  <text id="label-boston" class="city-name-text" x="575.8" y="87.4" text-anchor="start">Boston</text>
+                </g>
+              </g>
             </svg>
           </div>
 
-          <div class="journey-stepper" id="journeyStepper"></div>
+          <!-- Step Detail / Story Box -->
           <div class="journey-story" id="journeyStory"></div>
         </div>
 
@@ -119,9 +173,7 @@
             <span class="preview-title">Experience</span>
             <button class="preview-action" onclick="switchTab('experience')">View all &rarr;</button>
           </div>
-          <div id="previewExperience" class="experience-list">
-            <!-- Injected by JS: Most recent only -->
-          </div>
+          <div id="previewExperience" class="experience-list"></div>
         </div>
 
         <!-- Writing Preview -->
@@ -130,9 +182,7 @@
             <span class="preview-title">Writing &amp; Notes (Demo)</span>
             <button class="preview-action" onclick="switchTab('writing')">View all &rarr;</button>
           </div>
-          <div id="previewWriting" class="writing-list">
-            <!-- Injected by JS -->
-          </div>
+          <div id="previewWriting" class="writing-list"></div>
         </div>
 
         <!-- Misc Preview -->
@@ -141,9 +191,7 @@
             <span class="preview-title">Misc &amp; Life</span>
             <button class="preview-action" onclick="switchTab('misc')">View all &rarr;</button>
           </div>
-          <div id="previewMisc" class="misc-list">
-            <!-- Injected by JS -->
-          </div>
+          <div id="previewMisc" class="misc-list"></div>
         </div>
 
       </section>
@@ -155,9 +203,7 @@
           <p class="page-intro">Engineering roles and academic degrees.</p>
         </div>
 
-        <div id="fullExperience" class="experience-list">
-          <!-- Injected by JS -->
-        </div>
+        <div id="fullExperience" class="experience-list"></div>
       </section>
 
       <!-- Tab 3: Full Writing (Demo / Starter Framework) -->
@@ -171,9 +217,7 @@
           <strong>Demo placeholder:</strong> The notes below are starter templates focused on agents, workflows, and world models. You can edit <code>js/data.js</code> anytime to write your own blog posts.
         </div>
 
-        <div id="fullWriting" class="writing-list">
-          <!-- Injected by JS -->
-        </div>
+        <div id="fullWriting" class="writing-list"></div>
       </section>
 
       <!-- Tab 4: Full Misc (Tagged Notes & Life) -->
@@ -192,9 +236,7 @@
           <button class="tag-filter-btn" data-tag="cat">cat</button>
         </div>
 
-        <div id="fullMisc" class="misc-list">
-          <!-- Injected by JS -->
-        </div>
+        <div id="fullMisc" class="misc-list"></div>
       </section>
 
       <!-- Dedicated Tab 5: Single Blog Post Reader View -->
@@ -203,9 +245,7 @@
           &larr; Back to Writing
         </button>
         
-        <article class="single-post-view" id="singlePostContainer">
-          <!-- Injected dynamically by JS -->
-        </article>
+        <article class="single-post-view" id="singlePostContainer"></article>
       </section>
 
     </main>

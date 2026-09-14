@@ -4,7 +4,11 @@
  * Light mode only.
  */
 
-let previousTabBeforePost = 'about';
+// Global state variables
+var currentJourneyStep = 0;
+var journeyTimer = null;
+var isJourneyPlaying = false;
+var previousTabBeforePost = 'about';
 
 document.addEventListener('DOMContentLoaded', () => {
   initTabs();
@@ -129,57 +133,13 @@ function goBackFromPost() {
 /* ==========================================================================
    Interactive World Map & Journey Controller
    ========================================================================== */
-let journeyTimer = null;
-let currentJourneyStep = 0;
-let isJourneyPlaying = false;
-
 function initJourneyMap() {
-  const arcsLayer = document.getElementById('journeyArcsLayer');
-  const citiesLayer = document.getElementById('cityMarkersLayer');
-  const stepperContainer = document.getElementById('journeyStepper');
   const playBtn = document.getElementById('journeyPlayBtn');
   const resetBtn = document.getElementById('journeyResetBtn');
 
-  if (!arcsLayer || !citiesLayer || !SITE_DATA.journey) return;
+  if (!SITE_DATA.journey) return;
 
-  const { cities, steps } = SITE_DATA.journey;
-
-  // 1. Render Arcs into SVG
-  arcsLayer.innerHTML = steps.map((s, idx) => {
-    if (!s.arc) return '';
-    return `<path id="journeyArc-${idx}" class="journey-arc-path" d="${s.arc}" style="display: none;" />`;
-  }).join('');
-
-  // 2. Render City Markers into SVG
-  const labelOffsets = {
-    jiamusi: { dx: 8, dy: -2, anchor: 'start' },
-    tianjin: { dx: -8, dy: 3, anchor: 'end' },
-    sparta: { dx: -8, dy: 13, anchor: 'end' },
-    boston: { dx: 8, dy: -3, anchor: 'start' },
-    southbay: { dx: -8, dy: 3, anchor: 'end' }
-  };
-
-  citiesLayer.innerHTML = Object.entries(cities).map(([key, c]) => {
-    const offset = labelOffsets[key] || { dx: 8, dy: 3, anchor: 'start' };
-    return `
-      <g class="city-marker-group" data-city="${key}" onclick="jumpToCity('${key}')">
-        <circle id="pulse-${key}" class="city-pulse-ring" cx="${c.x}" cy="${c.y}" r="6" />
-        <circle id="dot-${key}" class="city-point" cx="${c.x}" cy="${c.y}" r="3.5" />
-        <text id="label-${key}" class="city-name-text" x="${c.x + offset.dx}" y="${c.y + offset.dy}" text-anchor="${offset.anchor}">${c.label}</text>
-      </g>
-    `;
-  }).join('');
-
-  // 3. Render Stepper Buttons (Responsive Grid, No Scroll)
-  if (stepperContainer) {
-    stepperContainer.innerHTML = steps.map((s, idx) => `
-      <button class="step-btn ${idx === 0 ? 'active' : ''}" data-step="${idx}" onclick="setJourneyStep(${idx})">
-        ${s.year} ${cities[s.cityKey].label}
-      </button>
-    `).join('');
-  }
-
-  // 4. Play / Reset Controls
+  // Play / Reset Controls
   if (playBtn) {
     playBtn.addEventListener('click', toggleJourneyPlay);
   }
@@ -190,27 +150,35 @@ function initJourneyMap() {
     });
   }
 
+  // Set initial step to Birthplace (Jiamusi 2001)
   setJourneyStep(0);
 }
 
-function setJourneyStep(stepIndex) {
+function setJourneyStep(stepIndex, stopAuto = true) {
+  if (!SITE_DATA || !SITE_DATA.journey) return;
   const { steps, cities } = SITE_DATA.journey;
   if (stepIndex < 0 || stepIndex >= steps.length) return;
-  currentJourneyStep = stepIndex;
 
+  if (stopAuto && isJourneyPlaying) {
+    stopJourneyPlay();
+  }
+
+  currentJourneyStep = stepIndex;
   const current = steps[stepIndex];
 
-  // Update Stepper buttons
-  const stepBtns = document.querySelectorAll('.step-btn');
-  stepBtns.forEach((btn, idx) => {
+  // 1. Update Top Breadcrumb Buttons
+  const crumbBtns = document.querySelectorAll('#journeyCrumbs .crumb-btn');
+  crumbBtns.forEach((btn, idx) => {
+    btn.classList.remove('active');
+    btn.classList.remove('completed');
     if (idx === stepIndex) {
       btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
+    } else if (idx < stepIndex) {
+      btn.classList.add('completed');
     }
   });
 
-  // Update Story Box
+  // 2. Update Story Box
   const storyBox = document.getElementById('journeyStory');
   if (storyBox) {
     storyBox.innerHTML = `
@@ -223,25 +191,22 @@ function setJourneyStep(stepIndex) {
     `;
   }
 
-  // Update SVG Arcs
+  // 3. Update SVG Arcs (Trajectories)
   steps.forEach((s, idx) => {
-    if (!s.arc) return;
+    if (idx === 0) return; // Step 0 has no arc
     const arcEl = document.getElementById(`journeyArc-${idx}`);
     if (!arcEl) return;
 
     if (idx < stepIndex) {
-      arcEl.style.display = 'block';
-      arcEl.className.baseVal = 'journey-arc-path completed';
+      arcEl.setAttribute('class', 'journey-arc-path completed');
     } else if (idx === stepIndex) {
-      arcEl.style.display = 'block';
-      arcEl.className.baseVal = 'journey-arc-path active';
+      arcEl.setAttribute('class', 'journey-arc-path active');
     } else {
-      arcEl.style.display = 'none';
-      arcEl.className.baseVal = 'journey-arc-path';
+      arcEl.setAttribute('class', 'journey-arc-path');
     }
   });
 
-  // Update City Markers
+  // 4. Update City Markers & Pulse Rings
   const visitedCities = new Set(steps.slice(0, stepIndex + 1).map(s => s.cityKey));
   const activeCity = current.cityKey;
 
@@ -251,17 +216,17 @@ function setJourneyStep(stepIndex) {
     const label = document.getElementById(`label-${key}`);
 
     if (dot) {
-      dot.className.baseVal = 'city-point';
+      dot.setAttribute('class', 'city-point');
       if (visitedCities.has(key)) dot.classList.add('visited');
       if (key === activeCity) dot.classList.add('active');
     }
 
     if (pulse) {
-      pulse.className.baseVal = key === activeCity ? 'city-pulse-ring active' : 'city-pulse-ring';
+      pulse.setAttribute('class', key === activeCity ? 'city-pulse-ring active' : 'city-pulse-ring');
     }
 
     if (label) {
-      label.className.baseVal = key === activeCity ? 'city-name-text active' : 'city-name-text';
+      label.setAttribute('class', key === activeCity ? 'city-name-text active' : 'city-name-text');
     }
   });
 }
@@ -279,17 +244,20 @@ function startJourneyPlay() {
   isJourneyPlaying = true;
   if (playBtn) playBtn.innerHTML = 'Pause &parallel;';
 
+  // If at the end, restart from 0
   if (currentJourneyStep >= SITE_DATA.journey.steps.length - 1) {
-    setJourneyStep(0);
+    setJourneyStep(0, false);
   }
+
+  if (journeyTimer) clearInterval(journeyTimer);
 
   journeyTimer = setInterval(() => {
     if (currentJourneyStep < SITE_DATA.journey.steps.length - 1) {
-      setJourneyStep(currentJourneyStep + 1);
+      setJourneyStep(currentJourneyStep + 1, false);
     } else {
       stopJourneyPlay();
     }
-  }, 2200);
+  }, 2100);
 }
 
 function stopJourneyPlay() {
@@ -299,14 +267,6 @@ function stopJourneyPlay() {
   if (journeyTimer) {
     clearInterval(journeyTimer);
     journeyTimer = null;
-  }
-}
-
-function jumpToCity(cityKey) {
-  const stepIdx = SITE_DATA.journey.steps.findIndex(s => s.cityKey === cityKey);
-  if (stepIdx !== -1) {
-    stopJourneyPlay();
-    setJourneyStep(stepIdx);
   }
 }
 
