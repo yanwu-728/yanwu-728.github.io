@@ -33,7 +33,7 @@ const SITE_DATA = {
       "I'm a software engineer at Google DeepMind working on Antigravity. Before this, I was at Windsurf building agentic developer tools.",
       "I graduated from MIT with a Bachelor's in CS and Math in May 2024, and completed my Master's in CS in January 2025.",
       "Originally from Tianjin, China, I'm currently based in South Bay, California. Broadly, I'm interested in AI—specifically AI agents, agentic workflows, and world models—with applications across software engineering, healthcare, and education.",
-      "In my spare time, you can spot me trying out different boba places, visiting newly opened local restaurants, hanging out with my cat (Juzhang, an orange 4-year-old boy), and trying out different fitness classes and sports (and losing interest quickly too)."
+      "In my spare time, you can spot me trying out different boba places, visiting newly opened local restaurants, hanging out with my cat (Juzhang / 局长, pronounced jú-zhǎng, an orange 4-year-old boy), and trying out different fitness classes and sports (and losing interest quickly too)."
     ],
     interests: [
       "AI Agents & Agentic Workflows",
@@ -200,12 +200,12 @@ Replace this placeholder with your own notes or papers you've read!
   misc: [
     {
       id: "juzhang-cat",
-      title: "Life with Juzhang",
+      title: "Life with Juzhang (局长)",
       date: "2025",
       tags: ["cat"],
       image: "assets/images/juzhang.jpg",
-      highlight: "Orange 4-year-old boy",
-      note: "Hanging out with Juzhang, my orange 4-year-old cat who faithfully oversees all coding sprints, problem-solving, and nap schedules."
+      highlight: "Orange 4-year-old boy · jú-zhǎng",
+      note: "Hanging out with Juzhang (局长, pronounced jú-zhǎng—literally 'bureau chief'), my orange 4-year-old cat who faithfully oversees all coding sprints, problem-solving, and nap schedules."
     },
     {
       id: "boba-and-restaurants",
