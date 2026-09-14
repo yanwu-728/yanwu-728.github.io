@@ -1,6 +1,6 @@
 /**
  * Yan Wu - Personal Website Main Script
- * Minimalist, zero-dependency tab switching, data rendering, and theme management.
+ * Minimalist, zero-dependency tab switching, tag filtering, and theme management.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTabs();
   renderPreviews();
   renderFullContent();
+  setupMiscTagFilters();
 });
 
 /* ==========================================================================
@@ -59,13 +60,11 @@ function initTabs() {
     });
   });
 
-  // Handle URL hash on load (e.g. #experience, #writing, #misc)
   const initialHash = window.location.hash.replace('#', '');
   if (['about', 'experience', 'writing', 'misc'].includes(initialHash)) {
     switchTab(initialHash, false);
   }
 
-  // Handle browser back/forward buttons
   window.addEventListener('popstate', () => {
     const hash = window.location.hash.replace('#', '') || 'about';
     if (['about', 'experience', 'writing', 'misc'].includes(hash)) {
@@ -133,19 +132,23 @@ function renderPreviews() {
     `).join('');
   }
 
-  // 3. Misc Preview (Top 2 spots)
+  // 3. Misc Preview (Top 3 with tags)
   const miscContainer = document.getElementById('previewMisc');
   if (miscContainer) {
-    const previewMisc = SITE_DATA.misc.slice(0, 2);
-    miscContainer.innerHTML = previewMisc.map(item => `
-      <div class="misc-entry" onclick="switchTab('misc')" style="cursor: pointer;">
-        <div class="misc-header">
-          <span class="misc-title">${item.title}</span>
-          <span class="misc-location">${item.location}</span>
+    const previewMisc = SITE_DATA.misc.slice(0, 3);
+    miscContainer.innerHTML = previewMisc.map(item => {
+      const tagHtml = (item.tags || []).map(t => `<span class="misc-tag">#${t}</span>`).join('');
+      return `
+        <div class="misc-entry" onclick="switchTab('misc')" style="cursor: pointer;">
+          <div class="misc-header">
+            <span class="misc-title">${item.title}</span>
+            <span class="misc-location">${item.date}</span>
+          </div>
+          <div class="misc-highlight">${item.highlight}</div>
+          <div class="misc-tag-list">${tagHtml}</div>
         </div>
-        <div class="misc-highlight">${item.highlight}</div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 }
 
@@ -168,7 +171,7 @@ function renderFullContent() {
     `).join('');
   }
 
-  // Full Writing (Demo / Starter notes with inline toggle)
+  // Full Writing
   const fullWriting = document.getElementById('fullWriting');
   if (fullWriting) {
     fullWriting.innerHTML = SITE_DATA.blogs.map(blog => `
@@ -185,20 +188,52 @@ function renderFullContent() {
     `).join('');
   }
 
-  // Full Misc
+  // Full Misc (defaults to 'all')
+  renderMiscEntries('all');
+}
+
+/* ==========================================================================
+   Render Tagged Misc Entries
+   ========================================================================== */
+function renderMiscEntries(filterTag = 'all') {
   const fullMisc = document.getElementById('fullMisc');
-  if (fullMisc) {
-    fullMisc.innerHTML = SITE_DATA.misc.map(item => `
+  if (!fullMisc) return;
+
+  const filtered = filterTag === 'all'
+    ? SITE_DATA.misc
+    : SITE_DATA.misc.filter(item => (item.tags || []).includes(filterTag));
+
+  if (filtered.length === 0) {
+    fullMisc.innerHTML = `<p style="color: var(--text-dim); font-size: 0.88rem;">No entries found for tag #${filterTag}.</p>`;
+    return;
+  }
+
+  fullMisc.innerHTML = filtered.map(item => {
+    const tagHtml = (item.tags || []).map(t => `<span class="misc-tag">#${t}</span>`).join('');
+    return `
       <div class="misc-entry">
         <div class="misc-header">
           <span class="misc-title">${item.title}</span>
-          <span class="misc-location">${item.location}</span>
+          <span class="misc-location">${item.date}</span>
         </div>
         <div class="misc-highlight">${item.highlight}</div>
         <p class="misc-note">${item.note}</p>
+        <div class="misc-tag-list">${tagHtml}</div>
       </div>
-    `).join('');
-  }
+    `;
+  }).join('');
+}
+
+function setupMiscTagFilters() {
+  const filterBtns = document.querySelectorAll('#miscTagFilters .tag-filter-btn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tag = btn.getAttribute('data-tag');
+      renderMiscEntries(tag);
+    });
+  });
 }
 
 /* Inline expand/collapse for blog posts */

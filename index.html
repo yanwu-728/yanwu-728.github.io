@@ -44,6 +44,7 @@
       <!-- External Links & Theme Toggle -->
       <div class="sidebar-footer">
         <div class="social-links">
+          <a href="https://scholar.google.com/citations?user=_gzU1DUAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar &nearr;</a>
           <a href="https://github.com/yanwu-728" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
           <a href="https://www.linkedin.com/in/yan-wu-01" target="_blank" rel="noopener noreferrer">LinkedIn &nearr;</a>
         </div>
@@ -98,7 +99,7 @@
         <!-- Misc Preview -->
         <div class="preview-block">
           <div class="preview-header">
-            <span class="preview-title">Places &amp; Food</span>
+            <span class="preview-title">Misc &amp; Life</span>
             <button class="preview-action" onclick="switchTab('misc')">View all &rarr;</button>
           </div>
           <div id="previewMisc" class="misc-list">
@@ -136,11 +137,20 @@
         </div>
       </section>
 
-      <!-- Tab 4: Full Misc (Food & Places) -->
+      <!-- Tab 4: Full Misc (Tagged Notes & Life) -->
       <section id="tab-misc" class="tab-panel">
         <div>
-          <h2 class="page-title">Food &amp; Places</h2>
-          <p class="page-intro">Hometown comfort, university memories, and local discoveries.</p>
+          <h2 class="page-title">Misc</h2>
+          <p class="page-intro">Observations, food, travel, visa notes, and life with my cat.</p>
+        </div>
+
+        <!-- Tag Filters -->
+        <div class="tag-filters" id="miscTagFilters" role="tablist" aria-label="Filter by tag">
+          <button class="tag-filter-btn active" data-tag="all">all</button>
+          <button class="tag-filter-btn" data-tag="food">food</button>
+          <button class="tag-filter-btn" data-tag="travel">travel</button>
+          <button class="tag-filter-btn" data-tag="visa">visa</button>
+          <button class="tag-filter-btn" data-tag="cat">cat</button>
         </div>
 
         <div id="fullMisc" class="misc-list">

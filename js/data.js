@@ -26,7 +26,8 @@ const SITE_DATA = {
     ],
     social: {
       github: "https://github.com/yanwu-728",
-      linkedin: "https://www.linkedin.com/in/yan-wu-01"
+      linkedin: "https://www.linkedin.com/in/yan-wu-01",
+      scholar: "https://scholar.google.com/citations?user=_gzU1DUAAAAJ&hl=en"
     },
     bio: [
       "I'm a software engineer at Google DeepMind working on Antigravity. Before this, I was at Windsurf building agentic developer tools.",
@@ -78,7 +79,7 @@ const SITE_DATA = {
     }
   ],
 
-  // Blog / Writing entries (Demo placeholders aligned with your interests for you to write)
+  // Blog / Writing entries (Demo placeholders for you to write)
   blogs: [
     {
       id: "demo-post-agents-and-workflows",
@@ -121,39 +122,55 @@ Replace this placeholder with your own notes or papers you've read!
     }
   ],
 
-  // Misc: Food, Places, Travel
+  // Misc Section: Personal blog posts / notes with tags (e.g. food, travel, visa, cat)
   misc: [
     {
+      id: "cat-adventures",
+      title: "Life with My Cat",
+      date: "2025",
+      tags: ["cat"],
+      highlight: "Feline quirks & daily companion",
+      note: "Notes, daily moments, and observations living with my cat while working on models and code."
+    },
+    {
+      id: "us-visa-notes",
+      title: "Notes on US Visas & Immigration Pathways",
+      date: "2025",
+      tags: ["visa"],
+      highlight: "F-1 OPT, STEM extension & work visas",
+      note: "Practical thoughts, timelines, and experiences navigating international student and researcher immigration in tech."
+    },
+    {
       id: "tianjin-food",
-      title: "Tianjin: Hometown Flavors",
-      category: "Food",
-      location: "Tianjin, China",
-      highlight: "Jianbing Guozi (煎饼馃子)",
-      note: "Nothing compares to fresh street corner Jianbing Guozi made with crispy baocui (薄脆), green mung bean batter, and sweet savory bean sauce."
+      title: "Tianjin Hometown Flavors: Jianbing Guozi",
+      date: "2025",
+      tags: ["food"],
+      highlight: "Jianbing Guozi (煎饼馃子) & street breakfast",
+      note: "Nothing compares to fresh street-corner Jianbing Guozi made with crispy baocui (薄脆), green mung bean batter, and sweet savory bean sauce."
     },
     {
-      id: "south-bay-routine",
-      title: "South Bay: Coffee & Ramen",
-      category: "Food",
-      location: "South Bay, CA",
-      highlight: "Specialty espresso & hand-pulled noodles",
-      note: "Exploring local coffee roasters and finding comforting noodle/ramen spots around Mountain View, Sunnyvale, and San Jose after work."
-    },
-    {
-      id: "cambridge-mit",
-      title: "Cambridge: Charles River & MIT Days",
-      category: "Places",
-      location: "Cambridge, MA",
-      highlight: "Harvard Bridge, Tatte, Charles River",
-      note: "Walking across the bridge over the Charles River with the Boston skyline in view, late-night psets on campus, and coffee and pastries at Tatte."
+      id: "south-bay-eats",
+      title: "South Bay Coffee Roasters & Noodle Spots",
+      date: "2025",
+      tags: ["food"],
+      highlight: "Specialty espresso & comforting noodle bowls",
+      note: "Exploring local pour-over spots and cozy ramen/hand-pulled noodle shops in Mountain View, Sunnyvale, and San Jose."
     },
     {
       id: "california-coast",
-      title: "California Coast & Redwoods",
-      category: "Places",
-      location: "Bay Area, CA",
-      highlight: "Highway 1, Pacifica, Half Moon Bay",
-      note: "Weekend drives down the coast along Highway 1, coastal fog, and quiet trails through California redwoods."
+      title: "Coastal Escapes: Highway 1 & Redwoods",
+      date: "2024",
+      tags: ["travel"],
+      highlight: "Pacifica, Half Moon Bay, and forest trails",
+      note: "Weekend drives down Highway 1 along the Pacific coast, coastal fog, and hikes through California giant redwoods."
+    },
+    {
+      id: "cambridge-mit",
+      title: "Cambridge & Boston Memories",
+      date: "2024",
+      tags: ["travel"],
+      highlight: "Charles River, Harvard Bridge & Tatte",
+      note: "Evening walks across the Charles River overlooking the Boston skyline, late-night hack sessions, and pastries at Tatte."
     }
   ]
 };
