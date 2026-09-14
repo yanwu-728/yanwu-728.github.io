@@ -1,54 +1,18 @@
 /**
  * Yan Wu - Personal Website Main Script
- * Minimalist, zero-dependency tab switching, tag filtering, dedicated blog reader, and theme management.
+ * Minimalist, zero-dependency tab switching, tag filtering, dedicated blog reader, and interactive map.
+ * Light mode only.
  */
 
 let previousTabBeforePost = 'about';
 
 document.addEventListener('DOMContentLoaded', () => {
-  initTheme();
   initTabs();
   renderPreviews();
   renderFullContent();
   setupMiscTagFilters();
   initJourneyMap();
 });
-
-/* ==========================================================================
-   Theme Management (Light / Dark)
-   ========================================================================== */
-function initTheme() {
-  const themeToggle = document.getElementById('themeToggle');
-  const savedTheme = localStorage.getItem('theme');
-  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
-  const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-  setTheme(initialTheme);
-
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      setTheme(newTheme);
-    });
-  }
-
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (!localStorage.getItem('theme')) {
-      setTheme(e.matches ? 'dark' : 'light');
-    }
-  });
-}
-
-function setTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-  
-  const label = document.getElementById('themeLabel');
-  if (label) {
-    label.textContent = `Theme: ${theme}`;
-  }
-}
 
 /* ==========================================================================
    Tab Navigation & Post Routing
@@ -151,7 +115,6 @@ function openBlogPost(postId, fromTab = 'writing', updateHistory = true) {
     `;
   }
 
-  // Switch to dedicated post tab
   switchTab('post', false);
 
   if (updateHistory) {
@@ -207,7 +170,7 @@ function initJourneyMap() {
     `;
   }).join('');
 
-  // 3. Render Stepper Buttons
+  // 3. Render Stepper Buttons (Responsive Grid, No Scroll)
   if (stepperContainer) {
     stepperContainer.innerHTML = steps.map((s, idx) => `
       <button class="step-btn ${idx === 0 ? 'active' : ''}" data-step="${idx}" onclick="setJourneyStep(${idx})">
@@ -351,7 +314,7 @@ function jumpToCity(cityKey) {
    Render Main Page Previews
    ========================================================================== */
 function renderPreviews() {
-  // 1. Experience Preview (Most Recent Only!)
+  // 1. Experience Preview (Most Recent Only)
   const expContainer = document.getElementById('previewExperience');
   if (expContainer) {
     const previewItems = SITE_DATA.experience.slice(0, 1);
@@ -379,12 +342,13 @@ function renderPreviews() {
     `).join('');
   }
 
-  // 3. Misc Preview (Top 3 with tags)
+  // 3. Misc Preview (Top 3 with tags and photo if available)
   const miscContainer = document.getElementById('previewMisc');
   if (miscContainer) {
     const previewMisc = SITE_DATA.misc.slice(0, 3);
     miscContainer.innerHTML = previewMisc.map(item => {
       const tagHtml = (item.tags || []).map(t => `<span class="misc-tag">#${t}</span>`).join('');
+      const imgHtml = item.image ? `<img src="${item.image}" alt="${item.title}" class="misc-card-thumb" />` : '';
       return `
         <div class="misc-entry" onclick="switchTab('misc')" style="cursor: pointer;">
           <div class="misc-header">
@@ -392,6 +356,7 @@ function renderPreviews() {
             <span class="misc-location">${item.date}</span>
           </div>
           <div class="misc-highlight">${item.highlight}</div>
+          ${imgHtml}
           <div class="misc-tag-list">${tagHtml}</div>
         </div>
       `;
@@ -418,7 +383,7 @@ function renderFullContent() {
     `).join('');
   }
 
-  // Full Writing (Shows read time & opens dedicated post page)
+  // Full Writing
   const fullWriting = document.getElementById('fullWriting');
   if (fullWriting) {
     fullWriting.innerHTML = SITE_DATA.blogs.map(blog => `
@@ -454,6 +419,7 @@ function renderMiscEntries(filterTag = 'all') {
 
   fullMisc.innerHTML = filtered.map(item => {
     const tagHtml = (item.tags || []).map(t => `<span class="misc-tag">#${t}</span>`).join('');
+    const imgHtml = item.image ? `<img src="${item.image}" alt="${item.title}" class="misc-card-img" />` : '';
     return `
       <div class="misc-entry">
         <div class="misc-header">
@@ -462,6 +428,7 @@ function renderMiscEntries(filterTag = 'all') {
         </div>
         <div class="misc-highlight">${item.highlight}</div>
         <p class="misc-note">${item.note}</p>
+        ${imgHtml}
         <div class="misc-tag-list">${tagHtml}</div>
       </div>
     `;

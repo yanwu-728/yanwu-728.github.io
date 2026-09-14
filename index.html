@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +18,7 @@
     <!-- Left Sidebar Menu -->
     <aside class="sidebar">
       <div class="sidebar-header">
+        <img src="assets/images/headshot.png" alt="Yan Wu" class="author-avatar" />
         <h1 class="site-name">Yan Wu</h1>
         <p class="site-role">Software Engineer, Google DeepMind (Antigravity)</p>
         <p class="site-meta">ex-Windsurf · MIT CS &amp; Math</p>
@@ -41,17 +42,13 @@
         </button>
       </nav>
 
-      <!-- External Links & Theme Toggle -->
+      <!-- External Links -->
       <div class="sidebar-footer">
         <div class="social-links">
           <a href="https://scholar.google.com/citations?user=_gzU1DUAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar &nearr;</a>
           <a href="https://github.com/yanwu-728" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
           <a href="https://www.linkedin.com/in/yan-wu-01" target="_blank" rel="noopener noreferrer">LinkedIn &nearr;</a>
         </div>
-
-        <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
-          <span id="themeLabel">Theme: dark</span>
-        </button>
       </div>
     </aside>
 
@@ -186,6 +183,7 @@
           <p class="page-intro">Observations, food, travel, visa notes, and life with my cat.</p>
         </div>
 
+        <!-- Tag Filters -->
         <div class="tag-filters" id="miscTagFilters" role="tablist" aria-label="Filter by tag">
           <button class="tag-filter-btn active" data-tag="all">all</button>
           <button class="tag-filter-btn" data-tag="food">food</button>
@@ -206,7 +204,7 @@
         </button>
         
         <article class="single-post-view" id="singlePostContainer">
-          <!-- Injected dynamically by JS: Title, Meta with read time, Summary, Full Body -->
+          <!-- Injected dynamically by JS -->
         </article>
       </section>
 

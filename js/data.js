@@ -203,6 +203,7 @@ Replace this placeholder with your own notes or papers you've read!
       title: "Life with Juzhang",
       date: "2025",
       tags: ["cat"],
+      image: "assets/images/juzhang.jpg",
       highlight: "Orange 4-year-old boy",
       note: "Hanging out with Juzhang, my orange 4-year-old cat who faithfully oversees all coding sprints, problem-solving, and nap schedules."
     },
