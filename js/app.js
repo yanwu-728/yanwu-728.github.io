@@ -37,6 +37,12 @@ function initLanguage() {
 function switchLanguage(lang) {
   if (!['en', 'zh'].includes(lang)) return;
   applyLanguage(lang, true);
+  if (typeof gtag === 'function') {
+    gtag('event', 'select_content', {
+      content_type: 'language',
+      item_id: lang
+    });
+  }
 }
 
 function applyLanguage(lang, saveToStorage = true) {
@@ -174,6 +180,13 @@ function switchTab(tabId, updateHistory = true) {
 
   if (updateHistory) {
     history.pushState(null, '', `#${tabId}`);
+    if (typeof gtag === 'function') {
+      gtag('event', 'page_view', {
+        page_title: `Yan Wu - ${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`,
+        page_location: window.location.href,
+        page_path: `/#${tabId}`
+      });
+    }
   }
 
   window.scrollTo({ top: 0, behavior: 'instant' });
@@ -239,6 +252,18 @@ function openBlogPost(postId, fromTab = 'writing', updateHistory = true) {
 
   if (updateHistory) {
     history.pushState(null, '', `#post/${postId}`);
+    if (typeof gtag === 'function') {
+      gtag('event', 'page_view', {
+        page_title: postData ? postData.title : postId,
+        page_location: window.location.href,
+        page_path: `/#post/${postId}`
+      });
+      gtag('event', 'view_item', {
+        item_type: 'blog_post',
+        item_id: postId,
+        item_name: postData ? postData.title : postId
+      });
+    }
   }
 }
 
@@ -305,6 +330,18 @@ function openMiscPost(miscId, fromTab = 'misc', updateHistory = true) {
 
   if (updateHistory) {
     history.pushState(null, '', `#misc/${miscId}`);
+    if (typeof gtag === 'function') {
+      gtag('event', 'page_view', {
+        page_title: miscData ? miscData.title : miscId,
+        page_location: window.location.href,
+        page_path: `/#misc/${miscId}`
+      });
+      gtag('event', 'view_item', {
+        item_type: 'misc_note',
+        item_id: miscId,
+        item_name: miscData ? miscData.title : miscId
+      });
+    }
   }
 }
 
