@@ -211,7 +211,7 @@ function initJourneyMap() {
   if (stepperContainer) {
     stepperContainer.innerHTML = steps.map((s, idx) => `
       <button class="step-btn ${idx === 0 ? 'active' : ''}" data-step="${idx}" onclick="setJourneyStep(${idx})">
-        ${idx}. ${cities[s.cityKey].label} (${s.age})
+        ${s.year} ${cities[s.cityKey].label}
       </button>
     `).join('');
   }
@@ -252,7 +252,7 @@ function setJourneyStep(stepIndex) {
   if (storyBox) {
     storyBox.innerHTML = `
       <div class="story-meta-row">
-        <span class="story-age-badge">${current.age} &middot; ${current.tag}</span>
+        <span class="story-age-badge">${current.year} &middot; ${current.tag}</span>
         <span class="story-route-pill">${current.routeLabel}</span>
       </div>
       <div class="story-title">${current.title}</div>

@@ -44,7 +44,7 @@ const SITE_DATA = {
     ]
   },
 
-  // Interactive Journey Data (Jiamusi -> Tianjin -> Sparta NJ -> Tianjin -> Boston -> South Bay)
+  // Interactive Journey Data (Years: 2001 -> 2004 -> 2016 -> 2020 -> 2021 -> 2025)
   journey: {
     cities: {
       jiamusi: { name: "Jiamusi, Heilongjiang", x: 232.9, y: 78.1, label: "Jiamusi" },
@@ -58,9 +58,9 @@ const SITE_DATA = {
         id: 0,
         cityKey: "jiamusi",
         tag: "Birthplace",
-        age: "Age 0",
+        year: "2001",
         title: "Born in Jiamusi, Heilongjiang",
-        desc: "I was born in Jiamusi (佳木斯), Heilongjiang province in northeastern China.",
+        desc: "Born in Jiamusi (佳木斯), Heilongjiang province in northeastern China.",
         routeLabel: "Birthplace",
         arc: null
       },
@@ -68,9 +68,9 @@ const SITE_DATA = {
         id: 1,
         cityKey: "tianjin",
         tag: "Growing Up",
-        age: "Age 3",
+        year: "2004",
         title: "Moved to Tianjin",
-        desc: "Moved to Tianjin at age 3 and grew up along the Haihe river.",
+        desc: "Moved to Tianjin in 2004 and grew up along the Haihe river.",
         routeLabel: "Jiamusi → Tianjin (~1,100 km)",
         arc: "M 232.9,78.1 Q 215,74 205.2,99.3"
       },
@@ -78,9 +78,9 @@ const SITE_DATA = {
         id: 2,
         cityKey: "sparta",
         tag: "High School",
-        age: "Age 15",
+        year: "2016",
         title: "Moved to Sparta, New Jersey",
-        desc: "Crossed the Pacific to attend high school in Sparta, New Jersey at age 15.",
+        desc: "Crossed the Pacific to attend high school in Sparta, New Jersey in 2016.",
         routeLabel: "Tianjin → Sparta, NJ (~11,000 km)",
         arc: "M 205.2,99.3 Q 382.7,10 560.2,94.1"
       },
@@ -88,19 +88,19 @@ const SITE_DATA = {
         id: 3,
         cityKey: "tianjin",
         tag: "Pandemic Return",
-        age: "Age 19",
+        year: "2020",
         title: "Returned to Tianjin",
-        desc: "Moved back home to Tianjin at age 19 due to the 2020 pandemic.",
+        desc: "Moved back home to Tianjin in 2020 due to the pandemic.",
         routeLabel: "Sparta, NJ → Tianjin (~11,000 km)",
         arc: "M 560.2,94.1 Q 382.7,24 205.2,99.3"
       },
       {
         id: 4,
         cityKey: "boston",
-        tag: "College & Grad School",
-        age: "Age 20",
+        tag: "MIT (B.S. & M.Eng)",
+        year: "2021",
         title: "Moved to Boston for MIT",
-        desc: "Moved to Boston at age 20 for college and master's at MIT (Course 6-3 CS & Course 18 Math).",
+        desc: "Moved to Boston in 2021 for college and master's at MIT (Course 6-3 CS & Course 18 Math).",
         routeLabel: "Tianjin → Boston, MA (~11,100 km)",
         arc: "M 205.2,99.3 Q 386.5,6 567.8,90.4"
       },
@@ -108,9 +108,9 @@ const SITE_DATA = {
         id: 5,
         cityKey: "southbay",
         tag: "Present",
-        age: "Age 23",
+        year: "2025",
         title: "Moved to South Bay, California",
-        desc: "Moved to the South Bay at age 23 to join Google DeepMind working on Antigravity.",
+        desc: "Moved to the South Bay in 2025 to join Google DeepMind working on Antigravity.",
         routeLabel: "Boston → South Bay, CA (~4,300 km)",
         arc: "M 567.8,90.4 Q 514.0,62 460.3,104.3"
       }
