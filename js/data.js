@@ -60,7 +60,7 @@ const SITE_DATA = {
         tag: "Birthplace",
         year: "2001",
         title: "Born in Jiamusi, Heilongjiang",
-        desc: "Born in Jiamusi (佳木斯), Heilongjiang province in northeastern China.",
+        desc: "Born in Jiamusi, Heilongjiang province in northeastern China.",
         routeLabel: "Birthplace",
         arc: null
       },

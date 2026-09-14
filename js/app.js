@@ -274,14 +274,13 @@ function stopJourneyPlay() {
    Render Main Page Previews
    ========================================================================== */
 function renderPreviews() {
-  // 1. Experience Preview (Most Recent Only)
+  // 1. Experience Preview (Full experience list)
   const expContainer = document.getElementById('previewExperience');
   if (expContainer) {
-    const previewItems = SITE_DATA.experience.slice(0, 1);
-    expContainer.innerHTML = previewItems.map(item => `
+    expContainer.innerHTML = SITE_DATA.experience.map(item => `
       <div class="experience-entry">
         <div class="entry-header">
-          <span class="entry-title">${item.role} &middot; <span style="font-weight: normal; color: var(--text-muted);">${item.company}</span></span>
+          <span class="entry-title">${item.role} &middot; <span style="font-weight: 500; color: var(--text-muted);">${item.company}</span></span>
           <span class="entry-period">${item.period}</span>
         </div>
       </div>
