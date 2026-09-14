@@ -1,196 +1,157 @@
 /**
- * Yan Wu's Personal Website Data
- * 
- * Edit this file to add new blog posts, food/place recommendations, or update your bio!
+ * Yan Wu - Personal Website Data
+ * Minimal, clean, and easily editable.
  */
 
 const SITE_DATA = {
   profile: {
-    name: 'Yan Wu',
-    preferredName: 'Sherry',
-    headline: 'Software Engineer at Google DeepMind · Antigravity',
-    currentRole: 'Software Engineer @ Google DeepMind (Antigravity)',
-    previousRole: 'Software Engineer @ Windsurf',
-    hometown: 'Tianjin, China',
-    currentLocation: 'South Bay, California',
+    name: "Yan Wu",
+    preferredName: "Sherry",
+    title: "Software Engineer at Google DeepMind",
+    team: "Antigravity",
+    previous: "Windsurf",
+    hometown: "Tianjin, China",
+    location: "South Bay, California",
     education: [
       {
-        degree: 'Master of Engineering (M.Eng) in Computer Science',
-        school: 'Massachusetts Institute of Technology (MIT)',
-        period: 'Graduated Jan 2025'
+        degree: "M.Eng in Computer Science",
+        school: "MIT",
+        year: "Jan 2025"
       },
       {
-        degree: 'Bachelor of Science (B.S.) in Computer Science and Mathematics',
-        school: 'Massachusetts Institute of Technology (MIT)',
-        period: 'Graduated May 2024'
+        degree: "B.S. in Computer Science & Mathematics",
+        school: "MIT",
+        year: "May 2024"
       }
     ],
     social: {
-      github: 'https://github.com/yanwu-728',
-      linkedin: 'https://www.linkedin.com/in/yan-wu-01'
+      github: "https://github.com/yanwu-728",
+      linkedin: "https://www.linkedin.com/in/yan-wu-01"
     },
     bio: [
-      "Hi! I'm Yan, a software engineer at Google DeepMind working on Antigravity. Previously, I was at Windsurf building agentic developer systems.",
-      "I graduated from MIT with a Bachelor's in Computer Science and Mathematics (May 2024) and completed my Master's in Computer Science (Jan 2025). Originally from Tianjin, China, I am currently living in the South Bay, California.",
-      "My interests span autonomous AI agents, developer intelligence, systems engineering, and the mathematical principles underpinning modern machine learning."
+      "I'm a software engineer at Google DeepMind working on Antigravity. Before this, I was at Windsurf working on agentic developer tools.",
+      "I graduated from MIT with a Bachelor's in CS and Math in May 2024, and completed my Master's in CS in January 2025.",
+      "Originally from Tianjin, China, I'm currently based in the South Bay, California. My technical interests focus on autonomous AI agents, code intelligence, systems, and mathematics."
     ]
   },
 
-  // Minimal, streamlined experience section for the main page
+  // Experience entries
   experience: [
     {
-      role: 'Software Engineer',
-      organization: 'Google DeepMind',
-      team: 'Antigravity',
-      period: '2025 – Present',
-      location: 'South Bay, CA',
-      badge: 'Current',
-      summary: 'Building Antigravity — advanced autonomous agentic coding, developer intelligence, and tooling harnesses.'
+      role: "Software Engineer",
+      company: "Google DeepMind",
+      team: "Antigravity",
+      period: "2025 — Present",
+      location: "South Bay, CA",
+      description: "Working on Antigravity, focusing on autonomous agentic coding and developer systems."
     },
     {
-      role: 'Software Engineer',
-      organization: 'Windsurf',
-      team: 'Agentic Tools',
-      period: 'Prior',
-      location: 'Mountain View, CA',
-      badge: 'Previous',
-      summary: 'Engineered agentic coding workflows, fast context awareness, and IDE-native intelligent assistant capabilities.'
+      role: "Software Engineer",
+      company: "Windsurf",
+      team: "Agentic Developer Tools",
+      period: "2024 — 2025",
+      location: "Mountain View, CA",
+      description: "Built agentic coding systems, real-time context engines, and IDE developer workflows."
     },
     {
-      role: 'M.Eng in Computer Science',
-      organization: 'Massachusetts Institute of Technology',
-      team: 'EECS Department',
-      period: 'Graduated Jan 2025',
-      location: 'Cambridge, MA',
-      badge: 'MIT',
-      summary: 'Graduate research and coursework in machine learning systems, algorithms, and computational theory.'
+      role: "M.Eng in Computer Science",
+      company: "Massachusetts Institute of Technology (MIT)",
+      team: "EECS Department",
+      period: "Graduated Jan 2025",
+      location: "Cambridge, MA",
+      description: "Graduate coursework and research in machine learning systems, algorithms, and computational theory."
     },
     {
-      role: 'B.S. in Computer Science & Mathematics',
-      organization: 'Massachusetts Institute of Technology',
-      team: 'Course 6-3 & Course 18',
-      period: 'Graduated May 2024',
-      location: 'Cambridge, MA',
-      badge: 'MIT',
-      summary: 'Double major in CS and Mathematics. Deep foundations in algorithms, linear algebra, probability, optimization, and systems.'
+      role: "B.S. in Computer Science & Mathematics",
+      company: "Massachusetts Institute of Technology (MIT)",
+      team: "Course 6-3 & Course 18",
+      period: "Graduated May 2024",
+      location: "Cambridge, MA",
+      description: "Double major in Computer Science and Mathematics. Grounded in discrete algorithms, algebra, analysis, probability, and systems."
     }
   ],
 
-  // Extensible Research & Blog Framework
-  // Add new posts by appending objects to this array!
+  // Blog / Writing entries (Demo placeholders for Yan to write)
   blogs: [
     {
-      id: 'agentic-coding-feedback-loops',
-      title: 'Feedback Loops & Environment Grounding in Autonomous Coding Agents',
-      date: 'Feb 2025',
-      readTime: '5 min read',
-      category: 'Agentic AI',
-      tags: ['Agents', 'Developer Tools', 'Evaluation'],
-      summary: 'Why execution feedback, verification harnesses, and tight terminal tool loops define the frontier of autonomous software engineering.',
+      id: "demo-post-feedback-loops",
+      isDemo: true,
+      title: "[Demo] Notes on Environment Feedback Loops in Coding Agents",
+      date: "Feb 2025",
+      readTime: "3 min",
+      topic: "Agentic AI",
+      summary: "Placeholder draft note on why execution grounding and verifier loops define autonomous coding performance.",
       content: `
-### Beyond Next-Token Prediction
+This is a starter demo post. You can replace this content with your own writing.
 
-Modern software engineering agents are fundamentally different from next-token autocomplete. An agent's capability isn't just bounded by the parameter scale of its base model—it is bounded by how tightly and reliably it can interact with an execution environment.
+### Core Idea
 
-When an agent writes code, it shouldn't guess whether the code compiles, runs, or satisfies tests. True agentic leverage emerges when the model operates inside a closed loop:
+Autocomplete predicts the next token. An agent executes a loop:
+1. **Plan**: Inspect repository structure and dependencies.
+2. **Execute**: Edit files, run test suites, check compiler output.
+3. **Correct**: Parse errors, refine hypotheses, and verify invariants.
 
-1. **Hypothesize & Plan**: Inspect the repository, understand existing architectural patterns and implicit constraints.
-2. **Execute & Tool Use**: Run tests, edit files, query linters, inspect logs.
-3. **Observe & Correct**: Parse terminal errors, adjust hypotheses, and verify invariants before declaring completion.
+### Next Steps
 
-### Verification as the Ultimate Reward Signal
-
-In coding benchmarks and real-world codebases, test suites and compiler feedback provide an objective ground truth that open-ended natural language tasks lack. Leveraging this feedback loop intelligently—without spinning in repetitive retry loops—is where the real magic happens.
-
-*(This is a framework post to demonstrate structure. You can easily modify, delete, or add your own articles here!)*
+Add your own technical posts, papers, and essays directly by editing \`js/data.js\`.
       `
     },
     {
-      id: 'math-and-neural-representations',
-      title: 'Notes on the Geometry of Latent Representations',
-      date: 'Jan 2025',
-      readTime: '4 min read',
-      category: 'Math & Theory',
-      tags: ['Mathematics', 'Linear Algebra', 'Transformers'],
-      summary: 'Reflections from MIT Course 18: how geometric intuition and linear algebra illuminate representation dynamics in modern models.',
+      id: "demo-post-math-reflections",
+      isDemo: true,
+      title: "[Demo] Reflections on Course 18: Geometry of Representations",
+      date: "Jan 2025",
+      readTime: "2 min",
+      topic: "Math & Theory",
+      summary: "Placeholder draft note on geometric intuition and linear algebra in high-dimensional representations.",
       content: `
-### Connecting Course 18 to Neural Representations
+This is a starter demo post.
 
-Studying pure mathematics at MIT taught me that geometric intuition often clarifies what seems opaque in raw numerical optimization. In modern deep learning, high-dimensional geometry offers striking lenses for understanding how models generalize:
+### Reflections
 
-- **Isometries in Latent Space**: How distance metrics and attention matrices preserve semantic topology across layers.
-- **Low-Rank Structures**: Why overparameterized models can be effectively compressed or distilled along intrinsic spectral dimensions.
-- **Optimization Landscapes**: How curvature and condition numbers impact gradient descent dynamics across non-convex loss surfaces.
+Mathematical intuition from MIT Course 18 often clarifies high-dimensional representation dynamics:
+- Distance metrics and spectral properties in latent space.
+- Low-rank structures and parameter efficiency.
+- Optimization geometries across loss surfaces.
 
-Mathematical grounding provides a strong anchor when debugging complex system dynamics in AI.
-
-*(This is a template post. You can write your own notes and math equations here!)*
-      `
-    },
-    {
-      id: 'reading-log-reasoning-and-search',
-      title: 'Reading Log: Test-Time Compute & Search in Reasoning',
-      date: 'Dec 2024',
-      readTime: '4 min read',
-      category: 'Reading Notes',
-      tags: ['Papers', 'Search', 'Inference Compute'],
-      summary: 'Quick takeaways from recent literature on search methods, verifier-guided rollouts, and test-time computation scaling.',
-      content: `
-### Recent Literature Highlights
-
-A collection of interesting threads across recent research:
-
-1. **Scaling Test-Time Compute**: How spending additional compute during inference (via tree search, verifiers, and multi-candidate generation) compares to pre-training scaling laws.
-2. **Self-Correction Boundaries**: Where intrinsic self-correction genuinely recovers from flaws versus where external feedback or verifiers are necessary.
-3. **Environment Determinism**: How reproducible environments with structured action spaces improve agent convergence.
-
-*(Framework template ready for your personal reading notes and paper reviews!)*
+Replace this placeholder with your own notes or mathematical explorations!
       `
     }
   ],
 
-  // Misc Section: Good Food, Fun Places & Life
-  // Add new favorite spots or travels here!
+  // Misc: Food, Places, Travel
   misc: [
     {
-      id: 'tianjin-home',
-      title: 'Tianjin: Hometown Flavors & The Haihe',
-      category: 'Places & Travel',
-      tag: 'Hometown',
-      location: 'Tianjin, China',
-      badge: 'Roots',
-      highlight: 'Jianbing Guozi (煎饼馃子) & Haihe River views',
-      description: 'Nothing beats genuine Tianjin Jianbing made fresh on the street corner with crisp baocui (薄脆), green mung bean batter, and sweet savory sauce. Fond memories of walking along the Haihe river with the illuminated Tianjin Eye.'
+      id: "tianjin-food",
+      title: "Tianjin: Hometown Flavors",
+      category: "Food",
+      location: "Tianjin, China",
+      highlight: "Jianbing Guozi (煎饼馃子)",
+      note: "Nothing compares to fresh street corner Jianbing Guozi made with crispy baocui (薄脆), green mung bean batter, and sweet savory bean sauce."
     },
     {
-      id: 'south-bay-eats',
-      title: 'South Bay: Specialty Coffee & Comfort Food',
-      category: 'Food & Drinks',
-      tag: 'Local Spots',
-      location: 'South Bay, California',
-      badge: 'Current Favorite',
-      highlight: 'Pour-overs, hand-pulled noodles & weekend ramen',
-      description: 'Since settling in the South Bay, exploring cozy coffee roasters and finding comforting noodle/hotpot spots after deep engineering sprints has been my favorite weekend ritual.'
+      id: "south-bay-routine",
+      title: "South Bay: Coffee & Ramen",
+      category: "Food",
+      location: "South Bay, CA",
+      highlight: "Specialty espresso & hand-pulled noodles",
+      note: "Exploring local coffee roasters and finding comforting noodle/ramen spots around Mountain View, Sunnyvale, and San Jose after work."
     },
     {
-      id: 'mit-charles-river',
-      title: 'Cambridge & Boston: MIT Memories',
-      category: 'Places & Travel',
-      tag: 'University',
-      location: 'Cambridge & Boston, MA',
-      badge: 'MIT Days',
-      highlight: 'Charles River runs, Tatte pastries, Boston skyline',
-      description: 'Memories of walks across Harvard Bridge overlooking the Boston skyline, late-night hackathons and math psets on campus, and pastries from Tatte in Kendall Square.'
+      id: "cambridge-mit",
+      title: "Cambridge: Charles River & MIT Days",
+      category: "Places",
+      location: "Cambridge, MA",
+      highlight: "Harvard Bridge, Tatte, Charles River",
+      note: "Walking across the bridge over the Charles River with the Boston skyline in view, late-night psets on campus, and coffee and pastries at Tatte."
     },
     {
-      id: 'pacific-coast-hikes',
-      title: 'California Coast & Redwoods',
-      category: 'Places & Travel',
-      tag: 'Outdoors',
-      location: 'Bay Area, CA',
-      badge: 'Adventures',
-      highlight: 'Highway 1 drives, coastal fog, and redwood trails',
-      description: 'Weekend escapes along Highway 1 from Pacifica down toward Half Moon Bay, coastal breeze, and hiking among California giant redwoods.'
+      id: "california-coast",
+      title: "California Coast & Redwoods",
+      category: "Places",
+      location: "Bay Area, CA",
+      highlight: "Highway 1, Pacifica, Half Moon Bay",
+      note: "Weekend drives down the coast along Highway 1, coastal fog, and quiet trails through California redwoods."
     }
   ]
 };
