@@ -70,10 +70,11 @@ a:hover {
 
 /* Layout: 2 Columns (Sidebar Left, Content Right) */
 .page-container {
+  position: relative;
   width: 100%;
   max-width: 1160px;
   margin: 0 auto;
-  padding: 3.5rem 2rem;
+  padding: 4.25rem 2rem 3.5rem;
   display: grid;
   grid-template-columns: 210px 1fr;
   gap: 3rem;
@@ -95,29 +96,25 @@ a:hover {
   gap: 0.35rem;
 }
 
-.sidebar-top-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 0.65rem;
-}
-
 .author-avatar {
   width: 80px;
   height: 80px;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid var(--border);
-  margin-bottom: 0;
+  margin-bottom: 0.5rem;
 }
 
+/* Top Right Language Switcher */
 .lang-switch-container {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 0.3rem;
-  margin-top: 0.2rem;
+  z-index: 50;
 }
 
 .lang-switch {
@@ -954,7 +951,12 @@ a:hover {
   .page-container {
     grid-template-columns: 1fr;
     gap: 2.5rem;
-    padding: 2rem 1.25rem;
+    padding: 3.75rem 1.25rem 2rem;
+  }
+
+  .lang-switch-container {
+    top: 1.25rem;
+    right: 1.25rem;
   }
 
   .sidebar {
