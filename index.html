@@ -18,27 +18,34 @@
     <!-- Left Sidebar Menu -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <img src="assets/images/headshot.png" alt="Yan Wu" class="author-avatar" />
+        <div class="sidebar-top-row">
+          <img src="assets/images/headshot.png" alt="Yan Wu" class="author-avatar" />
+          <div class="lang-switch" role="group" aria-label="Language Switcher">
+            <button id="langEnBtn" class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+            <span class="lang-divider">/</span>
+            <button id="langZhBtn" class="lang-btn" onclick="switchLanguage('zh')">中文</button>
+          </div>
+        </div>
         <h1 class="site-name">Yan Wu</h1>
-        <p class="site-role">Software Engineer, Google DeepMind (Antigravity)</p>
-        <p class="site-meta">ex-Windsurf · MIT CS &amp; Math</p>
-        <p class="site-meta">South Bay, CA</p>
+        <p class="site-role"><span data-i18n="role_sidebar">Software Engineer</span>, <span data-i18n="company_sidebar">Google DeepMind</span> (<span data-i18n="team_sidebar">Antigravity</span>)</p>
+        <p class="site-meta" data-i18n="past_sidebar">ex-Windsurf · MIT CS &amp; Math</p>
+        <p class="site-meta" data-i18n="location_sidebar">South Bay, CA</p>
       </div>
 
       <!-- Navigation Tabs -->
       <nav class="sidebar-nav" aria-label="Main Navigation">
         <button class="nav-item active" data-tab="about">
-          <span>About</span>
+          <span data-i18n="nav_about">About</span>
         </button>
         <button class="nav-item" data-tab="experience">
-          <span>Experience</span>
+          <span data-i18n="nav_experience">Experience</span>
         </button>
         <button class="nav-item" data-tab="writing">
-          <span>Writing</span>
+          <span data-i18n="nav_writing">Writing</span>
           <span class="nav-item-badge">demo</span>
         </button>
         <button class="nav-item" data-tab="misc">
-          <span>Misc</span>
+          <span data-i18n="nav_misc">Misc</span>
         </button>
       </nav>
 
@@ -78,26 +85,13 @@
       <section id="tab-about" class="tab-panel active">
         
         <!-- Bio -->
-        <div class="bio-section">
-          <p>
-            I'm a software engineer at <strong>Google DeepMind</strong> working on <strong>Antigravity</strong>. Previously, I was at <strong>Windsurf</strong> building agentic developer tools.
-          </p>
-          <p>
-            I graduated from <strong>MIT</strong> with a Bachelor's in Computer Science and Mathematics (May 2024), and completed my Master's in Computer Science (January 2025).
-          </p>
-          <p>
-            Originally from Tianjin, China, I'm currently based in South Bay, California. Broadly, I'm interested in <strong>AI</strong>—particularly <strong>AI agents</strong>, <strong>agentic workflows</strong>, and <strong>world models</strong>—with applications in <strong>software engineering</strong>, <strong>healthcare</strong>, and <strong>education</strong>.
-          </p>
-          <p>
-            Outside of work, you'll mostly find me hunting down good boba, checking out new local food spots, hanging out with my cat (<strong>Juzhang</strong> / 局长, pronounced <em>"joo-jahng"</em>, an orange 4-year-old boy), or picking up random sports and fitness classes (and quitting them just as fast).
-          </p>
-        </div>
+        <div class="bio-section" id="bioSection"></div>
 
         <!-- Interactive World Map & Journey Section -->
         <div class="journey-card">
           <div class="journey-header">
             <div class="journey-title-group">
-              <span class="preview-title">Roots &amp; Journey</span>
+              <span class="preview-title" data-i18n="journey_title">Roots &amp; Journey</span>
               <!-- Clickable Location Names on Top -->
               <div class="journey-crumbs" id="journeyCrumbs" role="tablist" aria-label="Journey timeline locations">
                 <button class="crumb-btn active" onclick="setJourneyStep(0)">Jiamusi (2001)</button>
@@ -114,8 +108,8 @@
               </div>
             </div>
             <div class="journey-controls">
-              <button id="journeyPlayBtn" class="journey-btn" title="Auto-play Journey">Play &blacktriangleright;</button>
-              <button id="journeyResetBtn" class="journey-btn" title="Reset">Reset &circlearrowleft;</button>
+              <button id="journeyPlayBtn" class="journey-btn" data-i18n="journey_play" title="Auto-play Journey">Play &blacktriangleright;</button>
+              <button id="journeyResetBtn" class="journey-btn" data-i18n="journey_reset" title="Reset">Reset &circlearrowleft;</button>
             </div>
           </div>
 
@@ -189,8 +183,8 @@
         <!-- Experience Section -->
         <div class="preview-block">
           <div class="preview-header">
-            <span class="preview-title">Experience</span>
-            <button class="preview-action" onclick="switchTab('experience')">View all &rarr;</button>
+            <span class="preview-title" data-i18n="experience_preview_title">Experience</span>
+            <button class="preview-action" onclick="switchTab('experience')" data-i18n="view_all">View all &rarr;</button>
           </div>
           <div id="previewExperience" class="experience-list"></div>
         </div>
@@ -198,8 +192,8 @@
         <!-- Writing Preview -->
         <div class="preview-block">
           <div class="preview-header">
-            <span class="preview-title">Writing &amp; Notes (Demo)</span>
-            <button class="preview-action" onclick="switchTab('writing')">View all &rarr;</button>
+            <span class="preview-title" data-i18n="writing_preview_title">Writing &amp; Notes</span>
+            <button class="preview-action" onclick="switchTab('writing')" data-i18n="view_all">View all &rarr;</button>
           </div>
           <div id="previewWriting" class="writing-list"></div>
         </div>
@@ -207,8 +201,8 @@
         <!-- Misc Preview -->
         <div class="preview-block">
           <div class="preview-header">
-            <span class="preview-title">Misc &amp; Life</span>
-            <button class="preview-action" onclick="switchTab('misc')">View all &rarr;</button>
+            <span class="preview-title" data-i18n="misc_preview_title">Misc &amp; Life</span>
+            <button class="preview-action" onclick="switchTab('misc')" data-i18n="view_all">View all &rarr;</button>
           </div>
           <div id="previewMisc" class="misc-list"></div>
         </div>
@@ -218,22 +212,22 @@
       <!-- Tab 2: Full Experience -->
       <section id="tab-experience" class="tab-panel">
         <div>
-          <h2 class="page-title">Experience &amp; Education</h2>
-          <p class="page-intro">Engineering roles and academic degrees.</p>
+          <h2 class="page-title" data-i18n="experience_page_title">Experience &amp; Education</h2>
+          <p class="page-intro" data-i18n="experience_page_intro">Engineering roles and academic degrees.</p>
         </div>
 
         <div id="fullExperience" class="experience-list"></div>
       </section>
 
-      <!-- Tab 3: Full Writing (Demo / Starter Framework) -->
+      <!-- Tab 3: Full Writing -->
       <section id="tab-writing" class="tab-panel">
         <div>
-          <h2 class="page-title">Writing &amp; Notes</h2>
-          <p class="page-intro">Personal notes, papers, and ideas.</p>
+          <h2 class="page-title" data-i18n="writing_page_title">Writing &amp; Notes</h2>
+          <p class="page-intro" data-i18n="writing_page_intro">Personal notes, papers, and ideas.</p>
         </div>
 
-        <div class="notice-box">
-          <strong>Demo placeholder:</strong> The notes below are starter templates focused on agents, workflows, and world models. You can edit <code>js/data.js</code> anytime to write your own blog posts.
+        <div class="notice-box" data-i18n="demo_notice">
+          <strong>Demo placeholder:</strong> The notes below are starter templates focused on agents, workflows, and world models. You can add new posts in <code>posts/</code> anytime.
         </div>
 
         <div id="fullWriting" class="writing-list"></div>
@@ -242,17 +236,17 @@
       <!-- Tab 4: Full Misc (Tagged Notes & Life) -->
       <section id="tab-misc" class="tab-panel">
         <div>
-          <h2 class="page-title">Misc</h2>
-          <p class="page-intro">Observations, food, travel, visa notes, and life with my cat.</p>
+          <h2 class="page-title" data-i18n="misc_page_title">Misc</h2>
+          <p class="page-intro" data-i18n="misc_page_intro">Observations, food, travel, visa notes, and life with my cat.</p>
         </div>
 
         <!-- Tag Filters -->
         <div class="tag-filters" id="miscTagFilters" role="tablist" aria-label="Filter by tag">
-          <button class="tag-filter-btn active" data-tag="all">all</button>
-          <button class="tag-filter-btn" data-tag="food">food</button>
-          <button class="tag-filter-btn" data-tag="travel">travel</button>
-          <button class="tag-filter-btn" data-tag="visa">visa</button>
-          <button class="tag-filter-btn" data-tag="cat">cat</button>
+          <button class="tag-filter-btn active" data-tag="all" data-i18n="tag_all">all</button>
+          <button class="tag-filter-btn" data-tag="food" data-i18n="tag_food">food</button>
+          <button class="tag-filter-btn" data-tag="travel" data-i18n="tag_travel">travel</button>
+          <button class="tag-filter-btn" data-tag="visa" data-i18n="tag_visa">visa</button>
+          <button class="tag-filter-btn" data-tag="cat" data-i18n="tag_cat">cat</button>
         </div>
 
         <div id="fullMisc" class="misc-list"></div>
@@ -271,7 +265,19 @@
 
   </div>
 
-  <script src="js/data.js"></script>
+  <!-- Modular Data Layer -->
+  <script src="js/data-store.js"></script>
+  <script src="data/i18n.js"></script>
+  <script src="data/profile.js"></script>
+  <script src="data/journey.js"></script>
+  <script src="data/experience.js"></script>
+  <script src="data/misc.js"></script>
+
+  <!-- Modular Blog Posts (Add your new posts here) -->
+  <script src="posts/01-ai-agents-and-workflows.js"></script>
+  <script src="posts/02-world-models.js"></script>
+
+  <!-- Core App Logic -->
   <script src="js/app.js"></script>
 </body>
 </html>
