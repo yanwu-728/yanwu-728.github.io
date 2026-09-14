@@ -30,52 +30,65 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
 
 ---
 
-## How to Add Your Own Blog Posts
+## How to Add Writing Posts or Misc Notes
 
-All blog posts live in [`js/data.js`](js/data.js) inside the `SITE_DATA.blogs` array.
+All articles and life notes are written in **standard Markdown** with separate English and Chinese files!
 
-To add a new post, simply add an entry:
-
-```javascript
-{
-  id: 'my-new-post-slug',
-  title: 'Your Article Title Here',
-  date: 'Mar 2025',
-  readTime: '4 min read',
-  category: 'Agentic AI', // e.g. 'Agentic AI', 'Math & Theory', or 'Reading Notes'
-  tags: ['Agents', 'Compilers'],
-  summary: 'A short 1-2 sentence preview for the card...',
-  content: `
-### Heading 1
-
-Your thoughts, equations, or notes here in markdown format!
-
-- Point 1
-- Point 2
-  `
-}
-```
-
-The site will automatically render your new post, calculate tags, update the filter pills, and open the full reader when clicked.
-
+### 1. Adding a Writing Blog Post
+Create a folder in `posts/<slug>/` and add `en.md`:
+```markdown
+---
+id: your-post-slug
+title: "Your Article Title"
+date: Mar 2025
+topic: "AI Agents"
+tags:
+  - agents
+  - workflows
+readTime: 3 min read
+summary: "A short 1-2 sentence preview for the card."
 ---
 
-## How to Add Food Spots or Places (Misc Section)
+### Heading
 
-Add an entry to `SITE_DATA.misc` in [`js/data.js`](js/data.js):
-
-```javascript
-{
-  id: 'unique-id',
-  title: 'Place Name or Cuisine',
-  category: 'Food & Drinks', // or 'Places & Travel'
-  tag: 'Local Favorite',
-  location: 'City, State / Country',
-  badge: 'Recommended',
-  highlight: 'Signature dish or landmark',
-  description: 'Why you loved it, tips, or what to order.'
-}
+Write your article content here in standard markdown!
 ```
+
+Then generate the Chinese translation and build the site:
+```bash
+# Generate Chinese zh.md and compile data/posts.js
+python3 scripts/build_content.py --translate your-post-slug
+```
+*(Or scaffold directly using `python3 scripts/build_content.py --new-post your-post-slug`)*
+
+### 2. Adding a Misc / Life Note
+Create a folder in `misc/<slug>/` (or `data/misc/<slug>/`) and add `en.md`:
+```markdown
+---
+id: your-note-slug
+title: "Title of Note or Place"
+date: "2025"
+tags:
+  - food
+image: assets/images/your-photo.jpg # optional
+summary: "Brief one-line summary."
+---
+
+Write your thoughts, food reviews, or observations here!
+```
+
+Then generate the Chinese version and compile:
+```bash
+python3 scripts/build_content.py --translate your-note-slug
+```
+*(Or scaffold directly using `python3 scripts/build_content.py --new-misc your-note-slug`)*
+
+### 3. Rebuild Command
+Whenever you edit markdowns, run:
+```bash
+python3 scripts/build_content.py
+```
+This automatically bundles both `posts/` and `misc/` into browser-ready data files with zero CORS issues on `file://` and on GitHub Pages. You **never have to touch `index.html`**!
 
 ---
 
