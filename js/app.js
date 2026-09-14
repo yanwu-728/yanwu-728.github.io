@@ -340,20 +340,44 @@ function initJourneyMap() {
 }
 
 /* ==========================================================================
-   Draggable & Zoomable Map Implementation
+   Continuous Horizontally Looping & Draggable Map Implementation
    ========================================================================== */
 var resetMapViewBox = function() {};
+
+function setupMapTiles() {
+  const masterTile = document.getElementById('worldMapBaseTile');
+  const tilesContainer = document.getElementById('worldMapTiles');
+  if (!masterTile || !tilesContainer) return;
+  if (tilesContainer.dataset && tilesContainer.dataset.tilesReady === 'true') return;
+  if (tilesContainer.dataset) tilesContainer.dataset.tilesReady = 'true';
+
+  // Tile -1 (offset -760) and Tile +1 (offset +760) for infinite seamless looping
+  [-760, 760].forEach(offsetX => {
+    const clone = masterTile.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.setAttribute('transform', `translate(${offsetX}, 0)`);
+    if (clone.querySelectorAll) {
+      clone.querySelectorAll('[id]').forEach(el => {
+        const id = el.getAttribute('id');
+        el.classList.add(id);
+        el.removeAttribute('id');
+      });
+    }
+    tilesContainer.appendChild(clone);
+  });
+}
 
 function setupMapDragging() {
   const svg = document.getElementById('worldMapSvg');
   const viewport = document.querySelector('.map-viewport');
-  const zoomInBtn = document.getElementById('mapZoomInBtn');
-  const zoomOutBtn = document.getElementById('mapZoomOutBtn');
 
   if (!svg || !viewport) return;
 
+  setupMapTiles();
+
   const baseW = 760;
   const baseH = 360;
+  const maxVerticalOffset = 35; // Constrain vertical drag to a subtle range (±35px)
   let view = { x: 0, y: 0, w: baseW, h: baseH };
 
   let isPointerDown = false;
@@ -365,21 +389,7 @@ function setupMapDragging() {
   let startViewY = 0;
 
   function updateViewBox() {
-    const minW = 160;
-    const maxW = baseW * 1.1;
-
-    view.w = Math.max(minW, Math.min(maxW, view.w));
-    view.h = view.w * (baseH / baseW);
-
-    const minX = -view.w * 0.4;
-    const maxX = baseW - view.w * 0.6;
-    const minY = -view.h * 0.3;
-    const maxY = baseH - view.h * 0.7;
-
-    view.x = Math.max(minX, Math.min(maxX, view.x));
-    view.y = Math.max(minY, Math.min(maxY, view.y));
-
-    svg.setAttribute('viewBox', `${view.x.toFixed(1)} ${view.y.toFixed(1)} ${view.w.toFixed(1)} ${view.h.toFixed(1)}`);
+    svg.setAttribute('viewBox', `${view.x.toFixed(1)} ${view.y.toFixed(1)} ${baseW} ${baseH}`);
   }
 
   resetMapViewBox = function() {
@@ -388,8 +398,6 @@ function setupMapDragging() {
   };
 
   viewport.addEventListener('pointerdown', (e) => {
-    if (e.target.closest && e.target.closest('.map-zoom-controls')) return;
-
     isPointerDown = true;
     hasMoved = false;
     startClientX = e.clientX;
@@ -418,11 +426,32 @@ function setupMapDragging() {
 
     if (hasMoved) {
       const rect = svg.getBoundingClientRect ? svg.getBoundingClientRect() : { width: 760, height: 360, left: 0, top: 0 };
-      const scaleX = view.w / (rect.width || 760);
-      const scaleY = view.h / (rect.height || 360);
+      const scaleX = baseW / (rect.width || baseW);
+      const scaleY = baseH / (rect.height || baseH);
 
+      // Horizontal dragging with continuous wrapping loop
       view.x = startViewX - dx * scaleX;
-      view.y = startViewY - dy * scaleY;
+      while (view.x >= baseW) {
+        view.x -= baseW;
+        startViewX -= baseW;
+      }
+      while (view.x < 0) {
+        view.x += baseW;
+        startViewX += baseW;
+      }
+
+      // Vertical dragging clamped to "only a little bit vertically" (±35px)
+      const targetY = startViewY - dy * scaleY;
+      if (targetY > maxVerticalOffset) {
+        view.y = maxVerticalOffset;
+        startViewY = maxVerticalOffset + dy * scaleY;
+      } else if (targetY < -maxVerticalOffset) {
+        view.y = -maxVerticalOffset;
+        startViewY = -maxVerticalOffset + dy * scaleY;
+      } else {
+        view.y = targetY;
+      }
+
       updateViewBox();
     }
   });
@@ -448,6 +477,7 @@ function setupMapDragging() {
   viewport.addEventListener('pointerup', onPointerEnd);
   viewport.addEventListener('pointercancel', onPointerEnd);
 
+  // Suppress city dot clicks if the user was dragging
   viewport.addEventListener('click', (e) => {
     if (wasDragging) {
       e.stopPropagation();
@@ -455,45 +485,6 @@ function setupMapDragging() {
       wasDragging = false;
     }
   }, true);
-
-  function zoomAt(factor, clientX, clientY) {
-    const rect = svg.getBoundingClientRect ? svg.getBoundingClientRect() : { width: 760, height: 360, left: 0, top: 0 };
-    const cx = clientX !== undefined ? (clientX - rect.left) / (rect.width || 760) : 0.5;
-    const cy = clientY !== undefined ? (clientY - rect.top) / (rect.height || 360) : 0.5;
-
-    const currentPointX = view.x + cx * view.w;
-    const currentPointY = view.y + cy * view.h;
-
-    const newW = view.w / factor;
-    const newH = newW * (baseH / baseW);
-
-    view.x = currentPointX - cx * newW;
-    view.y = currentPointY - cy * newH;
-    view.w = newW;
-    view.h = newH;
-
-    updateViewBox();
-  }
-
-  if (zoomInBtn) {
-    zoomInBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      zoomAt(1.35);
-    });
-  }
-
-  if (zoomOutBtn) {
-    zoomOutBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      zoomAt(0.75);
-    });
-  }
-
-  viewport.addEventListener('dblclick', (e) => {
-    if (e.target.closest && e.target.closest('.map-zoom-controls')) return;
-    if (e.preventDefault) e.preventDefault();
-    zoomAt(1.4, e.clientX, e.clientY);
-  });
 }
 
 function updateJourneyLanguage() {
@@ -510,12 +501,14 @@ function updateJourneyLanguage() {
     }
   });
 
-  // 2. Update map city labels
+  // 2. Update map city labels across all tiles
   Object.keys(cities).forEach(key => {
-    const label = document.getElementById(`label-${key}`);
-    if (label && cities[key]) {
-      label.textContent = cities[key][lang] || cities[key].en;
-    }
+    const labels = document.querySelectorAll(`[id="label-${key}"], .label-${key}`);
+    labels.forEach(label => {
+      if (cities[key]) {
+        label.textContent = cities[key][lang] || cities[key].en;
+      }
+    });
   });
 
   // 3. Update active story step text
@@ -561,44 +554,44 @@ function setJourneyStep(stepIndex, stopAuto = true) {
     `;
   }
 
-  // 3. Update SVG Arcs (Trajectories)
+  // 3. Update SVG Arcs (Trajectories) across all tiles
   steps.forEach((s, idx) => {
     if (idx === 0) return; // Step 0 has no arc
-    const arcEl = document.getElementById(`journeyArc-${idx}`);
-    if (!arcEl) return;
-
-    if (idx < stepIndex) {
-      arcEl.setAttribute('class', 'journey-arc-path completed');
-    } else if (idx === stepIndex) {
-      arcEl.setAttribute('class', 'journey-arc-path active');
-    } else {
-      arcEl.setAttribute('class', 'journey-arc-path');
-    }
+    const arcEls = document.querySelectorAll(`[id="journeyArc-${idx}"], .journeyArc-${idx}`);
+    arcEls.forEach(arcEl => {
+      if (idx < stepIndex) {
+        arcEl.setAttribute('class', `journey-arc-path journeyArc-${idx} completed`);
+      } else if (idx === stepIndex) {
+        arcEl.setAttribute('class', `journey-arc-path journeyArc-${idx} active`);
+      } else {
+        arcEl.setAttribute('class', `journey-arc-path journeyArc-${idx}`);
+      }
+    });
   });
 
-  // 4. Update City Markers & Pulse Rings
+  // 4. Update City Markers & Pulse Rings across all tiles
   const visitedCities = new Set(steps.slice(0, stepIndex + 1).map(s => s.cityKey));
   const activeCity = step.cityKey;
 
   Object.keys(cities).forEach(key => {
-    const dot = document.getElementById(`dot-${key}`);
-    const pulse = document.getElementById(`pulse-${key}`);
-    const label = document.getElementById(`label-${key}`);
+    const dots = document.querySelectorAll(`[id="dot-${key}"], .dot-${key}`);
+    const pulses = document.querySelectorAll(`[id="pulse-${key}"], .pulse-${key}`);
+    const labels = document.querySelectorAll(`[id="label-${key}"], .label-${key}`);
 
-    if (dot) {
-      dot.setAttribute('class', 'city-point');
+    dots.forEach(dot => {
+      dot.setAttribute('class', `city-point dot-${key}`);
       if (visitedCities.has(key)) dot.classList.add('visited');
       if (key === activeCity) dot.classList.add('active');
-    }
+    });
 
-    if (pulse) {
-      pulse.setAttribute('class', key === activeCity ? 'city-pulse-ring active' : 'city-pulse-ring');
-    }
+    pulses.forEach(pulse => {
+      pulse.setAttribute('class', key === activeCity ? `city-pulse-ring pulse-${key} active` : `city-pulse-ring pulse-${key}`);
+    });
 
-    if (label) {
-      label.setAttribute('class', key === activeCity ? 'city-name-text active' : 'city-name-text');
+    labels.forEach(label => {
+      label.setAttribute('class', key === activeCity ? `city-name-text label-${key} active` : `city-name-text label-${key}`);
       label.textContent = cities[key][lang] || cities[key].en;
-    }
+    });
   });
 }
 

@@ -121,68 +121,71 @@
           <!-- SVG Map Viewport -->
           <div class="map-viewport">
             <svg id="worldMapSvg" viewBox="0 0 760 360" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Interactive world map showing Yan's journey">
-              <rect width="760" height="360" fill="var(--bg-subtle)" />
-              
-              <line x1="0" y1="180" x2="760" y2="180" stroke="var(--border)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.5" />
-              <line x1="380" y1="0" x2="380" y2="360" stroke="var(--border)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.5" />
+              <!-- Seamless infinite background canvas and equator -->
+              <rect x="-3000" y="-300" width="8000" height="960" fill="var(--bg-subtle)" />
+              <line x1="-3000" y1="180" x2="5000" y2="180" stroke="var(--border)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.5" />
 
-              <!-- Continents (Pacific-centered) -->
-              <g class="world-continents">
-                <path class="world-land" d="M 21.1,19.4 L 52.8,16.6 L 84.4,19.4 L 109.8,5.5 L 126.7,5.5 L 168.9,-2.8 L 200.6,-5.5 L 242.8,8.3 L 274.4,11.1 L 316.7,16.6 L 337.8,24.9 L 358.9,27.7 L 369.4,41.5 L 299.8,52.6 L 289.2,63.7 L 259.7,47.1 L 253.3,60.9 L 247.0,83.1 L 236.4,88.6 L 228.0,99.7 L 221.7,102.5 L 230.1,110.8 L 223.8,113.5 L 221.7,105.2 L 206.9,99.7 L 209.0,105.2 L 211.1,110.8 L 215.3,119.1 L 209.0,138.5 L 198.4,146.8 L 185.8,149.5 L 183.7,180.0 L 175.2,185.5 L 177.3,204.9 L 168.9,193.8 L 168.9,171.7 L 160.4,163.4 L 149.9,146.8 L 141.4,149.5 L 130.9,163.4 L 126.7,180.0 L 120.3,185.5 L 114.0,166.2 L 101.3,144.0 L 88.7,138.5 L 78.1,138.5 L 73.9,160.6 L 59.1,171.7 L 50.7,171.7 L 38.0,144.0 L 29.6,124.6 L 33.8,108.0 L 19.0,94.2 L 21.1,80.3 L 29.6,85.8 L 40.1,77.5 L 59.1,91.4 L 67.6,77.5 L 59.1,58.2 L 38.0,52.6 L 21.1,41.5 L 21.1,19.4 Z" data-name="Eurasia" />
-                <path class="world-land" d="M 257.6,83.1 L 263.9,88.6 L 255.4,94.2 L 255.4,108.0 L 244.9,113.5 L 234.3,116.3 L 232.2,113.5 L 244.9,108.0 L 253.3,96.9 L 257.6,83.1 Z" data-name="Japan" />
-                <path class="world-land" d="M 388.4,11.1 L 432.8,11.1 L 464.4,16.6 L 506.7,19.4 L 538.3,30.5 L 559.4,36.0 L 582.7,41.5 L 599.6,69.2 L 605.9,77.5 L 582.7,85.8 L 570.0,88.6 L 561.6,94.2 L 559.4,110.8 L 546.8,124.6 L 548.9,138.5 L 538.3,127.4 L 519.3,127.4 L 513.0,135.7 L 513.0,152.3 L 523.6,157.8 L 532.0,166.2 L 551.0,182.8 L 555.2,185.5 L 538.3,180.0 L 521.4,163.4 L 496.1,152.3 L 485.6,141.2 L 470.8,119.1 L 460.2,105.2 L 456.0,85.8 L 453.9,74.8 L 443.3,58.2 L 428.6,47.1 L 405.3,41.5 L 392.7,47.1 L 369.4,55.4 L 367.3,41.5 L 363.1,27.7 L 388.4,11.1 Z" data-name="NorthAmerica" />
-                <path class="world-land" d="M 563.7,174.5 L 584.8,177.2 L 591.1,185.5 L 612.2,207.7 L 633.3,216.0 L 643.9,224.3 L 637.6,243.7 L 631.2,268.6 L 610.1,299.1 L 586.9,318.5 L 574.2,354.5 L 576.3,360.0 L 559.4,346.2 L 561.6,324.0 L 565.8,299.1 L 567.9,257.5 L 546.8,221.5 L 555.2,193.8 L 563.7,174.5 Z" data-name="SouthAmerica" />
-                <path class="world-land" d="M 234.3,240.9 L 244.9,240.9 L 244.9,252.0 L 257.6,238.2 L 272.3,263.1 L 280.8,285.2 L 274.4,310.2 L 263.9,312.9 L 253.3,312.9 L 236.4,296.3 L 206.9,304.6 L 200.6,296.3 L 198.4,268.6 L 219.6,249.2 L 234.3,240.9 Z" data-name="Australia" />
-                <path class="world-land" d="M 25.3,119.1 L 29.6,130.2 L 35.9,146.8 L 50.7,174.5 L 65.4,177.2 L 52.8,202.2 L 40.1,221.5 L 42.2,238.2 L 40.1,252.0 L 27.4,276.9 L 12.7,301.8 L 0.0,301.8 L 0.0,263.1 L 0.0,235.4 L 0.0,207.7 L 0.0,180.0 L 0.0,152.3 L 0.0,124.6 L 25.3,119.1 Z" data-name="AfricaEast" />
-              </g>
+              <!-- Container for World Map Continuous Horizontal Tiles -->
+              <g id="worldMapTiles">
+                <!-- Master Base Tile (Tile 0) -->
+                <g id="worldMapBaseTile" class="world-map-tile">
+                  <line x1="380" y1="0" x2="380" y2="360" stroke="var(--border)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.5" />
 
-              <!-- Travel Arcs (Pre-rendered) -->
-              <g id="journeyArcsLayer">
-                <path id="journeyArc-1" class="journey-arc-path" d="M 232.9,78.1 Q 215,74 205.2,99.3" />
-                <path id="journeyArc-2" class="journey-arc-path" d="M 205.2,99.3 Q 382.7,10 560.2,94.1" />
-                <path id="journeyArc-3" class="journey-arc-path" d="M 560.2,94.1 Q 382.7,24 205.2,99.3" />
-                <path id="journeyArc-4" class="journey-arc-path" d="M 205.2,99.3 Q 386.5,6 567.8,90.4" />
-                <path id="journeyArc-5" class="journey-arc-path" d="M 567.8,90.4 Q 514.0,62 460.3,104.3" />
-              </g>
+                  <!-- Continents (Pacific-centered) -->
+                  <g class="world-continents">
+                    <path class="world-land" d="M 21.1,19.4 L 52.8,16.6 L 84.4,19.4 L 109.8,5.5 L 126.7,5.5 L 168.9,-2.8 L 200.6,-5.5 L 242.8,8.3 L 274.4,11.1 L 316.7,16.6 L 337.8,24.9 L 358.9,27.7 L 369.4,41.5 L 299.8,52.6 L 289.2,63.7 L 259.7,47.1 L 253.3,60.9 L 247.0,83.1 L 236.4,88.6 L 228.0,99.7 L 221.7,102.5 L 230.1,110.8 L 223.8,113.5 L 221.7,105.2 L 206.9,99.7 L 209.0,105.2 L 211.1,110.8 L 215.3,119.1 L 209.0,138.5 L 198.4,146.8 L 185.8,149.5 L 183.7,180.0 L 175.2,185.5 L 177.3,204.9 L 168.9,193.8 L 168.9,171.7 L 160.4,163.4 L 149.9,146.8 L 141.4,149.5 L 130.9,163.4 L 126.7,180.0 L 120.3,185.5 L 114.0,166.2 L 101.3,144.0 L 88.7,138.5 L 78.1,138.5 L 73.9,160.6 L 59.1,171.7 L 50.7,171.7 L 38.0,144.0 L 29.6,124.6 L 33.8,108.0 L 19.0,94.2 L 21.1,80.3 L 29.6,85.8 L 40.1,77.5 L 59.1,91.4 L 67.6,77.5 L 59.1,58.2 L 38.0,52.6 L 21.1,41.5 L 21.1,19.4 Z" data-name="Eurasia" />
+                    <path class="world-land" d="M 257.6,83.1 L 263.9,88.6 L 255.4,94.2 L 255.4,108.0 L 244.9,113.5 L 234.3,116.3 L 232.2,113.5 L 244.9,108.0 L 253.3,96.9 L 257.6,83.1 Z" data-name="Japan" />
+                    <path class="world-land" d="M 388.4,11.1 L 432.8,11.1 L 464.4,16.6 L 506.7,19.4 L 538.3,30.5 L 559.4,36.0 L 582.7,41.5 L 599.6,69.2 L 605.9,77.5 L 582.7,85.8 L 570.0,88.6 L 561.6,94.2 L 559.4,110.8 L 546.8,124.6 L 548.9,138.5 L 538.3,127.4 L 519.3,127.4 L 513.0,135.7 L 513.0,152.3 L 523.6,157.8 L 532.0,166.2 L 551.0,182.8 L 555.2,185.5 L 538.3,180.0 L 521.4,163.4 L 496.1,152.3 L 485.6,141.2 L 470.8,119.1 L 460.2,105.2 L 456.0,85.8 L 453.9,74.8 L 443.3,58.2 L 428.6,47.1 L 405.3,41.5 L 392.7,47.1 L 369.4,55.4 L 367.3,41.5 L 363.1,27.7 L 388.4,11.1 Z" data-name="NorthAmerica" />
+                    <path class="world-land" d="M 563.7,174.5 L 584.8,177.2 L 591.1,185.5 L 612.2,207.7 L 633.3,216.0 L 643.9,224.3 L 637.6,243.7 L 631.2,268.6 L 610.1,299.1 L 586.9,318.5 L 574.2,354.5 L 576.3,360.0 L 559.4,346.2 L 561.6,324.0 L 565.8,299.1 L 567.9,257.5 L 546.8,221.5 L 555.2,193.8 L 563.7,174.5 Z" data-name="SouthAmerica" />
+                    <path class="world-land" d="M 234.3,240.9 L 244.9,240.9 L 244.9,252.0 L 257.6,238.2 L 272.3,263.1 L 280.8,285.2 L 274.4,310.2 L 263.9,312.9 L 253.3,312.9 L 236.4,296.3 L 206.9,304.6 L 200.6,296.3 L 198.4,268.6 L 219.6,249.2 L 234.3,240.9 Z" data-name="Australia" />
+                    <path class="world-land" d="M 25.3,119.1 L 29.6,130.2 L 35.9,146.8 L 50.7,174.5 L 65.4,177.2 L 52.8,202.2 L 40.1,221.5 L 42.2,238.2 L 40.1,252.0 L 27.4,276.9 L 12.7,301.8 L 0.0,301.8 L 0.0,263.1 L 0.0,235.4 L 0.0,207.7 L 0.0,180.0 L 0.0,152.3 L 0.0,124.6 L 25.3,119.1 Z" data-name="AfricaEast" />
+                  </g>
 
-              <!-- Cities (Pre-rendered) -->
-              <g id="cityMarkersLayer">
-                <!-- Jiamusi -->
-                <g class="city-marker-group" onclick="setJourneyStep(0)">
-                  <circle id="pulse-jiamusi" class="city-pulse-ring" cx="232.9" cy="78.1" r="6" />
-                  <circle id="dot-jiamusi" class="city-point" cx="232.9" cy="78.1" r="3.5" />
-                  <text id="label-jiamusi" class="city-name-text" x="240.9" y="76.1" text-anchor="start">Jiamusi</text>
-                </g>
-                <!-- Tianjin -->
-                <g class="city-marker-group" onclick="setJourneyStep(1)">
-                  <circle id="pulse-tianjin" class="city-pulse-ring" cx="205.2" cy="99.3" r="6" />
-                  <circle id="dot-tianjin" class="city-point" cx="205.2" cy="99.3" r="3.5" />
-                  <text id="label-tianjin" class="city-name-text" x="197.2" y="102.3" text-anchor="end">Tianjin</text>
-                </g>
-                <!-- South Bay -->
-                <g class="city-marker-group" onclick="setJourneyStep(5)">
-                  <circle id="pulse-southbay" class="city-pulse-ring" cx="460.3" cy="104.3" r="6" />
-                  <circle id="dot-southbay" class="city-point" cx="460.3" cy="104.3" r="3.5" />
-                  <text id="label-southbay" class="city-name-text" x="452.3" y="107.3" text-anchor="end">South Bay</text>
-                </g>
-                <!-- New Jersey -->
-                <g class="city-marker-group" onclick="setJourneyStep(2)">
-                  <circle id="pulse-sparta" class="city-pulse-ring" cx="560.2" cy="94.1" r="6" />
-                  <circle id="dot-sparta" class="city-point" cx="560.2" cy="94.1" r="3.5" />
-                  <text id="label-sparta" class="city-name-text" x="552.2" y="107.1" text-anchor="end">New Jersey</text>
-                </g>
-                <!-- Boston -->
-                <g class="city-marker-group" onclick="setJourneyStep(4)">
-                  <circle id="pulse-boston" class="city-pulse-ring" cx="567.8" cy="90.4" r="6" />
-                  <circle id="dot-boston" class="city-point" cx="567.8" cy="90.4" r="3.5" />
-                  <text id="label-boston" class="city-name-text" x="575.8" y="87.4" text-anchor="start">Boston</text>
+                  <!-- Travel Arcs (Pre-rendered) -->
+                  <g class="journey-arcs-layer">
+                    <path id="journeyArc-1" class="journey-arc-path journeyArc-1" d="M 232.9,78.1 Q 215,74 205.2,99.3" />
+                    <path id="journeyArc-2" class="journey-arc-path journeyArc-2" d="M 205.2,99.3 Q 382.7,10 560.2,94.1" />
+                    <path id="journeyArc-3" class="journey-arc-path journeyArc-3" d="M 560.2,94.1 Q 382.7,24 205.2,99.3" />
+                    <path id="journeyArc-4" class="journey-arc-path journeyArc-4" d="M 205.2,99.3 Q 386.5,6 567.8,90.4" />
+                    <path id="journeyArc-5" class="journey-arc-path journeyArc-5" d="M 567.8,90.4 Q 514.0,62 460.3,104.3" />
+                  </g>
+
+                  <!-- Cities (Pre-rendered) -->
+                  <g class="city-markers-layer">
+                    <!-- Jiamusi -->
+                    <g class="city-marker-group" onclick="setJourneyStep(0)">
+                      <circle id="pulse-jiamusi" class="city-pulse-ring pulse-jiamusi" cx="232.9" cy="78.1" r="6" />
+                      <circle id="dot-jiamusi" class="city-point dot-jiamusi" cx="232.9" cy="78.1" r="3.5" />
+                      <text id="label-jiamusi" class="city-name-text label-jiamusi" x="240.9" y="76.1" text-anchor="start">Jiamusi</text>
+                    </g>
+                    <!-- Tianjin -->
+                    <g class="city-marker-group" onclick="setJourneyStep(1)">
+                      <circle id="pulse-tianjin" class="city-pulse-ring pulse-tianjin" cx="205.2" cy="99.3" r="6" />
+                      <circle id="dot-tianjin" class="city-point dot-tianjin" cx="205.2" cy="99.3" r="3.5" />
+                      <text id="label-tianjin" class="city-name-text label-tianjin" x="197.2" y="102.3" text-anchor="end">Tianjin</text>
+                    </g>
+                    <!-- South Bay -->
+                    <g class="city-marker-group" onclick="setJourneyStep(5)">
+                      <circle id="pulse-southbay" class="city-pulse-ring pulse-southbay" cx="460.3" cy="104.3" r="6" />
+                      <circle id="dot-southbay" class="city-point dot-southbay" cx="460.3" cy="104.3" r="3.5" />
+                      <text id="label-southbay" class="city-name-text label-southbay" x="452.3" y="107.3" text-anchor="end">South Bay</text>
+                    </g>
+                    <!-- New Jersey -->
+                    <g class="city-marker-group" onclick="setJourneyStep(2)">
+                      <circle id="pulse-sparta" class="city-pulse-ring pulse-sparta" cx="560.2" cy="94.1" r="6" />
+                      <circle id="dot-sparta" class="city-point dot-sparta" cx="560.2" cy="94.1" r="3.5" />
+                      <text id="label-sparta" class="city-name-text label-sparta" x="552.2" y="107.1" text-anchor="end">New Jersey</text>
+                    </g>
+                    <!-- Boston -->
+                    <g class="city-marker-group" onclick="setJourneyStep(4)">
+                      <circle id="pulse-boston" class="city-pulse-ring pulse-boston" cx="567.8" cy="90.4" r="6" />
+                      <circle id="dot-boston" class="city-point dot-boston" cx="567.8" cy="90.4" r="3.5" />
+                      <text id="label-boston" class="city-name-text label-boston" x="575.8" y="87.4" text-anchor="start">Boston</text>
+                    </g>
+                  </g>
                 </g>
               </g>
             </svg>
-            <div class="map-zoom-controls">
-              <button id="mapZoomInBtn" class="map-zoom-btn" title="Zoom in" aria-label="Zoom in">+</button>
-              <button id="mapZoomOutBtn" class="map-zoom-btn" title="Zoom out" aria-label="Zoom out">&minus;</button>
-            </div>
           </div>
 
           <!-- Step Detail / Story Box -->

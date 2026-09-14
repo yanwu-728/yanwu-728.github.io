@@ -409,43 +409,6 @@ a:hover {
   touch-action: none;
 }
 
-/* Map Zoom Controls */
-.map-zoom-controls {
-  position: absolute;
-  bottom: 0.65rem;
-  right: 0.65rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  z-index: 10;
-}
-
-.map-zoom-btn {
-  width: 26px;
-  height: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-  transition: all 0.15s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-}
-
-.map-zoom-btn:hover {
-  color: var(--text);
-  border-color: var(--text);
-  background: var(--bg-hover);
-}
-
 .world-land {
   fill: var(--bg-subtle);
   stroke: var(--border);
