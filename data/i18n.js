@@ -45,7 +45,9 @@ var I18N = {
     tag_world_models: "world-models",
     tag_simulation: "simulation",
     ai_trans_notice: "* Translated with AI",
-    ai_trans_badge: "AI Translated"
+    ai_trans_badge: "AI Translated",
+    empty_writing: "No articles published yet. Check back soon!",
+    empty_misc: "No notes published yet."
   },
   zh: {
     role_sidebar: "软件工程师",
@@ -88,7 +90,9 @@ var I18N = {
     tag_world_models: "世界模型",
     tag_simulation: "仿真",
     ai_trans_notice: "* 中文内容由 AI 翻译",
-    ai_trans_badge: "AI 翻译"
+    ai_trans_badge: "AI 翻译",
+    empty_writing: "暂未发布文章，敬请期待！",
+    empty_misc: "暂未发布随笔。"
   }
 };
 

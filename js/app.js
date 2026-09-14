@@ -659,50 +659,58 @@ function renderPreviews() {
   // 2. Writing Preview (Shows read time, summary & tags; opens dedicated post)
   const writingContainer = document.getElementById('previewWriting');
   if (writingContainer) {
-    writingContainer.innerHTML = SITE_DATA.blogs.map(blog => {
-      const postData = blog[lang] || blog.en;
-      const readTimeStr = (blog.readTime && blog.readTime[lang]) || (blog.readTime && blog.readTime.en) || '';
-      const tagsHtml = (blog.tags || []).map(tKey => {
-        const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
-        return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
-      }).join(' ');
+    if (!SITE_DATA.blogs || SITE_DATA.blogs.length === 0) {
+      writingContainer.innerHTML = `<p class="empty-state-msg">${t('empty_writing')}</p>`;
+    } else {
+      writingContainer.innerHTML = SITE_DATA.blogs.map(blog => {
+        const postData = blog[lang] || blog.en;
+        const readTimeStr = (blog.readTime && blog.readTime[lang]) || (blog.readTime && blog.readTime.en) || '';
+        const tagsHtml = (blog.tags || []).map(tKey => {
+          const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
+          return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
+        }).join(' ');
 
-      return `
-        <div class="writing-entry" onclick="openBlogPost('${blog.id}', 'about')">
-          <div class="writing-entry-header">
-            <span class="writing-title">${postData.title}</span>
-            <span class="writing-meta">${blog.date} &middot; ${readTimeStr}</span>
+        return `
+          <div class="writing-entry" onclick="openBlogPost('${blog.id}', 'about')">
+            <div class="writing-entry-header">
+              <span class="writing-title">${postData.title}</span>
+              <span class="writing-meta">${blog.date} &middot; ${readTimeStr}</span>
+            </div>
+            <p class="writing-summary">${postData.summary}</p>
+            ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
           </div>
-          <p class="writing-summary">${postData.summary}</p>
-          ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
-        </div>
-      `;
-    }).join('');
+        `;
+      }).join('');
+    }
   }
 
   // 3. Misc Preview (Card matching writing format; opens dedicated misc reader)
   const miscContainer = document.getElementById('previewMisc');
   if (miscContainer) {
-    const previewMisc = SITE_DATA.misc.slice(0, 3);
-    miscContainer.innerHTML = previewMisc.map(item => {
-      const miscData = item[lang] || item.en;
-      const readTimeStr = (item.readTime && item.readTime[lang]) || (item.readTime && item.readTime.en) || '';
-      const tagsHtml = (item.tags || []).map(tKey => {
-        const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
-        return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
-      }).join(' ');
+    if (!SITE_DATA.misc || SITE_DATA.misc.length === 0) {
+      miscContainer.innerHTML = `<p class="empty-state-msg">${t('empty_misc')}</p>`;
+    } else {
+      const previewMisc = SITE_DATA.misc.slice(0, 3);
+      miscContainer.innerHTML = previewMisc.map(item => {
+        const miscData = item[lang] || item.en;
+        const readTimeStr = (item.readTime && item.readTime[lang]) || (item.readTime && item.readTime.en) || '';
+        const tagsHtml = (item.tags || []).map(tKey => {
+          const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
+          return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
+        }).join(' ');
 
-      return `
-        <div class="writing-entry" onclick="openMiscPost('${item.id}', 'about')">
-          <div class="writing-entry-header">
-            <span class="writing-title">${miscData.title}</span>
-            <span class="writing-meta">${item.date}${readTimeStr ? ' &middot; ' + readTimeStr : ''}</span>
+        return `
+          <div class="writing-entry" onclick="openMiscPost('${item.id}', 'about')">
+            <div class="writing-entry-header">
+              <span class="writing-title">${miscData.title}</span>
+              <span class="writing-meta">${item.date}${readTimeStr ? ' &middot; ' + readTimeStr : ''}</span>
+            </div>
+            <p class="writing-summary">${miscData.summary || miscData.note}</p>
+            ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
           </div>
-          <p class="writing-summary">${miscData.summary || miscData.note}</p>
-          ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
-        </div>
-      `;
-    }).join('');
+        `;
+      }).join('');
+    }
   }
 }
 
@@ -750,6 +758,12 @@ function setupWritingTagFilters() {
     (b.tags || []).forEach(t => allTags.add(t));
   });
 
+  if (allTags.size <= 1) {
+    filterContainer.style.display = 'none';
+    return;
+  }
+  filterContainer.style.display = '';
+
   filterContainer.innerHTML = Array.from(allTags).map(tKey => {
     const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
     const label = tKey === 'all' ? t('tag_all') : (t(i18nKey) || tKey);
@@ -776,8 +790,9 @@ function renderWritingEntries(filterTag = 'all') {
     ? SITE_DATA.blogs
     : SITE_DATA.blogs.filter(b => (b.tags || []).includes(filterTag));
 
-  if (filtered.length === 0) {
-    fullWriting.innerHTML = `<p style="color: var(--text-dim); font-size: 0.88rem; padding: 1rem 0;">No articles found under #${filterTag}.</p>`;
+  if (!filtered || filtered.length === 0) {
+    const emptyMsg = filterTag === 'all' ? t('empty_writing') : `No articles found under #${filterTag}.`;
+    fullWriting.innerHTML = `<p class="empty-state-msg">${emptyMsg}</p>`;
     return;
   }
 
@@ -815,6 +830,12 @@ function setupMiscTagFilters() {
     (m.tags || []).forEach(t => allTags.add(t));
   });
 
+  if (allTags.size <= 1) {
+    filterContainer.style.display = 'none';
+    return;
+  }
+  filterContainer.style.display = '';
+
   filterContainer.innerHTML = Array.from(allTags).map(tKey => {
     const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
     const label = tKey === 'all' ? t('tag_all') : (t(i18nKey) || tKey);
@@ -841,8 +862,9 @@ function renderMiscEntries(filterTag = 'all') {
     ? SITE_DATA.misc
     : SITE_DATA.misc.filter(item => (item.tags || []).includes(filterTag));
 
-  if (filtered.length === 0) {
-    fullMisc.innerHTML = `<p style="color: var(--text-dim); font-size: 0.88rem; padding: 1rem 0;">No entries found for #${filterTag}.</p>`;
+  if (!filtered || filtered.length === 0) {
+    const emptyMsg = filterTag === 'all' ? t('empty_misc') : `No entries found for #${filterTag}.`;
+    fullMisc.innerHTML = `<p class="empty-state-msg">${emptyMsg}</p>`;
     return;
   }
 
