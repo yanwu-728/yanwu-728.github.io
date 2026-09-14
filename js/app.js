@@ -737,10 +737,22 @@ function formatSimpleMarkdown(text) {
     } else if (/^!\[(.*?)\]\((.*?)\)$/.test(trimmed)) {
       if (inList) { result.push('</ul>'); inList = false; }
       const imgMatch = trimmed.match(/^!\[(.*?)\]\((.*?)\)$/);
-      const alt = imgMatch[1];
-      const src = imgMatch[2];
+      let alt = imgMatch[1];
+      let src = imgMatch[2];
+
+      let figureClass = 'post-figure';
+      if (alt.includes('|right') || src.includes('#right') || src.includes('juzhang')) {
+        figureClass += ' float-right';
+        alt = alt.replace('|right', '').trim();
+        src = src.replace('#right', '').trim();
+      } else if (alt.includes('|left') || src.includes('#left')) {
+        figureClass += ' float-left';
+        alt = alt.replace('|left', '').trim();
+        src = src.replace('#left', '').trim();
+      }
+
       result.push(`
-        <figure class="post-figure">
+        <figure class="${figureClass}">
           <img src="${src}" alt="${alt}" class="post-inline-image" loading="lazy" />
           ${alt ? `<figcaption class="post-caption">${alt}</figcaption>` : ''}
         </figure>

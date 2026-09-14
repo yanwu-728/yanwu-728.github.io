@@ -801,6 +801,38 @@ a:hover {
   display: block;
 }
 
+.post-figure.float-right {
+  float: right;
+  max-width: 220px;
+  margin: 0.25rem 0 1.25rem 1.75rem;
+}
+
+.post-figure.float-right .post-inline-image {
+  max-width: 220px;
+  width: 100%;
+}
+
+.post-figure.float-right .post-caption {
+  text-align: center;
+  max-width: 220px;
+}
+
+.post-figure.float-left {
+  float: left;
+  max-width: 220px;
+  margin: 0.25rem 1.75rem 1.25rem 0;
+}
+
+.post-figure.float-left .post-inline-image {
+  max-width: 220px;
+  width: 100%;
+}
+
+.post-figure.float-left .post-caption {
+  text-align: center;
+  max-width: 220px;
+}
+
 .post-inline-image {
   width: 100%;
   max-width: 540px;
@@ -822,6 +854,12 @@ a:hover {
   font-size: 1rem;
   color: var(--text);
   line-height: 1.8;
+}
+
+.single-post-body::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .single-post-body h3 {
@@ -940,5 +978,16 @@ a:hover {
   .social-links {
     flex-direction: row;
     gap: 1rem;
+  }
+
+  .post-figure.float-right,
+  .post-figure.float-left {
+    max-width: 150px;
+    margin: 0.25rem 0 0.75rem 1rem;
+  }
+
+  .post-figure.float-right .post-inline-image,
+  .post-figure.float-left .post-inline-image {
+    max-width: 150px;
   }
 }
