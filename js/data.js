@@ -79,9 +79,9 @@ const SITE_DATA = {
         cityKey: "sparta",
         tag: "High School",
         year: "2016",
-        title: "Moved to Sparta, New Jersey",
-        desc: "Crossed the Pacific to attend high school in Sparta, New Jersey in 2016.",
-        routeLabel: "Tianjin → Sparta, NJ (~11,000 km)",
+        title: "Moved to New Jersey",
+        desc: "Crossed the Pacific to attend high school in New Jersey in 2016.",
+        routeLabel: "Tianjin → New Jersey (~11,000 km)",
         arc: "M 205.2,99.3 Q 382.7,10 560.2,94.1"
       },
       {
@@ -90,8 +90,8 @@ const SITE_DATA = {
         tag: "Pandemic Return",
         year: "2020",
         title: "Returned to Tianjin",
-        desc: "Moved back home to Tianjin in 2020 due to the pandemic.",
-        routeLabel: "Sparta, NJ → Tianjin (~11,000 km)",
+        desc: "Moved back home to Tianjin in 2020 due to the pandemic. Spent the entire first year of college on Zoom.",
+        routeLabel: "New Jersey → Tianjin (~11,000 km)",
         arc: "M 560.2,94.1 Q 382.7,24 205.2,99.3"
       },
       {
@@ -100,7 +100,7 @@ const SITE_DATA = {
         tag: "MIT (B.S. & M.Eng)",
         year: "2021",
         title: "Moved to Boston for MIT",
-        desc: "Moved to Boston in 2021 for college and master's at MIT (Course 6-3 CS & Course 18 Math).",
+        desc: "Moved to Boston in 2021 for college.",
         routeLabel: "Tianjin → Boston, MA (~11,100 km)",
         arc: "M 205.2,99.3 Q 386.5,6 567.8,90.4"
       },
