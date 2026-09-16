@@ -1,0 +1,11 @@
+# Python & Virtualenv
+.venv/
+__pycache__/
+*.pyc
+
+# Google Cloud & OAuth credentials
+*credentials*.json
+*token*.json
+
+# OS files
+.DS_Store

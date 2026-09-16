@@ -17,7 +17,7 @@ tags:
   - food
   - travel
   - visa
-readTime: "1 min read"
+# readTime: auto (optional, calculated automatically from word count)
 summary: "Brief one-line summary displayed on the card."
 ---
 

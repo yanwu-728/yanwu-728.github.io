@@ -192,6 +192,35 @@ function switchTab(tabId, updateHistory = true) {
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
+/**
+ * Resolves or dynamically computes the estimated read time for a post or note based on word count.
+ */
+function getReadTime(item, lang) {
+  if (!item) return '';
+  if (item.readTime && item.readTime[lang]) {
+    return item.readTime[lang];
+  }
+  if (item.readTime && item.readTime.en && lang === 'en') {
+    return item.readTime.en;
+  }
+  const postData = item[lang] || item.en;
+  const text = (postData && (postData.content || postData.note)) || '';
+  if (!text) return '';
+  
+  // Strip images, code fences, and tags for clean prose
+  const clean = text.replace(/!\[.*?\]\(.*?\)/g, '').replace(/```[\s\S]*?```/g, '').replace(/<[^>]+>/g, '');
+  if (lang === 'zh') {
+    const chars = (clean.match(/[\u4e00-\u9fff]/g) || []).length;
+    const engWords = (clean.match(/\b[a-zA-Z0-9_-]+\b/g) || []).length;
+    const mins = Math.max(1, Math.round((chars + engWords * 1.5) / 300));
+    return `${mins}分钟阅读`;
+  } else {
+    const words = (clean.match(/\b[a-zA-Z0-9_'-]+\b/g) || []).length;
+    const mins = Math.max(1, Math.round(words / 200));
+    return `${mins} min read`;
+  }
+}
+
 /* ==========================================================================
    Dedicated Blog Post Reader View
    ========================================================================== */
@@ -210,7 +239,7 @@ function openBlogPost(postId, fromTab = 'writing', updateHistory = true) {
   const lang = getLang();
 
   const postData = blog[lang] || blog.en;
-  const readTimeStr = (blog.readTime && blog.readTime[lang]) || (blog.readTime && blog.readTime.en) || '';
+  const readTimeStr = getReadTime(blog, lang);
   const tagsHtml = (blog.tags || []).map(tKey => {
     const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
     return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
@@ -289,7 +318,7 @@ function openMiscPost(miscId, fromTab = 'misc', updateHistory = true) {
   const lang = getLang();
 
   const miscData = item[lang] || item.en;
-  const readTimeStr = (item.readTime && item.readTime[lang]) || (item.readTime && item.readTime.en) || '';
+  const readTimeStr = getReadTime(item, lang);
   const tagsHtml = (item.tags || []).map(tKey => {
     const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
     return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
@@ -701,7 +730,7 @@ function renderPreviews() {
     } else {
       writingContainer.innerHTML = SITE_DATA.blogs.map(blog => {
         const postData = blog[lang] || blog.en;
-        const readTimeStr = (blog.readTime && blog.readTime[lang]) || (blog.readTime && blog.readTime.en) || '';
+        const readTimeStr = getReadTime(blog, lang);
         const tagsHtml = (blog.tags || []).map(tKey => {
           const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
           return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
@@ -730,7 +759,7 @@ function renderPreviews() {
       const previewMisc = SITE_DATA.misc.slice(0, 3);
       miscContainer.innerHTML = previewMisc.map(item => {
         const miscData = item[lang] || item.en;
-        const readTimeStr = (item.readTime && item.readTime[lang]) || (item.readTime && item.readTime.en) || '';
+        const readTimeStr = getReadTime(item, lang);
         const tagsHtml = (item.tags || []).map(tKey => {
           const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
           return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
@@ -835,7 +864,7 @@ function renderWritingEntries(filterTag = 'all') {
 
   fullWriting.innerHTML = filtered.map(blog => {
     const postData = blog[lang] || blog.en;
-    const readTimeStr = (blog.readTime && blog.readTime[lang]) || (blog.readTime && blog.readTime.en) || '';
+    const readTimeStr = getReadTime(blog, lang);
     const tagsHtml = (blog.tags || []).map(tKey => {
       const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
       return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;
@@ -907,7 +936,7 @@ function renderMiscEntries(filterTag = 'all') {
 
   fullMisc.innerHTML = filtered.map(item => {
     const miscData = item[lang] || item.en;
-    const readTimeStr = (item.readTime && item.readTime[lang]) || (item.readTime && item.readTime.en) || '';
+    const readTimeStr = getReadTime(item, lang);
     const tagsHtml = (item.tags || []).map(tKey => {
       const i18nKey = 'tag_' + tKey.replace(/-/g, '_');
       return `<span class="misc-tag">#${t(i18nKey) || tKey}</span>`;

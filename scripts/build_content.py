@@ -49,7 +49,8 @@ def parse_markdown_frontmatter(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
         text = f.read()
 
-    match = re.match(r"^---\s*\n(.*?)\n---\s*\n(.*)$", text, re.DOTALL)
+    # Strip optional leading HTML comments or whitespace before frontmatter
+    match = re.match(r"^(?:<!--.*?-->\s*)?---\s*\n(.*?)\n---\s*\n(.*)$", text, re.DOTALL)
     if not match:
         return {}, text.strip()
 
@@ -95,14 +96,30 @@ def parse_markdown_frontmatter(file_path):
     return metadata, body
 
 def estimate_read_time(text, lang="en"):
-    """Calculates read time estimate."""
+    """
+    Calculates read time estimate based on word/character count.
+    - English: ~200 words per minute (standard web reading speed).
+    - Chinese: ~300 characters per minute.
+    Strips markdown images, code blocks, HTML tags, and links for accurate word count.
+    """
+    if not text:
+        return "1 min read" if lang != "zh" else "1分钟阅读"
+
+    # Strip markdown images, code blocks, HTML tags, and link URLs
+    clean = re.sub(r"!\[.*?\]\(.*?\)", "", text)
+    clean = re.sub(r"```[\s\S]*?```", "", clean)
+    clean = re.sub(r"<[^>]+>", "", clean)
+    clean = re.sub(r"\[(.*?)\]\(.*?\)", r"\1", clean)
+
     if lang == "zh":
-        chars = len(re.findall(r"[\u4e00-\u9fff]", text))
-        mins = max(1, round(chars / 300))
+        chars = len(re.findall(r"[\u4e00-\u9fff]", clean))
+        eng_words = len(re.findall(r"\b[a-zA-Z0-9_-]+\b", clean))
+        effective = chars + (eng_words * 1.5)
+        mins = max(1, round(effective / 300))
         return f"{mins}分钟阅读"
     else:
-        words = len(text.split())
-        mins = max(1, round(words / 180))
+        words = len(re.findall(r"\b[a-zA-Z0-9_'-]+\b", clean))
+        mins = max(1, round(words / 200))
         return f"{mins} min read"
 
 def translate_text(text, preserve_nouns=PROPER_NOUNS):
@@ -210,13 +227,26 @@ def scan_entries(directory):
         # Remove numerical sort prefix like '01-' for id if not provided in frontmatter
         clean_id = re.sub(r"^\d+-", "", slug)
 
+        # Auto-calculate read time based on word count
+        en_rt_meta = en_meta.get("readTime")
+        if not en_rt_meta or en_rt_meta in ["auto", "1 min read", "2 min read", "3 min read"]:
+            en_read_time = estimate_read_time(en_body, "en")
+        else:
+            en_read_time = en_rt_meta
+
+        zh_rt_meta = zh_meta.get("readTime") if zh_meta else None
+        if not zh_rt_meta or zh_rt_meta in ["auto", "1 分钟阅读", "1分钟阅读", "2 分钟阅读", "2分钟阅读", "3 分钟阅读", "3分钟阅读"]:
+            zh_read_time = estimate_read_time(zh_body if zh_body else en_body, "zh")
+        else:
+            zh_read_time = zh_rt_meta
+
         entry = {
             "id": en_meta.get("id") or clean_id,
             "date": en_meta.get("date", ""),
             "tags": en_meta.get("tags") or [],
             "readTime": {
-                "en": en_meta.get("readTime") or estimate_read_time(en_body, "en"),
-                "zh": (zh_meta.get("readTime") if zh_meta else None) or estimate_read_time(zh_body, "zh")
+                "en": en_read_time,
+                "zh": zh_read_time
             },
             "en": {
                 "title": en_meta.get("title", ""),
@@ -301,7 +331,6 @@ date: {time.strftime('%b %Y')}
 topic: "Research"
 tags:
   - agents
-readTime: 2 min read
 summary: "Brief summary of {slug.replace('-', ' ')}."
 ---
 
@@ -316,7 +345,6 @@ title: "{slug.replace('-', ' ').title()}"
 date: {time.strftime('%Y')}
 tags:
   - notes
-readTime: 1 min read
 summary: "Brief note about {slug.replace('-', ' ')}."
 ---
 
