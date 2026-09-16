@@ -221,6 +221,42 @@ function getReadTime(item, lang) {
   }
 }
 
+function formatShortDate(dateStr) {
+  if (!dateStr) return '';
+  const str = String(dateStr).trim();
+  const cleanStr = str.replace(/(\d+)(st|nd|rd|th)/i, '$1');
+
+  const months = {
+    jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
+    jul: '07', aug: '08', sep: '09', sept: '09', oct: '10', nov: '11', dec: '12'
+  };
+
+  // Month Day, Year -> MM/DD/YYYY (e.g. Sept 14th, 2026 -> 09/14/2026)
+  const mdyMatch = cleanStr.match(/^([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})$/);
+  if (mdyMatch) {
+    const m = months[mdyMatch[1].toLowerCase().slice(0, 4)] || months[mdyMatch[1].toLowerCase().slice(0, 3)];
+    const d = mdyMatch[2].padStart(2, '0');
+    const y = mdyMatch[3];
+    if (m) return `${m}/${d}/${y}`;
+  }
+
+  // Month Year -> MM/YYYY (e.g. Feb 2025 -> 02/2025)
+  const myMatch = cleanStr.match(/^([A-Za-z]+)\s+(\d{4})$/);
+  if (myMatch) {
+    const m = months[myMatch[1].toLowerCase().slice(0, 4)] || months[myMatch[1].toLowerCase().slice(0, 3)];
+    const y = myMatch[2];
+    if (m) return `${m}/${y}`;
+  }
+
+  // ISO YYYY-MM-DD -> MM/DD/YYYY
+  const isoMatch = cleanStr.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (isoMatch) {
+    return `${isoMatch[2].padStart(2, '0')}/${isoMatch[3].padStart(2, '0')}/${isoMatch[1]}`;
+  }
+
+  return str;
+}
+
 /* ==========================================================================
    Dedicated Blog Post Reader View
    ========================================================================== */
@@ -740,7 +776,12 @@ function renderPreviews() {
           <div class="writing-entry" onclick="openBlogPost('${blog.id}', 'about')">
             <div class="writing-entry-header">
               <span class="writing-title">${postData.title}</span>
-              <span class="writing-meta">${blog.date} &middot; ${readTimeStr}</span>
+              <div class="writing-meta">
+                <span class="writing-date-full">${blog.date}</span>
+                <span class="writing-date-short">${formatShortDate(blog.date)}</span>
+                ${readTimeStr ? '<span class="writing-meta-dot">&middot;</span>' : ''}
+                ${readTimeStr ? `<span class="writing-read-time">${readTimeStr}</span>` : ''}
+              </div>
             </div>
             <p class="writing-summary">${postData.summary}</p>
             ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
@@ -769,7 +810,12 @@ function renderPreviews() {
           <div class="writing-entry" onclick="openMiscPost('${item.id}', 'about')">
             <div class="writing-entry-header">
               <span class="writing-title">${miscData.title}</span>
-              <span class="writing-meta">${item.date}${readTimeStr ? ' &middot; ' + readTimeStr : ''}</span>
+              <div class="writing-meta">
+                <span class="writing-date-full">${item.date}</span>
+                <span class="writing-date-short">${formatShortDate(item.date)}</span>
+                ${readTimeStr ? '<span class="writing-meta-dot">&middot;</span>' : ''}
+                ${readTimeStr ? `<span class="writing-read-time">${readTimeStr}</span>` : ''}
+              </div>
             </div>
             <p class="writing-summary">${miscData.summary || miscData.note}</p>
             ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
@@ -874,7 +920,12 @@ function renderWritingEntries(filterTag = 'all') {
       <div class="writing-entry" onclick="openBlogPost('${blog.id}', 'writing')">
         <div class="writing-entry-header">
           <span class="writing-title">${postData.title}</span>
-          <span class="writing-meta">${blog.date} &middot; ${readTimeStr}</span>
+          <div class="writing-meta">
+            <span class="writing-date-full">${blog.date}</span>
+            <span class="writing-date-short">${formatShortDate(blog.date)}</span>
+            ${readTimeStr ? '<span class="writing-meta-dot">&middot;</span>' : ''}
+            ${readTimeStr ? `<span class="writing-read-time">${readTimeStr}</span>` : ''}
+          </div>
         </div>
         <p class="writing-summary">${postData.summary}</p>
         ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
@@ -946,7 +997,12 @@ function renderMiscEntries(filterTag = 'all') {
       <div class="writing-entry" onclick="openMiscPost('${item.id}', 'misc')">
         <div class="writing-entry-header">
           <span class="writing-title">${miscData.title}</span>
-          <span class="writing-meta">${item.date}${readTimeStr ? ' &middot; ' + readTimeStr : ''}</span>
+          <div class="writing-meta">
+            <span class="writing-date-full">${item.date}</span>
+            <span class="writing-date-short">${formatShortDate(item.date)}</span>
+            ${readTimeStr ? '<span class="writing-meta-dot">&middot;</span>' : ''}
+            ${readTimeStr ? `<span class="writing-read-time">${readTimeStr}</span>` : ''}
+          </div>
         </div>
         <p class="writing-summary">${miscData.summary || miscData.note}</p>
         ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
