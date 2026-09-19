@@ -59,7 +59,7 @@ This skill guides the translation and paraphrasing of English blog posts and not
     - 智能体
     - 工作流
   readTime: "3 分钟阅读"
-  summary: "一至两句精炼的中文文章导读，突出核心技术见解。"
+  # summary: optional (如果英文版没有 summary 则省略)
   ---
   ```
 - Retain image embedding syntax:

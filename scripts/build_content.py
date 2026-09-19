@@ -172,7 +172,7 @@ def generate_chinese_file(en_file_path, zh_file_path, force=False):
     summary_en = meta.get("summary", "")
 
     title_zh = translate_text(title_en)
-    summary_zh = translate_text(summary_en)
+    summary_zh = translate_text(summary_en) if summary_en else ""
     body_zh = translate_text(body)
     read_time_zh = estimate_read_time(body_zh, "zh")
 
@@ -194,7 +194,8 @@ def generate_chinese_file(en_file_path, zh_file_path, force=False):
     zh_lines.append(f"readTime: {read_time_zh}")
     if "image" in meta:
         zh_lines.append(f"image: {meta['image']}")
-    zh_lines.append(f"summary: \"{summary_zh}\"")
+    if summary_zh:
+        zh_lines.append(f"summary: \"{summary_zh}\"")
     zh_lines.append("---\n")
     zh_lines.append(body_zh + "\n")
 

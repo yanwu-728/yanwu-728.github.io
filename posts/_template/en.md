@@ -18,7 +18,6 @@ tags:
   - workflows
   - coding
 # readTime: auto (optional, calculated automatically from word count)
-summary: "A brief 1-2 sentence overview of the article, displayed on the article card."
 ---
 
 ### Introduction

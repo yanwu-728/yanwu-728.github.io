@@ -8,7 +8,6 @@ tags:
   - workflows
   - coding
 readTime: "3 分钟阅读"
-summary: "文章的一到两句话简要概述，将展示在列表卡片上。"
 ---
 
 ### 导言
