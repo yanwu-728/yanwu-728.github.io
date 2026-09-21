@@ -231,8 +231,8 @@ function formatShortDate(dateStr) {
     jul: '07', aug: '08', sep: '09', sept: '09', oct: '10', nov: '11', dec: '12'
   };
 
-  // Month Day, Year -> MM/DD/YYYY (e.g. Sept 14th, 2026 -> 09/14/2026)
-  const mdyMatch = cleanStr.match(/^([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})$/);
+  // Month Day, Year -> MM/DD/YYYY (e.g. Sept. 20th, 2026 -> 09/20/2026)
+  const mdyMatch = cleanStr.match(/^([A-Za-z]+)\.?\s+(\d{1,2}),?\s+(\d{4})$/);
   if (mdyMatch) {
     const m = months[mdyMatch[1].toLowerCase().slice(0, 4)] || months[mdyMatch[1].toLowerCase().slice(0, 3)];
     const d = mdyMatch[2].padStart(2, '0');
@@ -240,8 +240,8 @@ function formatShortDate(dateStr) {
     if (m) return `${m}/${d}/${y}`;
   }
 
-  // Month Year -> MM/YYYY (e.g. Feb 2025 -> 02/2025)
-  const myMatch = cleanStr.match(/^([A-Za-z]+)\s+(\d{4})$/);
+  // Month Year -> MM/YYYY (e.g. Feb. 2025 -> 02/2025)
+  const myMatch = cleanStr.match(/^([A-Za-z]+)\.?\s+(\d{4})$/);
   if (myMatch) {
     const m = months[myMatch[1].toLowerCase().slice(0, 4)] || months[myMatch[1].toLowerCase().slice(0, 3)];
     const y = myMatch[2];

@@ -12,7 +12,7 @@ POST TEMPLATE: AI Slop
 ---
 id: ai_slop
 title: "How to Say No to AI Slop"
-date: "Sept 16th 2026"
+date: "Sept. 20th, 2026"
 topic: "Agentic Workflows in Workspace"
 tags:
   - agents
