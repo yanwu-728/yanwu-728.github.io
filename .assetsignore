@@ -1,0 +1,26 @@
+# Git & Environment
+.git/
+.gitignore
+.nojekyll
+.venv/
+.DS_Store
+
+# Cloudflare Wrangler cache
+.wrangler/
+
+# Agent instructions & Prompts
+.agents/
+prompts/
+AGENTS.md
+README.md
+
+# Build scripts & Credentials
+scripts/
+
+# Source markdown files (compiled into data/posts.js and data/misc.js)
+posts/
+misc/
+
+# Config files
+wrangler.jsonc
+.assetsignore
