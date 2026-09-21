@@ -45,7 +45,7 @@ Eliminate generic AI jargon, corporate filler, and throat-clearing openings:
     - workflows
     - coding
   readTime: "3 min read"
-  summary: "Sharp 1-2 sentence hook highlighting the core insight."
+  # summary: optional
   ---
   ```
 - Retain image embedding conventions:

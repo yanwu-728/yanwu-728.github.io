@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "personal-website",
+  "compatibility_date": "2026-09-18",
+  "build": {
+    "command": "python3 scripts/build_content.py"
+  },
+  "assets": {
+    "directory": "./",
+    "not_found_handling": "single-page-application"
+  }
+}

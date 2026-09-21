@@ -221,6 +221,42 @@ function getReadTime(item, lang) {
   }
 }
 
+function formatShortDate(dateStr) {
+  if (!dateStr) return '';
+  const str = String(dateStr).trim();
+  const cleanStr = str.replace(/(\d+)(st|nd|rd|th)/i, '$1');
+
+  const months = {
+    jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
+    jul: '07', aug: '08', sep: '09', sept: '09', oct: '10', nov: '11', dec: '12'
+  };
+
+  // Month Day, Year -> MM/DD/YYYY (e.g. Sept. 20th, 2026 -> 09/20/2026)
+  const mdyMatch = cleanStr.match(/^([A-Za-z]+)\.?\s+(\d{1,2}),?\s+(\d{4})$/);
+  if (mdyMatch) {
+    const m = months[mdyMatch[1].toLowerCase().slice(0, 4)] || months[mdyMatch[1].toLowerCase().slice(0, 3)];
+    const d = mdyMatch[2].padStart(2, '0');
+    const y = mdyMatch[3];
+    if (m) return `${m}/${d}/${y}`;
+  }
+
+  // Month Year -> MM/YYYY (e.g. Feb. 2025 -> 02/2025)
+  const myMatch = cleanStr.match(/^([A-Za-z]+)\.?\s+(\d{4})$/);
+  if (myMatch) {
+    const m = months[myMatch[1].toLowerCase().slice(0, 4)] || months[myMatch[1].toLowerCase().slice(0, 3)];
+    const y = myMatch[2];
+    if (m) return `${m}/${y}`;
+  }
+
+  // ISO YYYY-MM-DD -> MM/DD/YYYY
+  const isoMatch = cleanStr.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (isoMatch) {
+    return `${isoMatch[2].padStart(2, '0')}/${isoMatch[3].padStart(2, '0')}/${isoMatch[1]}`;
+  }
+
+  return str;
+}
+
 /* ==========================================================================
    Dedicated Blog Post Reader View
    ========================================================================== */
@@ -264,10 +300,12 @@ function openBlogPost(postId, fromTab = 'writing', updateHistory = true) {
         ${lang === 'zh' ? ` &middot; <span class="ai-trans-badge">${t('ai_trans_badge')}</span>` : ''}
       </div>
       
+      ${postData.summary ? `
       <div class="single-post-summary-box">
         <div class="single-post-summary-title">${t('summary_heading')}</div>
         <p class="single-post-summary-text">${postData.summary}</p>
       </div>
+      ` : ''}
 
       ${imgHtml}
 
@@ -740,9 +778,14 @@ function renderPreviews() {
           <div class="writing-entry" onclick="openBlogPost('${blog.id}', 'about')">
             <div class="writing-entry-header">
               <span class="writing-title">${postData.title}</span>
-              <span class="writing-meta">${blog.date} &middot; ${readTimeStr}</span>
+              <div class="writing-meta">
+                <span class="writing-date-full">${blog.date}</span>
+                <span class="writing-date-short">${formatShortDate(blog.date)}</span>
+                ${readTimeStr ? '<span class="writing-meta-dot">&middot;</span>' : ''}
+                ${readTimeStr ? `<span class="writing-read-time">${readTimeStr}</span>` : ''}
+              </div>
             </div>
-            <p class="writing-summary">${postData.summary}</p>
+            ${postData.summary ? `<p class="writing-summary">${postData.summary}</p>` : ''}
             ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
           </div>
         `;
@@ -769,9 +812,14 @@ function renderPreviews() {
           <div class="writing-entry" onclick="openMiscPost('${item.id}', 'about')">
             <div class="writing-entry-header">
               <span class="writing-title">${miscData.title}</span>
-              <span class="writing-meta">${item.date}${readTimeStr ? ' &middot; ' + readTimeStr : ''}</span>
+              <div class="writing-meta">
+                <span class="writing-date-full">${item.date}</span>
+                <span class="writing-date-short">${formatShortDate(item.date)}</span>
+                ${readTimeStr ? '<span class="writing-meta-dot">&middot;</span>' : ''}
+                ${readTimeStr ? `<span class="writing-read-time">${readTimeStr}</span>` : ''}
+              </div>
             </div>
-            <p class="writing-summary">${miscData.summary || miscData.note}</p>
+            ${(miscData.summary || miscData.note) ? `<p class="writing-summary">${miscData.summary || miscData.note}</p>` : ''}
             ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
           </div>
         `;
@@ -874,9 +922,14 @@ function renderWritingEntries(filterTag = 'all') {
       <div class="writing-entry" onclick="openBlogPost('${blog.id}', 'writing')">
         <div class="writing-entry-header">
           <span class="writing-title">${postData.title}</span>
-          <span class="writing-meta">${blog.date} &middot; ${readTimeStr}</span>
+          <div class="writing-meta">
+            <span class="writing-date-full">${blog.date}</span>
+            <span class="writing-date-short">${formatShortDate(blog.date)}</span>
+            ${readTimeStr ? '<span class="writing-meta-dot">&middot;</span>' : ''}
+            ${readTimeStr ? `<span class="writing-read-time">${readTimeStr}</span>` : ''}
+          </div>
         </div>
-        <p class="writing-summary">${postData.summary}</p>
+        ${postData.summary ? `<p class="writing-summary">${postData.summary}</p>` : ''}
         ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
       </div>
     `;
@@ -946,9 +999,14 @@ function renderMiscEntries(filterTag = 'all') {
       <div class="writing-entry" onclick="openMiscPost('${item.id}', 'misc')">
         <div class="writing-entry-header">
           <span class="writing-title">${miscData.title}</span>
-          <span class="writing-meta">${item.date}${readTimeStr ? ' &middot; ' + readTimeStr : ''}</span>
+          <div class="writing-meta">
+            <span class="writing-date-full">${item.date}</span>
+            <span class="writing-date-short">${formatShortDate(item.date)}</span>
+            ${readTimeStr ? '<span class="writing-meta-dot">&middot;</span>' : ''}
+            ${readTimeStr ? `<span class="writing-read-time">${readTimeStr}</span>` : ''}
+          </div>
         </div>
-        <p class="writing-summary">${miscData.summary || miscData.note}</p>
+        ${(miscData.summary || miscData.note) ? `<p class="writing-summary">${miscData.summary || miscData.note}</p>` : ''}
         ${tagsHtml ? `<div class="misc-tag-list">${tagsHtml}</div>` : ''}
       </div>
     `;
@@ -963,10 +1021,48 @@ function formatSimpleMarkdown(text) {
   let lines = text.trim().split('\n');
   let result = [];
   let inList = false;
+  let inCodeBlock = false;
+  let footnotes = [];
 
   for (let line of lines) {
     let trimmed = line.trim();
-    if (trimmed.startsWith('### ')) {
+
+    // Code block handling
+    if (trimmed.startsWith('```')) {
+      if (inCodeBlock) {
+        result.push('</code></pre>');
+        inCodeBlock = false;
+      } else {
+        if (inList) { result.push('</ul>'); inList = false; }
+        const lang = trimmed.substring(3).trim();
+        result.push(`<pre><code class="language-${lang}">`);
+        inCodeBlock = true;
+      }
+      continue;
+    }
+    if (inCodeBlock) {
+      result.push(line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+      continue;
+    }
+
+    // Footnote definition handling: [^1]: ... or [^*]: ...
+    const fnMatch = trimmed.match(/^\[\^([^\]]+)\]:\s*(.*)$/);
+    if (fnMatch) {
+      if (inList) { result.push('</ul>'); inList = false; }
+      footnotes.push({ id: fnMatch[1], content: fnMatch[2] });
+      continue;
+    }
+
+    if (trimmed === '---' || trimmed === '***') {
+      if (inList) { result.push('</ul>'); inList = false; }
+      result.push('<hr class="post-divider" />');
+    } else if (trimmed.startsWith('> ')) {
+      if (inList) { result.push('</ul>'); inList = false; }
+      result.push(`<blockquote><p>${formatInlineStyles(trimmed.substring(2))}</p></blockquote>`);
+    } else if (trimmed.startsWith('#### ')) {
+      if (inList) { result.push('</ul>'); inList = false; }
+      result.push(`<h4>${formatInlineStyles(trimmed.substring(5))}</h4>`);
+    } else if (trimmed.startsWith('### ')) {
       if (inList) { result.push('</ul>'); inList = false; }
       result.push(`<h3>${formatInlineStyles(trimmed.substring(4))}</h3>`);
     } else if (trimmed.startsWith('## ')) {
@@ -975,6 +1071,7 @@ function formatSimpleMarkdown(text) {
     } else if (trimmed.startsWith('# ')) {
       if (inList) { result.push('</ul>'); inList = false; }
       result.push(`<h1>${formatInlineStyles(trimmed.substring(2))}</h1>`);
+
     } else if (/^!\[(.*?)\]\((.*?)\)$/.test(trimmed)) {
       if (inList) { result.push('</ul>'); inList = false; }
       const imgMatch = trimmed.match(/^!\[(.*?)\]\((.*?)\)$/);
@@ -1004,15 +1101,41 @@ function formatSimpleMarkdown(text) {
     } else if (/^\d+\.\s+/.test(trimmed)) {
       if (!inList) { result.push('<ol>'); inList = true; }
       result.push(`<li>${formatInlineStyles(trimmed.replace(/^\d+\.\s+/, ''))}</li>`);
+    } else if (inList && (line.startsWith('  ') || line.startsWith('\t')) && trimmed !== '') {
+      if (result.length > 0 && result[result.length - 1].endsWith('</li>')) {
+        result[result.length - 1] = result[result.length - 1].replace(/<\/li>$/, `<br><span class="list-item-desc">${formatInlineStyles(trimmed)}</span></li>`);
+      }
     } else if (trimmed === '') {
       if (inList) { result.push('</ul>'); inList = false; }
     } else {
       if (inList) { result.push('</ul>'); inList = false; }
       result.push(`<p>${formatInlineStyles(trimmed)}</p>`);
     }
+
   }
 
   if (inList) result.push('</ul>');
+  if (inCodeBlock) result.push('</code></pre>');
+
+  if (footnotes.length > 0) {
+    result.push('<div class="post-footnotes">');
+    const isAllNumeric = footnotes.every(fn => /^\d+$/.test(fn.id));
+    if (isAllNumeric) {
+      result.push('  <ol>');
+      for (let fn of footnotes) {
+        result.push(`    <li id="fn-${fn.id}">${formatInlineStyles(fn.content)} <a href="#fnref-${fn.id}" class="footnote-backref" title="Jump back">↩</a></li>`);
+      }
+      result.push('  </ol>');
+    } else {
+      result.push('  <ul style="list-style: none; padding-left: 0;">');
+      for (let fn of footnotes) {
+        result.push(`    <li id="fn-${fn.id}"><sup>[${fn.id}]</sup> ${formatInlineStyles(fn.content)} <a href="#fnref-${fn.id}" class="footnote-backref" title="Jump back">↩</a></li>`);
+      }
+      result.push('  </ul>');
+    }
+    result.push('</div>');
+  }
+
   return result.join('\n');
 }
 
@@ -1022,5 +1145,7 @@ function formatInlineStyles(str) {
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
     .replace(/`([^`]+)`/g, '<code style="background: var(--bg-hover); padding: 0.1rem 0.35rem; font-family: var(--font-mono); font-size: 0.88em; border-radius: 3px;">$1</code>')
     .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="post-inline-image" loading="lazy" />')
+    .replace(/\[\^([^\]]+)\](?!\:)/g, '<sup class="footnote-ref"><a href="#fn-$1" id="fnref-$1">[$1]</a></sup>')
     .replace(/(?<!\!)\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 }
+

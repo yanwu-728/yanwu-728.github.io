@@ -54,7 +54,7 @@ You provide two output modes:
     - 智能体
     - 工作流
   readTime: "X 分钟阅读"
-  summary: "一至两句精炼的中文文章导读，突出核心技术见解。"
+  # summary: optional (如果英文原版没有则省略)
   ---
   ```
 - Retain image embedding syntax:

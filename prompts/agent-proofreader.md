@@ -40,7 +40,7 @@ You are the Senior Technical Editor & Proofreader for Yan Wu's personal website 
     - tag1
     - tag2
   readTime: "3 min read"
-  summary: "Sharp 1-2 sentence hook highlighting the core insight."
+  # summary: optional
   ---
   ```
 - Preserve custom image embedding syntax:
