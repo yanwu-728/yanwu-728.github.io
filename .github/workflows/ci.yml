@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - "feat/**"
+      - "fix/**"
+  pull_request:
+    branches:
+      - main
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Build & Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check Python scripts syntax
+        run: |
+          python3 -m py_compile scripts/build_content.py scripts/dev_server.py
+
+      - name: Build content data
+        run: |
+          python3 scripts/build_content.py
+
+      - name: Verify compiled data is in sync with markdown
+        run: |
+          if ! git diff --exit-code data/; then
+            echo "::error::Compiled files in data/ are out of sync with markdown in posts/ or misc/."
+            echo "Please run 'python3 scripts/build_content.py' locally and commit the updated data files."
+            exit 1
+          fi
+
+      - name: Validate XML and SEO files
+        run: |
+          python3 -c "import xml.etree.ElementTree as ET; ET.parse('sitemap.xml'); print('✓ sitemap.xml is valid XML')"
+          test -f robots.txt && echo "✓ robots.txt exists"
+
+      - name: Verify referenced assets in index.html
+        run: |
+          python3 -c "
+          import re, os, sys
+          with open('index.html') as f:
+              html = f.read()
+          srcs = re.findall(r'(?:src|href)=\"([^\":?#]+\.[a-zA-Z0-9]+)(?:\?[^\"]*)?\"', html)
+          local_srcs = [s for s in srcs if not s.startswith(('http', '//', 'mailto', '#'))]
+          missing = [s for s in local_srcs if not os.path.exists(s)]
+          if missing:
+              print('Missing referenced assets:', missing, file=sys.stderr)
+              sys.exit(1)
+          print(f'✓ Verified {len(local_srcs)} local asset references exist in index.html')
+          "
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate Cloudflare Wrangler config (dry-run)
+        run: |
+          npx --yes wrangler deploy --dry-run

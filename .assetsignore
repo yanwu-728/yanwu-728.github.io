@@ -1,5 +1,6 @@
 # Git & Environment
 .git/
+.github/
 .gitignore
 .nojekyll
 .venv/
