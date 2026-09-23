@@ -10,6 +10,7 @@ This repository is configured with two specialized subagents and Antigravity ski
 | :--- | :--- | :--- | :--- |
 | **English Proofreader** | `proofreader` | `proofread-english-blog` | Polishes English blogs and notes for high-signal clarity, active voice, and authentic engineering depth without corporate fluff. |
 | **Mandarin Translator** | `translator` | `translate-to-mandarin` | Translates and paraphrases posts into natural, idiomatic Chinese ("信达雅") with zero translationese and strict proper-noun preservation. |
+| **Mobile Web Specialist** | `frontend` | `mobile-web-development` | Enforces mobile-first responsive design, touch target sizing (WCAG 2.5.5/2.5.8), safe areas, and mobile Core Web Vitals. |
 
 ---
 
@@ -24,6 +25,7 @@ You can ask Antigravity to delegate work to these agents in chat:
 Antigravity automatically discovers the skills in `.agents/skills/`:
 - `proofread-english-blog` triggers automatically when asking to review or polish English drafts.
 - `translate-to-mandarin` triggers automatically when asking to translate or paraphrase to Chinese.
+- `mobile-web-development` triggers automatically when designing, inspecting, or fixing mobile responsiveness, touch targets, and viewport layouts.
 
 ---
 
@@ -31,6 +33,7 @@ Antigravity automatically discovers the skills in `.agents/skills/`:
 If you want to use these agents in ChatGPT, Claude, or Cursor, copy the full system prompts from:
 - [prompts/agent-proofreader.md](prompts/agent-proofreader.md)
 - [prompts/agent-translator.md](prompts/agent-translator.md)
+- [prompts/agent-mobile-web.md](prompts/agent-mobile-web.md)
 
 ---
 

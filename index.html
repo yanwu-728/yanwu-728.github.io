@@ -69,7 +69,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.cdnfonts.com/css/proxima-nova" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..700;1,400..700&family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260918_v8">
+  <link rel="stylesheet" href="css/style.css?v=20260921_v9">
 </head>
 <body>
 
@@ -284,7 +284,7 @@
 
       <!-- Tab 2: Full Experience -->
       <section id="tab-experience" class="tab-panel">
-        <div>
+        <div class="tab-header">
           <h2 class="page-title" data-i18n="experience_page_title">Experience &amp; Education</h2>
           <p class="page-intro" data-i18n="experience_page_intro">Engineering roles and academic degrees.</p>
         </div>
@@ -294,31 +294,29 @@
 
       <!-- Tab 3: Full Writing -->
       <section id="tab-writing" class="tab-panel">
-        <div>
+        <div class="tab-header">
           <h2 class="page-title" data-i18n="writing_page_title">Writing &amp; Notes</h2>
           <p class="page-intro" data-i18n="writing_page_intro">Personal notes, papers, and ideas.</p>
+          <!-- Writing Tag Filters -->
+          <div class="tag-filters" id="writingTagFilters" role="tablist" aria-label="Filter writing by tag"></div>
         </div>
-
-        <!-- Writing Tag Filters -->
-        <div class="tag-filters" id="writingTagFilters" role="tablist" aria-label="Filter writing by tag"></div>
 
         <div id="fullWriting" class="writing-list"></div>
       </section>
 
       <!-- Tab 4: Full Misc (Tagged Notes & Life) -->
       <section id="tab-misc" class="tab-panel">
-        <div>
+        <div class="tab-header">
           <h2 class="page-title" data-i18n="misc_page_title">Misc</h2>
           <p class="page-intro" data-i18n="misc_page_intro">Observations, food, travel, visa notes, and life with my cat.</p>
-        </div>
-
-        <!-- Tag Filters -->
-        <div class="tag-filters" id="miscTagFilters" role="tablist" aria-label="Filter by tag">
-          <button class="tag-filter-btn active" data-tag="all" data-i18n="tag_all">all</button>
-          <button class="tag-filter-btn" data-tag="food" data-i18n="tag_food">food</button>
-          <button class="tag-filter-btn" data-tag="travel" data-i18n="tag_travel">travel</button>
-          <button class="tag-filter-btn" data-tag="visa" data-i18n="tag_visa">visa</button>
-          <button class="tag-filter-btn" data-tag="cat" data-i18n="tag_cat">cat</button>
+          <!-- Tag Filters -->
+          <div class="tag-filters" id="miscTagFilters" role="tablist" aria-label="Filter by tag">
+            <button class="tag-filter-btn active" data-tag="all" data-i18n="tag_all">all</button>
+            <button class="tag-filter-btn" data-tag="food" data-i18n="tag_food">food</button>
+            <button class="tag-filter-btn" data-tag="travel" data-i18n="tag_travel">travel</button>
+            <button class="tag-filter-btn" data-tag="visa" data-i18n="tag_visa">visa</button>
+            <button class="tag-filter-btn" data-tag="cat" data-i18n="tag_cat">cat</button>
+          </div>
         </div>
 
         <div id="fullMisc" class="writing-list misc-list"></div>
