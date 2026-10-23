@@ -205,6 +205,55 @@ def generate_chinese_file(en_file_path, zh_file_path, force=False):
     print(f"  [created] {zh_file_path}")
     return True
 
+def parse_date_key(date_str):
+    """
+    Parses various human date strings into a sortable tuple (year, month, day).
+    Supports formats like 'Oct. 24th, 2026', 'Sept. 20th, 2026', 'Feb 2025', '2025', '2026-10-24'.
+    """
+    if not date_str:
+        return (0, 0, 0)
+    s = str(date_str).strip()
+    clean = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", s, flags=re.IGNORECASE)
+    clean = clean.replace(".", "")
+
+    month_map = {
+        "jan": 1, "january": 1, "feb": 2, "february": 2,
+        "mar": 3, "march": 3, "apr": 4, "april": 4,
+        "may": 5, "jun": 6, "june": 6, "jul": 7, "july": 7,
+        "aug": 8, "august": 8, "sep": 9, "sept": 9, "september": 9,
+        "oct": 10, "october": 10, "nov": 11, "november": 11,
+        "dec": 12, "december": 12,
+    }
+
+    # ISO format YYYY-MM-DD
+    iso_match = re.match(r"^(\d{4})-(\d{1,2})-(\d{1,2})$", clean)
+    if iso_match:
+        return (int(iso_match.group(1)), int(iso_match.group(2)), int(iso_match.group(3)))
+
+    # Month Day, Year e.g. 'Oct 24, 2026' or 'Sept 14 2026'
+    m_d_y = re.match(r"^([a-zA-Z]+)\s+(\d{1,2})(?:,|\s+)\s*(\d{4})$", clean)
+    if m_d_y:
+        m_name = m_d_y.group(1).lower()
+        month = month_map.get(m_name, 0)
+        day = int(m_d_y.group(2))
+        year = int(m_d_y.group(3))
+        return (year, month, day)
+
+    # Month Year e.g. 'Feb 2025'
+    m_y = re.match(r"^([a-zA-Z]+)\s+(\d{4})$", clean)
+    if m_y:
+        m_name = m_y.group(1).lower()
+        month = month_map.get(m_name, 0)
+        year = int(m_y.group(2))
+        return (year, month, 1)
+
+    # Year only e.g. '2025'
+    y_only = re.match(r"^(\d{4})$", clean)
+    if y_only:
+        return (int(y_only.group(1)), 1, 1)
+
+    return (0, 0, 0)
+
 def scan_entries(directory):
     """Scans subfolders in directory for en.md and zh.md."""
     entries = []
@@ -269,6 +318,9 @@ def scan_entries(directory):
             entry["image"] = en_meta["image"]
 
         entries.append((d, entry))
+
+    # Sort entries by date descending (newest first). Fall back to directory name.
+    entries.sort(key=lambda e: (parse_date_key(e[1].get("date")), e[0]), reverse=True)
 
     return [e[1] for e in entries]
 

@@ -5,30 +5,6 @@
 (function() {
   const posts = [
   {
-    "id": "ai_slop",
-    "date": "Sept. 20th, 2026",
-    "tags": [
-      "agents",
-      "llm",
-      "workflows"
-    ],
-    "readTime": {
-      "en": "2 min read",
-      "zh": "3分钟阅读"
-    },
-    "en": {
-      "title": "How to Say No to AI Slop",
-      "summary": "",
-      "content": "### 30-Second Prompt vs. 45-Minute Review\n\n**We all hate to be slopped on, but we also love slopping on others.**\n\nProducing AI slop is easy and satisfying. With very little input, AI predicts the most likely details to fill in a Google Doc, making us feel productive with minimal effort. Yet when we review AI slop from others, the frustration of not knowing which parts are human vs. AI is real—we achieve so little with so much effort.\n\nThe most immediate thing lost in AI slop is **async communication**. A document that should have been reviewed offline now forces a meeting and face-to-face confirmation because the doc itself is useless. Plus it is exhausting and time-consuming to differentiate human intent from AI-generated filler.\n\n\n### How to slop without pissing people off\n\n- **Have good judgment on what you can slop on and what you can't.**  \n  Personal CSS animation or MVP from scratch are great things to slop on, and design docs or product core infrastructures are not. If the slop costs more than a few hours or causes confusion in a 10-person meeting, think twice before you dump the LLM result into the Google docs or Github Pull Request.\n\n- **Review your work afterwards. If it's too hard for you to read, it's too hard for others too.**  \n  If reading the doc induces your migraine, maybe it's a good idea to delete it or ask AI for an explanation before you send to others. Some of the more capable models like to invent nouns or metaphors that sound fancy but make no sense after you read it for more than 2 seconds.[^1]\n\n\n### How to tell others to stop sending you AI slops?\n\n- **Don't read it until you're instructed to do so.**  \n  To save your own time and energy, don't immediately jump into the doc unless someone explicitly pinged you to take a look. Even then, there's a non-zero chance that the doc is generated with less than 5 minutes of human effort. In this case, ask whether they want to clean up the doc a bit and whether this is the final version.\n\n- **Politely ask them for a tldr**  \n  Be direct about what they want to achieve and what question they want to ask. There must be a reason that you were sent this doc, so maybe just be direct and cut to the point.\n\n- **Ask to break down to smaller pieces**  \n  For AI generated code, it's very useful to break down into smaller reviewable pieces. Keep asking the author to break it down until it's small enough for you to review and point out the AI slop from an architectural perspective. \n\n[^1]: https://www.explainx.ai/dictionary/claudish"
-    },
-    "zh": {
-      "title": "如何在职场中对 AI 废话（AI Slop）说不",
-      "summary": null,
-      "content": "### 30 秒的提示词，45 分钟的审阅负担\n\n**我们都讨厌被别人的 AI 废话糊一脸，但自己用 AI 糊别人时往往乐此不疲。**\n\n生成 AI 废话既轻松又有满足感。只要给几个简单的词，AI 就会自动补全一大堆看似煞有介事的细节塞满整份 Google Doc，让我们用极低的心智成本获得一种“今天产出真高”的虚假充实感。然而，当我们换到审阅者的视角去读别人生成的 AI 废话时，挫败感便扑面而来——你根本不知道哪一段是作者自己的真正意图，哪一段是 AI 脑补的水话。辛辛苦苦看了半天，有效信息却少得可怜。\n\nAI 废话摧毁的第一个东西，就是**异步沟通（async communication）**。本来应该在线下花几分钟快速过一遍的文档，现在因为内容本身水到毫无参考价值，不得不额外约个会当面确认：“你到底想表达什么？”更别提在整篇 AI 生成的填充物里大海捞针、分辨人类真实意图到底有多耗费精力了。\n\n\n### 如何合理偷懒，而不至于惹怒同事\n\n- **对什么能糊、什么不能糊有清晰的判断。**  \n  个人项目的 CSS 动画、或者从零快速搭一个概念验证（MVP），都是让 AI 大显身手的好地方；但系统设计文档（Design Doc）或产品的核心架构绝对不行。如果一份 AI 糊出来的产物可能浪费团队几个小时、或在十人例会上引发认知混乱，把大模型吐出来的文字直接倒进 Google Doc 或 GitHub Pull Request 之前，请务必三思。\n\n- **自己先通读一遍。如果你自己都读不下去，别人更读不下去。**  \n  如果读自己刚生成的文档都让你头疼，最好在发给别人之前果断删掉，或者先让 AI 自己解释一遍。有些能力较强的模型尤其喜欢生造名词或花哨的比喻，乍看高级，但稍微细读超过两秒就会发现纯属胡说八道。[^1]\n\n\n### 怎么劝阻别人继续向你投喂 AI 废话？\n\n- **除非被明确要求，否则别主动去读。**  \n  为了省下自己的时间和精力，除非有人明确 @ 你请求审阅，否则不要主动点进文档。即便被指定审阅，这份文档也大概率只花了作者不到 5 分钟的人类精力。遇到这种情况，不妨先直接问一句：“这是最终版吗？要不要先自己整理精简一下？”\n\n- **礼貌地请对方提供一个 TL;DR。**  \n  直接切入主题：对方究竟想达成什么目标？遇到了什么具体问题？既然把文档发给你，必然有明确的诉求，索性单刀直入，跳过繁琐的铺垫。\n\n- **要求拆解成更小的颗粒度。**  \n  对于 AI 生成的代码，拆解成小块审阅非常有效。不断要求作者将其拆解，直到粒度小到你可以轻松审查、并能从架构视角一针见血指出其中冗余的 AI 杂质为止。\n\n[^1]: https://www.explainx.ai/dictionary/claudish"
-    },
-    "topic": "Agentic Workflows in Workspace"
-  },
-  {
     "id": "multi_agent_chaos",
     "date": "Oct. 24th, 2026",
     "tags": [
@@ -50,6 +26,30 @@
       "title": "驯服多智能体协作的混乱：为什么我们需要契约而非自由闲聊",
       "summary": null,
       "content": "### “智能体围炉夜话”的诱人幻觉\n\n在多智能体演示中，最吸睛的往往是模拟软件团队：拉起五个大语言模型（LLM）扮演的角色——产品经理、架构师、前端工程师、后端工程师、QA测试，扔进一个开放聊天频道，然后敲下一行提示词：*“帮我写一个分布式键值存储系统。”*\n\n前三分钟，终端里的景象宛若魔法。产品经理迅速输出用户故事，架构师建议采用 Raft 共识算法，工程师们热火朝天地互相致意。\n\n然而到了第四分钟，画风开始走偏。\n\n架构师和后端工程师陷入了无限的客套循环：\n> *“关于 Raft 日志压缩的提议非常棒！我们是否也该对内存映射文件做个基准测试？”*  \n> *“这个想法很独到！内存映射文件确实能优化 I/O。产品经理怎么看存储上限的问题？”*  \n> *“从用户体验出发，可靠存储至关重要！我们先把边界情况梳理清楚吧。”*\n\n到了第十二轮对话，上下文窗口有一半被互相吹捧的废话塞满，模型凭空捏造了三个根本不存在的 API，而真正能运行的代码却连一行都没写出来。这简直是以每轮 0.06 美元的成本，极其逼真地复刻了一场职场中各怀心思、只点头不落地的低效委员会例会。\n\n把多智能体协作当成毫无约束的自由聊天室，在工程上注定走入死胡同。当智能体像人类那样东拉西扯时，不仅继承了人类团队所有的组织内耗，而且缺乏人类天然具备的现实纠偏机制。\n\n\n### 多智能体系统为何频繁失控？\n\n为什么自由交流的智能体网络总是难以收敛？根本原因在于三个结构性缺陷：\n\n1. **跨轮次的认知漂移（Epistemic Drift）**  \n   大语言模型的每一次补全本质上都是概率采样。当智能体 A 向智能体 B 传递一段自由文本解释时，智能体 B 只能基于对 A 意图的概率估算来生成回复。到了第四轮，最初的技术目标早已在类似“传话游戏”的概率迭代中严重变形。诸如“严格线程安全”或“禁止引入外部依赖”等微妙约束，彻底淹没在泛泛而谈的散文中。\n\n2. **责任发散与终止条件缺失**  \n   在点对点的扁平智能体网络里，没有任何一个模型对终态结果负责。如果智能体 A 挑了智能体 B 代码里的毛病，智能体 B 修改后又回抛给智能体 A 重新审阅。缺乏强制的外部停止准则，整个循环往往只能靠触发 Token 截断、超时或限流硬性终止。\n\n3. **上下文二次膨胀（Quadratic Context Bloat）**  \n   如果每个智能体都能看到所有其他智能体的对话全文，Token 消耗量将随着智能体数量呈二次方爆炸。更糟糕的是，上下文里充斥着大量客套话和重复摘要，直接破坏了模型原本的推理质量。\n\n\n### 构建高信噪比多智能体系统的三条准则\n\n过去两年在 Windsurf 与 Google DeepMind 开发智能体系统的经历，让我体会最深的一点是：**真正可靠的多智能体架构，长得绝不像社交网络；它们更像经典的分布式系统。**\n\n要想把失控的智能体狂欢变成可落地的生产级流水线，需要遵循以下三条设计原则：\n\n\n#### 1. 严禁自由闲聊，全面采用 RPC 强类型接口\n\n对于智能体之间的通信而言，自由自然语言是最糟糕的序列化协议。它直接诱发了冗余、歧义和臆造范围。\n\n子智能体之间不应该进行任何点对点的辩论。相反，应该采用**分层编排器（Hierarchical Orchestrator）**，通过严格定义的类型化 Schema 分发任务：\n\n```python\nfrom pydantic import BaseModel, Field\n\nclass CodeEditRequest(BaseModel):\n    target_file: str\n    instruction: str\n    context_lines: list[int] = Field(description=\"相关代码行切片\")\n\nclass CodeEditResult(BaseModel):\n    patch: str = Field(description=\"统一 diff 格式补丁\")\n    files_modified: list[str]\n    verification_passed: bool\n    compiler_error: str | None = None\n```\n\n编排器不需要向执行节点询问“你怎么看”。它分配原子任务，限定输入范围，并等待一个类型确定的结构化载荷。如果执行失败，子节点只需返回标准错误码，而不是洋洋洒洒解释一段内疚的心路历程。\n\n\n#### 2. 上下文完全隔离，仅共享交付产物（Artifacts）\n\n一个常见的反模式是把智能体 A 的完整执行轨迹一股脑塞给智能体 B。这会导致智能体 B 的上下文被 A 失败的尝试、无关的工具输出以及思考草稿严重污染。\n\n子智能体应该在**隔离的上下文分支**中独立运行。它们只接收执行具体子任务所需的最小信息，在专用沙箱里干活，最后仅回传干净的交付产物：\n\n- 一段具体的代码补丁（diff）\n- 一份独立的 Markdown 报告或产物\n- 一个附带复现步骤的布尔型验证结论\n\n编排器只审查交付物本身，而不去通读混乱的中间推理轨迹。这既保证了主控上下文的精简，也防止了上游混乱污染下游执行节点。\n\n\n#### 3. 必须由确定性验证工具裁决结果\n\n只要存在确定性的检验工具，就绝不要用大语言模型去评估另一个大语言模型的产出。\n\n当智能体写完代码后，不要拉一个“审查智能体”去问代码写得对不对。直接调用编译器、Linter 和单元测试套件：\n\n```bash\n# 确定性的客观事实永远胜过大模型的自我感觉\npytest tests/unit -q && mypy src/ --strict\n```\n\n测试运行器的输出毫无歧义：零样本、不可贿赂、几乎不消耗 Token。要么通过测试，要么测试失败。如果一个智能体反复尝试三次仍无法修复测试报错，立刻触发熔断机制（circuit breaker），回滚沙箱环境，并将决策权交还给人类开发者。\n\n\n### 返璞归真的系统演进\n\n最抓人眼球的智能体演示，总是在描绘由单条提示词驱动、通过“群体涌现”自运转的自动化公司。\n\n但在实际生产中，这种所谓的群体涌现，往往只涌现出了车轱辘话和飞涨的云账单。\n\n真正能在工业界稳定产出高质量代码的智能体架构，往往出奇地传统：有向无环图（DAG）、具备确定性转移条件的状态机、隔离的沙箱工作区，以及类型严苛的 RPC 契约。\n\n如果你希望智能体真正为你编写可用软件，别再让它们聚在数字茶水间里闲扯了。给它们清晰的职责说明、隔离的运行沙箱，以及一台无情的自动化编译器。"
+    },
+    "topic": "Agentic Workflows in Workspace"
+  },
+  {
+    "id": "ai_slop",
+    "date": "Sept. 20th, 2026",
+    "tags": [
+      "agents",
+      "llm",
+      "workflows"
+    ],
+    "readTime": {
+      "en": "2 min read",
+      "zh": "3分钟阅读"
+    },
+    "en": {
+      "title": "How to Say No to AI Slop",
+      "summary": "",
+      "content": "### 30-Second Prompt vs. 45-Minute Review\n\n**We all hate to be slopped on, but we also love slopping on others.**\n\nProducing AI slop is easy and satisfying. With very little input, AI predicts the most likely details to fill in a Google Doc, making us feel productive with minimal effort. Yet when we review AI slop from others, the frustration of not knowing which parts are human vs. AI is real—we achieve so little with so much effort.\n\nThe most immediate thing lost in AI slop is **async communication**. A document that should have been reviewed offline now forces a meeting and face-to-face confirmation because the doc itself is useless. Plus it is exhausting and time-consuming to differentiate human intent from AI-generated filler.\n\n\n### How to slop without pissing people off\n\n- **Have good judgment on what you can slop on and what you can't.**  \n  Personal CSS animation or MVP from scratch are great things to slop on, and design docs or product core infrastructures are not. If the slop costs more than a few hours or causes confusion in a 10-person meeting, think twice before you dump the LLM result into the Google docs or Github Pull Request.\n\n- **Review your work afterwards. If it's too hard for you to read, it's too hard for others too.**  \n  If reading the doc induces your migraine, maybe it's a good idea to delete it or ask AI for an explanation before you send to others. Some of the more capable models like to invent nouns or metaphors that sound fancy but make no sense after you read it for more than 2 seconds.[^1]\n\n\n### How to tell others to stop sending you AI slops?\n\n- **Don't read it until you're instructed to do so.**  \n  To save your own time and energy, don't immediately jump into the doc unless someone explicitly pinged you to take a look. Even then, there's a non-zero chance that the doc is generated with less than 5 minutes of human effort. In this case, ask whether they want to clean up the doc a bit and whether this is the final version.\n\n- **Politely ask them for a tldr**  \n  Be direct about what they want to achieve and what question they want to ask. There must be a reason that you were sent this doc, so maybe just be direct and cut to the point.\n\n- **Ask to break down to smaller pieces**  \n  For AI generated code, it's very useful to break down into smaller reviewable pieces. Keep asking the author to break it down until it's small enough for you to review and point out the AI slop from an architectural perspective. \n\n[^1]: https://www.explainx.ai/dictionary/claudish"
+    },
+    "zh": {
+      "title": "如何在职场中对 AI 废话（AI Slop）说不",
+      "summary": null,
+      "content": "### 30 秒的提示词，45 分钟的审阅负担\n\n**我们都讨厌被别人的 AI 废话糊一脸，但自己用 AI 糊别人时往往乐此不疲。**\n\n生成 AI 废话既轻松又有满足感。只要给几个简单的词，AI 就会自动补全一大堆看似煞有介事的细节塞满整份 Google Doc，让我们用极低的心智成本获得一种“今天产出真高”的虚假充实感。然而，当我们换到审阅者的视角去读别人生成的 AI 废话时，挫败感便扑面而来——你根本不知道哪一段是作者自己的真正意图，哪一段是 AI 脑补的水话。辛辛苦苦看了半天，有效信息却少得可怜。\n\nAI 废话摧毁的第一个东西，就是**异步沟通（async communication）**。本来应该在线下花几分钟快速过一遍的文档，现在因为内容本身水到毫无参考价值，不得不额外约个会当面确认：“你到底想表达什么？”更别提在整篇 AI 生成的填充物里大海捞针、分辨人类真实意图到底有多耗费精力了。\n\n\n### 如何合理偷懒，而不至于惹怒同事\n\n- **对什么能糊、什么不能糊有清晰的判断。**  \n  个人项目的 CSS 动画、或者从零快速搭一个概念验证（MVP），都是让 AI 大显身手的好地方；但系统设计文档（Design Doc）或产品的核心架构绝对不行。如果一份 AI 糊出来的产物可能浪费团队几个小时、或在十人例会上引发认知混乱，把大模型吐出来的文字直接倒进 Google Doc 或 GitHub Pull Request 之前，请务必三思。\n\n- **自己先通读一遍。如果你自己都读不下去，别人更读不下去。**  \n  如果读自己刚生成的文档都让你头疼，最好在发给别人之前果断删掉，或者先让 AI 自己解释一遍。有些能力较强的模型尤其喜欢生造名词或花哨的比喻，乍看高级，但稍微细读超过两秒就会发现纯属胡说八道。[^1]\n\n\n### 怎么劝阻别人继续向你投喂 AI 废话？\n\n- **除非被明确要求，否则别主动去读。**  \n  为了省下自己的时间和精力，除非有人明确 @ 你请求审阅，否则不要主动点进文档。即便被指定审阅，这份文档也大概率只花了作者不到 5 分钟的人类精力。遇到这种情况，不妨先直接问一句：“这是最终版吗？要不要先自己整理精简一下？”\n\n- **礼貌地请对方提供一个 TL;DR。**  \n  直接切入主题：对方究竟想达成什么目标？遇到了什么具体问题？既然把文档发给你，必然有明确的诉求，索性单刀直入，跳过繁琐的铺垫。\n\n- **要求拆解成更小的颗粒度。**  \n  对于 AI 生成的代码，拆解成小块审阅非常有效。不断要求作者将其拆解，直到粒度小到你可以轻松审查、并能从架构视角一针见血指出其中冗余的 AI 杂质为止。\n\n[^1]: https://www.explainx.ai/dictionary/claudish"
     },
     "topic": "Agentic Workflows in Workspace"
   }

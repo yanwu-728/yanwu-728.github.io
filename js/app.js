@@ -16,6 +16,8 @@ var activeWritingTag = 'all';
 var activeMiscTag = 'all';
 
 document.addEventListener('DOMContentLoaded', () => {
+  sortEntriesByDateDesc(SITE_DATA.blogs);
+  sortEntriesByDateDesc(SITE_DATA.misc);
   initLanguage();
   initTabs();
   renderBio();
@@ -255,6 +257,60 @@ function formatShortDate(dateStr) {
   }
 
   return str;
+}
+
+function parseDateToTimestamp(dateStr) {
+  if (!dateStr) return 0;
+  const str = String(dateStr).trim();
+  const cleanStr = str.replace(/(\d+)(st|nd|rd|th)/i, '$1').replace(/\./g, '');
+
+  const months = {
+    jan: 0, january: 0,
+    feb: 1, february: 1,
+    mar: 2, march: 2,
+    apr: 3, april: 3,
+    may: 4,
+    jun: 5, june: 5,
+    jul: 6, july: 6,
+    aug: 7, august: 7,
+    sep: 8, sept: 8, september: 8,
+    oct: 9, october: 9,
+    nov: 10, november: 10,
+    dec: 11, december: 11
+  };
+
+  const isoMatch = cleanStr.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (isoMatch) {
+    return new Date(parseInt(isoMatch[1], 10), parseInt(isoMatch[2], 10) - 1, parseInt(isoMatch[3], 10)).getTime();
+  }
+
+  const mdyMatch = cleanStr.match(/^([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})$/);
+  if (mdyMatch) {
+    const m = months[mdyMatch[1].toLowerCase()];
+    if (m !== undefined) {
+      return new Date(parseInt(mdyMatch[3], 10), m, parseInt(mdyMatch[2], 10)).getTime();
+    }
+  }
+
+  const myMatch = cleanStr.match(/^([A-Za-z]+)\s+(\d{4})$/);
+  if (myMatch) {
+    const m = months[myMatch[1].toLowerCase()];
+    if (m !== undefined) {
+      return new Date(parseInt(myMatch[2], 10), m, 1).getTime();
+    }
+  }
+
+  const yMatch = cleanStr.match(/^(\d{4})$/);
+  if (yMatch) {
+    return new Date(parseInt(yMatch[1], 10), 0, 1).getTime();
+  }
+
+  return 0;
+}
+
+function sortEntriesByDateDesc(items) {
+  if (!items || !items.length) return items;
+  return items.sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
 }
 
 /* ==========================================================================
