@@ -56,8 +56,8 @@ var I18N = {
     juzhang_stat_fights: "Street Fights",
     juzhang_fights_val: "1\u20130",
     juzhang_latest_label: "Latest incident:",
-    juzhang_knock_btn: "\ud83d\udc3e Knock something over (+1)",
-    juzhang_story_link: "Read jailbreak note \u2192"
+    juzhang_knock_btn: "\ud83d\udc3e Knock over (+1)",
+    juzhang_story_link: "Jailbreak note \u2192"
   },
   zh: {
     role_sidebar: "软件工程师",
@@ -111,8 +111,8 @@ var I18N = {
     juzhang_stat_fights: "街头胜绩",
     juzhang_fights_val: "1胜0负",
     juzhang_latest_label: "最新案情：",
-    juzhang_knock_btn: "\ud83d\udc3e 随手扒拉一下 (+1)",
-    juzhang_story_link: "阅读周日越狱实录 \u2192"
+    juzhang_knock_btn: "\ud83d\udc3e 扒拉一下 (+1)",
+    juzhang_story_link: "周日越狱实录 \u2192"
   }
 };
 
