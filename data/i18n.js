@@ -47,7 +47,17 @@ var I18N = {
     ai_trans_notice: "* Translated with AI",
     ai_trans_badge: "AI Translated",
     empty_writing: "No articles published yet. Check back soon!",
-    empty_misc: "No notes published yet."
+    empty_misc: "No notes published yet.",
+    juzhang_sidebar_btn: "Juzhang (局长)",
+    juzhang_subtitle: "4 y/o · Orange Boy · Chief of Chaos",
+    juzhang_next_photo: "Next photo \u21bb",
+    juzhang_stat_crimes: "Crimes Committed",
+    juzhang_stat_knocked: "Objects Knocked Over",
+    juzhang_stat_fights: "Street Fights",
+    juzhang_fights_val: "1\u20130",
+    juzhang_latest_label: "Latest incident:",
+    juzhang_knock_btn: "\ud83d\udc3e Knock something over (+1)",
+    juzhang_story_link: "Read jailbreak note \u2192"
   },
   zh: {
     role_sidebar: "软件工程师",
@@ -92,7 +102,17 @@ var I18N = {
     ai_trans_notice: "* 中文内容由 AI 翻译",
     ai_trans_badge: "AI 翻译",
     empty_writing: "暂未发布文章，敬请期待！",
-    empty_misc: "暂未发布随笔。"
+    empty_misc: "暂未发布随笔。",
+    juzhang_sidebar_btn: "局长 (Juzhang)",
+    juzhang_subtitle: "4岁 · 橘猫小男孩 · 家里一把手",
+    juzhang_next_photo: "切换照片 \u21bb",
+    juzhang_stat_crimes: "作案总数",
+    juzhang_stat_knocked: "扒落物品",
+    juzhang_stat_fights: "街头胜绩",
+    juzhang_fights_val: "1胜0负",
+    juzhang_latest_label: "最新案情：",
+    juzhang_knock_btn: "\ud83d\udc3e 随手扒拉一下 (+1)",
+    juzhang_story_link: "阅读周日越狱实录 \u2192"
   }
 };
 

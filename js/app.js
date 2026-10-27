@@ -14,8 +14,12 @@ var currentActivePostId = null;
 var currentActiveMiscId = null;
 var activeWritingTag = 'all';
 var activeMiscTag = 'all';
+var juzhangPhotoIdx = 0;
+var juzhangIncidentIdx = 0;
+var juzhangBonusCount = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
+  initJuzhangEasterEgg();
   initLanguage();
   initTabs();
   renderBio();
@@ -91,8 +95,9 @@ function applyLanguage(lang, saveToStorage = true) {
   renderFullContent();
   setupWritingTagFilters();
   setupMiscTagFilters();
+  renderJuzhangCard();
 
-  // 6. Refresh active post view if open
+  // 7. Refresh active post view if open
   if (currentActivePostId) {
     openBlogPost(currentActivePostId, previousTabBeforePost, false);
   }
@@ -1149,3 +1154,161 @@ function formatInlineStyles(str) {
     .replace(/(?<!\!)\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 }
 
+/* ==========================================================================
+   Subtle Juzhang (局长) Easter Egg Controller
+   ========================================================================== */
+function initJuzhangEasterEgg() {
+  try {
+    const saved = parseInt(localStorage.getItem('juzhang_bonus_count') || '0', 10);
+    if (!isNaN(saved) && saved >= 0) {
+      juzhangBonusCount = saved;
+    }
+  } catch (e) {}
+
+  renderJuzhangCard();
+
+  // Close when clicking outside the card
+  document.addEventListener('click', (e) => {
+    const card = document.getElementById('juzhangEasterEggCard');
+    if (!card || !card.classList.contains('is-open')) return;
+    if (
+      card.contains(e.target) ||
+      e.target.closest('.juzhang-inline-trigger') ||
+      e.target.closest('.juzhang-sidebar-btn')
+    ) {
+      return;
+    }
+    closeJuzhangCard();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeJuzhangCard();
+    }
+  });
+}
+
+function handleJuzhangTriggerClick(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const card = document.getElementById('juzhangEasterEggCard');
+  if (!card) return;
+
+  if (!card.classList.contains('is-open')) {
+    renderJuzhangCard();
+    card.classList.add('is-open');
+    card.setAttribute('aria-hidden', 'false');
+    if (typeof gtag === 'function') {
+      gtag('event', 'select_content', {
+        content_type: 'easter_egg',
+        item_id: 'juzhang_open'
+      });
+    }
+  } else {
+    // Subsequent clicks while open cycle the photo and log another knocked-over object
+    cycleJuzhangPhoto(event);
+    recordJuzhangCrime(event);
+  }
+}
+
+function closeJuzhangCard() {
+  const card = document.getElementById('juzhangEasterEggCard');
+  if (!card) return;
+  card.classList.remove('is-open');
+  card.setAttribute('aria-hidden', 'true');
+}
+
+function cycleJuzhangPhoto(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const jData = SITE_DATA.profile && SITE_DATA.profile.juzhang;
+  if (!jData || !jData.photos || jData.photos.length === 0) return;
+
+  juzhangPhotoIdx = (juzhangPhotoIdx + 1) % jData.photos.length;
+  renderJuzhangCard();
+}
+
+function recordJuzhangCrime(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const jData = SITE_DATA.profile && SITE_DATA.profile.juzhang;
+  if (!jData) return;
+
+  juzhangBonusCount += 1;
+  if (jData.incidents && jData.incidents.length > 0) {
+    juzhangIncidentIdx = (juzhangIncidentIdx + 1) % jData.incidents.length;
+  }
+
+  try {
+    localStorage.setItem('juzhang_bonus_count', String(juzhangBonusCount));
+  } catch (e) {}
+
+  renderJuzhangCard();
+
+  const crimesEl = document.getElementById('juzhangCrimesVal');
+  const knockedEl = document.getElementById('juzhangKnockedVal');
+  [crimesEl, knockedEl].forEach(el => {
+    if (!el) return;
+    el.classList.remove('stat-bump');
+    void el.offsetWidth;
+    el.classList.add('stat-bump');
+    setTimeout(() => el.classList.remove('stat-bump'), 220);
+  });
+}
+
+function renderJuzhangCard() {
+  const jData = SITE_DATA.profile && SITE_DATA.profile.juzhang;
+  if (!jData) return;
+  const lang = getLang();
+
+  const photos = jData.photos || [];
+  const photo = photos[juzhangPhotoIdx] || photos[0];
+  if (photo) {
+    const pLang = photo[lang] || photo.en;
+    const imgEl = document.getElementById('juzhangPhotoImg');
+    const titleEl = document.getElementById('juzhangPhotoTitle');
+    const capEl = document.getElementById('juzhangPhotoCaption');
+    const counterEl = document.getElementById('juzhangPhotoCounter');
+
+    if (imgEl) {
+      imgEl.src = photo.src;
+      imgEl.style.objectPosition = photo.pos || 'center center';
+      imgEl.alt = pLang.title;
+    }
+    if (titleEl) titleEl.textContent = pLang.title;
+    if (capEl) capEl.textContent = pLang.caption;
+    if (counterEl) {
+      const cur = String(juzhangPhotoIdx + 1).padStart(2, '0');
+      const tot = String(photos.length).padStart(2, '0');
+      counterEl.textContent = `${cur} / ${tot}`;
+    }
+  }
+
+  const crimesEl = document.getElementById('juzhangCrimesVal');
+  const knockedEl = document.getElementById('juzhangKnockedVal');
+  if (crimesEl) {
+    crimesEl.textContent = String((jData.baseCrimes || 14) + Math.floor((juzhangBonusCount + 1) / 2));
+  }
+  if (knockedEl) {
+    knockedEl.textContent = String((jData.baseKnocked || 27) + juzhangBonusCount);
+  }
+
+  const incidents = jData.incidents || [];
+  const inc = incidents[juzhangIncidentIdx] || incidents[0];
+  const incEl = document.getElementById('juzhangIncidentText');
+  if (inc && incEl) {
+    incEl.textContent = inc[lang] || inc.en;
+  }
+}
+
+function openJuzhangStoryFromCard() {
+  closeJuzhangCard();
+  openMiscPost('juzhang_jailbreak', 'about');
+}
