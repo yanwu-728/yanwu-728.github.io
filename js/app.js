@@ -14,8 +14,12 @@ var currentActivePostId = null;
 var currentActiveMiscId = null;
 var activeWritingTag = 'all';
 var activeMiscTag = 'all';
+var juzhangPhotoIdx = 0;
+var juzhangIncidentIdx = 0;
+var juzhangBonusCount = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
+  initJuzhangEasterEgg();
   initLanguage();
   initTabs();
   renderBio();
@@ -91,8 +95,9 @@ function applyLanguage(lang, saveToStorage = true) {
   renderFullContent();
   setupWritingTagFilters();
   setupMiscTagFilters();
+  renderJuzhangCard();
 
-  // 6. Refresh active post view if open
+  // 7. Refresh active post view if open
   if (currentActivePostId) {
     openBlogPost(currentActivePostId, previousTabBeforePost, false);
   }
@@ -1147,5 +1152,236 @@ function formatInlineStyles(str) {
     .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="post-inline-image" loading="lazy" />')
     .replace(/\[\^([^\]]+)\](?!\:)/g, '<sup class="footnote-ref"><a href="#fn-$1" id="fnref-$1">[$1]</a></sup>')
     .replace(/(?<!\!)\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+}
+
+/* ==========================================================================
+   Subtle Juzhang (局长) Easter Egg Controller
+   ========================================================================== */
+var juzhangThoughtIdx = 0;
+var juzhangLastSwattedIdx = null;
+
+function initJuzhangEasterEgg() {
+  try {
+    const saved = parseInt(localStorage.getItem('juzhang_bonus_count') || '0', 10);
+    if (!isNaN(saved) && saved >= 0) {
+      juzhangBonusCount = saved;
+    }
+  } catch (e) {}
+
+  renderJuzhangCard();
+
+  // Close when clicking outside the card
+  document.addEventListener('click', (e) => {
+    const card = document.getElementById('juzhangEasterEggCard');
+    if (!card || !card.classList.contains('is-open')) return;
+    if (
+      card.contains(e.target) ||
+      e.target.closest('.juzhang-inline-trigger') ||
+      e.target.closest('.juzhang-sidebar-btn')
+    ) {
+      return;
+    }
+    closeJuzhangCard();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeJuzhangCard();
+    }
+  });
+}
+
+function handleJuzhangTriggerClick(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const card = document.getElementById('juzhangEasterEggCard');
+  if (!card) return;
+
+  if (!card.classList.contains('is-open')) {
+    juzhangLastSwattedIdx = null;
+    renderJuzhangCard();
+    card.classList.add('is-open');
+    card.setAttribute('aria-hidden', 'false');
+    if (typeof gtag === 'function') {
+      gtag('event', 'select_content', {
+        content_type: 'easter_egg',
+        item_id: 'juzhang_open'
+      });
+    }
+  } else {
+    cycleJuzhangPhoto(event);
+    swatJuzhangObject(event);
+  }
+}
+
+function closeJuzhangCard() {
+  const card = document.getElementById('juzhangEasterEggCard');
+  if (!card) return;
+  card.classList.remove('is-open');
+  card.setAttribute('aria-hidden', 'true');
+}
+
+function cycleJuzhangPhoto(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const jData = SITE_DATA.profile && SITE_DATA.profile.juzhang;
+  if (!jData || !jData.photos || jData.photos.length === 0) return;
+
+  juzhangPhotoIdx = (juzhangPhotoIdx + 1) % jData.photos.length;
+  juzhangLastSwattedIdx = null;
+  renderJuzhangCard();
+}
+
+function petJuzhangPhoto(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const jData = SITE_DATA.profile && SITE_DATA.profile.juzhang;
+  if (!jData) return;
+
+  // Spawn floating thought bubble at click position
+  const frame = document.getElementById('juzhangPhotoFrame');
+  const layer = document.getElementById('juzhangFloatingLayer');
+  const lang = getLang();
+  const thoughts = (jData.thoughts && (jData.thoughts[lang] || jData.thoughts.en)) || ['purr...'];
+
+  if (frame && layer && thoughts.length > 0) {
+    const bubble = document.createElement('span');
+    bubble.className = 'juzhang-thought-bubble';
+    bubble.textContent = thoughts[juzhangThoughtIdx % thoughts.length];
+    juzhangThoughtIdx += 1;
+
+    let xPct = 50;
+    let yPct = 45;
+    if (event && event.clientX && frame.getBoundingClientRect) {
+      const rect = frame.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        xPct = Math.min(80, Math.max(20, ((event.clientX - rect.left) / rect.width) * 100));
+        yPct = Math.min(80, Math.max(20, ((event.clientY - rect.top) / rect.height) * 100));
+      }
+    }
+    bubble.style.left = `${xPct}%`;
+    bubble.style.top = `${yPct}%`;
+    layer.appendChild(bubble);
+    setTimeout(() => {
+      if (bubble.parentNode) bubble.parentNode.removeChild(bubble);
+    }, 950);
+  }
+
+  // Also flip between the two photos
+  cycleJuzhangPhoto(null);
+}
+
+function swatJuzhangObject(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const jData = SITE_DATA.profile && SITE_DATA.profile.juzhang;
+  if (!jData) return;
+
+  const items = jData.swatItems || [];
+  const currentItemIdx = juzhangIncidentIdx % Math.max(1, items.length);
+  const swattedItem = items[currentItemIdx];
+
+  // Animate paw swat
+  const pawEl = document.getElementById('juzhangSwatPaw');
+  if (pawEl) {
+    pawEl.classList.remove('is-swatting');
+    void pawEl.offsetWidth;
+    pawEl.classList.add('is-swatting');
+    setTimeout(() => pawEl.classList.remove('is-swatting'), 180);
+  }
+
+  // Spawn falling emoji tumbling off the edge of the card
+  const card = document.getElementById('juzhangEasterEggCard');
+  if (card && swattedItem && typeof document.createElement === 'function') {
+    const flyer = document.createElement('span');
+    flyer.className = 'juzhang-falling-emoji';
+    flyer.textContent = swattedItem.icon;
+    card.appendChild(flyer);
+    setTimeout(() => {
+      if (flyer.parentNode) flyer.parentNode.removeChild(flyer);
+    }, 680);
+  }
+
+  juzhangBonusCount += 1;
+  juzhangLastSwattedIdx = currentItemIdx;
+  if (items.length > 0) {
+    juzhangIncidentIdx = (juzhangIncidentIdx + 1) % items.length;
+  }
+
+  try {
+    localStorage.setItem('juzhang_bonus_count', String(juzhangBonusCount));
+  } catch (e) {}
+
+  renderJuzhangCard();
+
+  const knockedEl = document.getElementById('juzhangKnockedVal');
+  if (knockedEl) {
+    knockedEl.classList.remove('stat-bump');
+    void knockedEl.offsetWidth;
+    knockedEl.classList.add('stat-bump');
+    setTimeout(() => knockedEl.classList.remove('stat-bump'), 220);
+  }
+}
+
+function renderJuzhangCard() {
+  const jData = SITE_DATA.profile && SITE_DATA.profile.juzhang;
+  if (!jData) return;
+  const lang = getLang();
+
+  const photos = jData.photos || [];
+  const photo = photos[juzhangPhotoIdx] || photos[0];
+  const items = jData.swatItems || [];
+
+  if (photo) {
+    const pLang = photo[lang] || photo.en;
+    const imgEl = document.getElementById('juzhangPhotoImg');
+    const modeEl = document.getElementById('juzhangModeTag');
+    const capEl = document.getElementById('juzhangPhotoCaption');
+    const counterEl = document.getElementById('juzhangPhotoCounter');
+
+    if (imgEl) {
+      imgEl.src = photo.src;
+      imgEl.style.objectPosition = photo.pos || 'center center';
+      imgEl.alt = pLang.mode || 'Juzhang';
+    }
+    if (modeEl) modeEl.textContent = pLang.mode || '';
+    if (counterEl) {
+      counterEl.innerHTML = `${juzhangPhotoIdx + 1}/${photos.length} &#8635;`;
+    }
+
+    if (capEl) {
+      if (juzhangLastSwattedIdx !== null && items[juzhangLastSwattedIdx]) {
+        const swatItem = items[juzhangLastSwattedIdx];
+        capEl.textContent = `${swatItem.icon} ${swatItem[lang] || swatItem.en}`;
+      } else {
+        capEl.textContent = pLang.caption;
+      }
+    }
+  }
+
+  const knockedEl = document.getElementById('juzhangKnockedVal');
+  if (knockedEl) {
+    knockedEl.textContent = String((jData.baseKnocked || 27) + juzhangBonusCount);
+  }
+
+  const nextItem = items[juzhangIncidentIdx % Math.max(1, items.length)];
+  const emojiEl = document.getElementById('juzhangTargetEmoji');
+  if (nextItem && emojiEl) {
+    emojiEl.textContent = nextItem.icon;
+  }
+}
+
+function openJuzhangStoryFromCard() {
+  closeJuzhangCard();
+  openMiscPost('juzhang_jailbreak', 'about');
 }
 

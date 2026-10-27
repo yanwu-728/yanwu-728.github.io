@@ -1216,6 +1216,359 @@ a:hover {
   line-height: 1.4;
 }
 
+/* ==========================================================================
+   Subtle Juzhang (局长) Easter Egg — Minimal Polaroid & Desk Swatter
+   ========================================================================== */
+.juzhang-inline-trigger {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.18rem;
+  background: none;
+  border: none;
+  border-bottom: 1px dotted var(--text-dim);
+  padding: 0 0.05rem;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
 
+.juzhang-inline-trigger:hover {
+  border-bottom: 1px solid var(--text);
+}
 
+.juzhang-paw-dot {
+  font-size: 0.72em;
+  line-height: 1;
+  display: inline-block;
+  opacity: 0.7;
+  margin-left: 0.12rem;
+  transition: transform 0.18s ease, opacity 0.15s ease;
+}
+
+.juzhang-inline-trigger:hover .juzhang-paw-dot {
+  opacity: 1;
+  transform: rotate(-14deg) scale(1.15);
+}
+
+.juzhang-sidebar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: none;
+  border: none;
+  padding: 0.1rem 0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.15s ease;
+  width: fit-content;
+}
+
+.juzhang-sidebar-btn:hover {
+  color: var(--text);
+}
+
+.juzhang-cat-icon {
+  color: #d97706;
+  opacity: 0.75;
+  flex-shrink: 0;
+  transition: transform 0.18s ease, opacity 0.15s ease;
+}
+
+.juzhang-sidebar-btn:hover .juzhang-cat-icon {
+  opacity: 1;
+  transform: rotate(-12deg) scale(1.1);
+}
+
+.juzhang-card {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 300px;
+  max-width: calc(100vw - 2rem);
+  background: var(--bg);
+  border: 1px solid var(--border-focus);
+  border-radius: 3px;
+  padding: 0.75rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  overflow: visible;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+}
+
+.juzhang-card.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.juzhang-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.juzhang-card-name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.juzhang-card-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.juzhang-mode-tag {
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.juzhang-card-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.juzhang-photo-counter {
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  padding: 0.1rem 0.25rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.juzhang-photo-counter:hover {
+  color: var(--text);
+}
+
+.juzhang-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  line-height: 1;
+  padding: 0 0.15rem;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.juzhang-close-btn:hover {
+  color: var(--text);
+}
+
+.juzhang-photo-frame {
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--bg-subtle);
+  cursor: pointer;
+  user-select: none;
+}
+
+.juzhang-photo-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.juzhang-photo-frame:active .juzhang-photo-img {
+  transform: scale(0.985);
+}
+
+.juzhang-floating-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.juzhang-thought-bubble {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  background: rgba(17, 17, 17, 0.86);
+  color: #ffffff;
+  padding: 0.16rem 0.45rem;
+  border-radius: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: floatCatThought 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes floatCatThought {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -20%) scale(0.9);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -60%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -145%) scale(0.96);
+  }
+}
+
+.juzhang-photo-caption {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.42;
+  margin: 0;
+  min-height: 2.2em;
+}
+
+.juzhang-desk-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.juzhang-desk-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.juzhang-desk-meta strong {
+  color: var(--text);
+  font-weight: 600;
+  display: inline-block;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.juzhang-desk-meta strong.stat-bump {
+  transform: scale(1.22);
+  color: #d97706;
+}
+
+.juzhang-story-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.juzhang-story-link:hover {
+  color: var(--text);
+}
+
+.juzhang-swat-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  padding: 0.18rem 0.48rem;
+  border-radius: 2px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.juzhang-swat-btn:hover {
+  border-color: var(--text);
+  background: var(--bg);
+}
+
+.juzhang-swat-paw {
+  display: inline-block;
+  font-size: 0.78rem;
+  transition: transform 0.14s ease;
+}
+
+.juzhang-swat-paw.is-swatting {
+  transform: translateX(5px) rotate(24deg) scale(1.2);
+}
+
+.juzhang-target-emoji {
+  display: inline-block;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.juzhang-falling-emoji {
+  position: absolute;
+  right: 0.35rem;
+  bottom: 0.4rem;
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 250;
+  animation: swatOffDesk 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes swatOffDesk {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  30% {
+    opacity: 1;
+    transform: translate(18px, -12px) rotate(45deg) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(54px, 68px) rotate(220deg) scale(0.75);
+  }
+}
+
+@media (max-width: 768px) {
+  .juzhang-card {
+    right: 1rem;
+    bottom: 1rem;
+    width: 290px;
+  }
+}
 

@@ -69,7 +69,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.cdnfonts.com/css/proxima-nova" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..700;1,400..700&family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260918_v8">
+  <link rel="stylesheet" href="css/style.css?v=20261027_v11">
 </head>
 <body>
 
@@ -139,6 +139,13 @@
             <span class="external-arrow">&nearr;</span>
           </a>
         </div>
+
+        <button id="juzhangSidebarBtn" type="button" class="juzhang-sidebar-btn" onclick="handleJuzhangTriggerClick(event)" title="Inspect Juzhang's dossier">
+          <svg class="juzhang-cat-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 13.5c-2.6 0-4.7 1.8-5.2 4.2-.2 1.1.6 2.1 1.7 2.1h7c1.1 0 1.9-1 1.7-2.1-.5-2.4-2.6-4.2-5.2-4.2zm-4.8-2.3c1.1 0 1.9-1.1 1.9-2.4s-.8-2.4-1.9-2.4-1.9 1.1-1.9 2.4.8 2.4 1.9 2.4zm9.6 0c1.1 0 1.9-1.1 1.9-2.4s-.8-2.4-1.9-2.4-1.9 1.1-1.9 2.4.8 2.4 1.9 2.4zm-6.7-4.5c.9-.2 1.4-1.4 1.1-2.6-.3-1.2-1.2-2-2.1-1.8-.9.2-1.4 1.4-1.1 2.6.3 1.2 1.2 2 2.1 1.8zm3.8 0c.9.2 1.8-.6 2.1-1.8.3-1.2-.2-2.4-1.1-2.6-.9-.2-1.8.6-2.1 1.8-.3 1.2.2 2.4 1.1 2.6z"/>
+          </svg>
+          <span data-i18n="juzhang_sidebar_btn">Juzhang (局长)</span>
+        </button>
       </div>
     </aside>
 
@@ -346,16 +353,50 @@
 
   </div>
 
+  <!-- Subtle Juzhang (局长) Easter Egg Card -->
+  <aside id="juzhangEasterEggCard" class="juzhang-card" aria-hidden="true" role="dialog" aria-label="Juzhang">
+    <div class="juzhang-card-header">
+      <div class="juzhang-card-name-row">
+        <span class="juzhang-card-name">Juzhang &middot; 局长</span>
+        <span id="juzhangModeTag" class="juzhang-mode-tag">executive slouch</span>
+      </div>
+      <div class="juzhang-card-header-right">
+        <button id="juzhangPhotoCounter" type="button" class="juzhang-photo-counter" onclick="cycleJuzhangPhoto(event)" title="Flip photo">1/2 &#8635;</button>
+        <button id="juzhangCloseBtn" type="button" class="juzhang-close-btn" onclick="closeJuzhangCard()" aria-label="Close">&times;</button>
+      </div>
+    </div>
+
+    <div id="juzhangPhotoFrame" class="juzhang-photo-frame" onclick="petJuzhangPhoto(event)" title="Click to pet / flip photo">
+      <img id="juzhangPhotoImg" src="assets/images/chonk-juzhang.png" alt="Juzhang the orange cat" class="juzhang-photo-img" />
+      <div id="juzhangFloatingLayer" class="juzhang-floating-layer" aria-hidden="true"></div>
+    </div>
+
+    <p id="juzhangPhotoCaption" class="juzhang-photo-caption"></p>
+
+    <div class="juzhang-desk-footer">
+      <div class="juzhang-desk-meta">
+        <span><span data-i18n="juzhang_knocked_prefix">knocked over:</span> <strong id="juzhangKnockedVal">27</strong></span>
+        <span class="juzhang-meta-dot">&middot;</span>
+        <button type="button" class="juzhang-story-link" onclick="openJuzhangStoryFromCard()" data-i18n="juzhang_story_link">jailbreak &nearr;</button>
+      </div>
+      <button id="juzhangSwatBtn" type="button" class="juzhang-swat-btn" onclick="swatJuzhangObject(event)">
+        <span id="juzhangSwatPaw" class="juzhang-swat-paw" aria-hidden="true">🐾</span>
+        <span data-i18n="juzhang_swat_verb">swat</span>
+        <span id="juzhangTargetEmoji" class="juzhang-target-emoji">🧋</span>
+      </button>
+    </div>
+  </aside>
+
   <!-- Modular Data Layer -->
-  <script src="js/data-store.js?v=20260918_v8"></script>
-  <script src="data/i18n.js?v=20260918_v8"></script>
-  <script src="data/profile.js?v=20260918_v8"></script>
-  <script src="data/journey.js?v=20260918_v8"></script>
-  <script src="data/experience.js?v=20260918_v8"></script>
-  <script src="data/posts.js?v=20260918_v8"></script>
-  <script src="data/misc.js?v=20260918_v8"></script>
+  <script src="js/data-store.js?v=20261027_v11"></script>
+  <script src="data/i18n.js?v=20261027_v11"></script>
+  <script src="data/profile.js?v=20261027_v11"></script>
+  <script src="data/journey.js?v=20261027_v11"></script>
+  <script src="data/experience.js?v=20261027_v11"></script>
+  <script src="data/posts.js?v=20261027_v11"></script>
+  <script src="data/misc.js?v=20261027_v11"></script>
 
   <!-- Core App Logic -->
-  <script src="js/app.js?v=20260918_v8"></script>
+  <script src="js/app.js?v=20261027_v11"></script>
 </body>
 </html>

@@ -10,6 +10,76 @@ registerProfile({
     github: "https://github.com/yanwu-728",
     scholar: "https://scholar.google.com/citations?user=_gzU1DUAAAAJ&hl=en"
   },
+  juzhang: {
+    baseKnocked: 27,
+    photos: [
+      {
+        src: "assets/images/chonk-juzhang.png",
+        pos: "center center",
+        en: {
+          mode: "executive slouch",
+          caption: "Slouched on the couch like a bureau chief after a 3-hour meeting."
+        },
+        zh: {
+          mode: "局级坐姿",
+          caption: "瘫坐沙发正中，宛如刚开完三小时大会的局里一把手。"
+        }
+      },
+      {
+        src: "assets/images/grinding-juzhang.jpeg",
+        pos: "center center",
+        en: {
+          mode: "on-call reviewer",
+          caption: "Loafing behind the keyboard, silently judging every commit."
+        },
+        zh: {
+          mode: "代码审查员",
+          caption: "端坐键盘后方监工，冷静审视每一行新提交的代码。"
+        }
+      }
+    ],
+    thoughts: {
+      en: ["purr...", "LGTM 🐾", "needs more treats", "git push --force", "unbothered", "3am zoomies queued"],
+      zh: ["呼噜呼噜...", "准了 🐾", "冻干呢？", "准备凌晨跑酷", "代码不行重写真的", "稳如老干部"]
+    },
+    swatItems: [
+      {
+        icon: "🧋",
+        en: "Swatted your half-sugar boba off the desk while holding eye contact.",
+        zh: "直视你的眼睛，慢条斯理一爪把半糖奶茶拨下桌。"
+      },
+      {
+        icon: "⌨️",
+        en: "Walked across the keyboard and force-pushed to main.",
+        zh: "从容踩过键盘，顺手往 main 分支执行了 force push。"
+      },
+      {
+        icon: "🪴",
+        en: "Toppled the heavy cat tree onto the entryway shoe rack.",
+        zh: "把沉重的猫爬架精准推倒在玄关鞋架上。"
+      },
+      {
+        icon: "🖊️",
+        en: "Batted your pen into the irreversible void under the couch.",
+        zh: "把签字笔一巴掌拍进沙发底下的异次元空间。"
+      },
+      {
+        icon: "☕",
+        en: "Tested South Bay gravity on a full cup of coffee at 8:00 AM.",
+        zh: "早上八点用满杯咖啡抽检了南湾的重力加速度。"
+      },
+      {
+        icon: "🩺",
+        en: "Materialized under the ER vet's desk and tripped her.",
+        zh: "在急诊室大夫桌底突然闪现，成功绊了大夫一跤。"
+      },
+      {
+        icon: "🪟",
+        en: "Popped open the window screen for an unauthorized Sunday stroll.",
+        zh: "周日清晨徒手推开纱窗，溜出门巡视街区。"
+      }
+    ]
+  },
   en: {
     title: "Software Engineer at Google DeepMind",
     team: "Antigravity",
@@ -20,7 +90,7 @@ registerProfile({
       "I'm a software engineer at <strong>Google DeepMind</strong> working on <strong>Antigravity</strong>. Previously, I was at <strong>Windsurf</strong> building agentic developer tools.",
       "I graduated from <strong>MIT</strong> with a Bachelor's in Computer Science and Mathematics (May 2024), and completed my Master's in Computer Science (January 2025).",
       "Originally from Tianjin, China, I'm currently based in South Bay, California. Broadly, I'm interested in <strong>AI</strong>—particularly <strong>AI agents</strong>, <strong>agentic workflows</strong>, and <strong>world models</strong>—with applications in <strong>software engineering</strong>, <strong>healthcare</strong>, and <strong>education</strong>.",
-      "Outside of work, you'll mostly find me hunting down good boba, checking out new local food spots, hanging out with my cat (<strong>Juzhang</strong> / 局长, pronounced <em>\"joo-jahng\"</em>, an orange 4-year-old boy), or picking up random sports and fitness classes (and quitting them just as fast)."
+      "Outside of work, you'll mostly find me hunting down good boba, checking out new local food spots, hanging out with my cat (<button type=\"button\" class=\"juzhang-inline-trigger\" onclick=\"handleJuzhangTriggerClick(event)\" title=\"Meet Juzhang\"><strong>Juzhang</strong> / 局长<span class=\"juzhang-paw-dot\" aria-hidden=\"true\">🐾</span></button>, pronounced <em>\"joo-jahng\"</em>, an orange 4-year-old boy), or picking up random sports and fitness classes (and quitting them just as fast)."
     ],
     interests: [
       "AI Agents & Agentic Workflows",
@@ -40,7 +110,7 @@ registerProfile({
       "我是 <strong>Google DeepMind</strong> 的软件工程师，专注于 <strong>Antigravity</strong> 项目。此前，我曾在 <strong>Windsurf</strong> 构建智能体开发者工具。",
       "我毕业于 <strong>MIT</strong>，于2024年5月获得计算机科学与数学学士学位，并于2025年1月获得计算机科学硕士学位。",
       "我来自中国天津，目前常驻加州南湾。广泛来说，我对 <strong>AI</strong> 抱有浓厚兴趣——特别是 <strong>AI agents</strong>、<strong>agentic workflows</strong> 以及 <strong>world models</strong>——并探索其在<strong>软件工程</strong>、<strong>医疗</strong>和<strong>教育</strong>等领域的实际应用。",
-      "工作之余，你大多能发现我在探店好喝的奶茶、打卡新开的本地餐厅、陪伴我的小猫（<strong>局长</strong> / Juzhang，一只4岁大的橘猫小男孩），或者随缘体验各种运动与健身课程（然后同样迅速地失去兴趣）。"
+      "工作之余，你大多能发现我在探店好喝的奶茶、打卡新开的本地餐厅、陪伴我的小猫（<button type=\"button\" class=\"juzhang-inline-trigger\" onclick=\"handleJuzhangTriggerClick(event)\" title=\"看看局长\"><strong>局长</strong> / Juzhang<span class=\"juzhang-paw-dot\" aria-hidden=\"true\">🐾</span></button>，一只4岁大的橘猫小男孩），或者随缘体验各种运动与健身课程（然后同样迅速地失去兴趣）。"
     ],
     interests: [
       "AI Agents 与智能体工作流",

@@ -47,7 +47,11 @@ var I18N = {
     ai_trans_notice: "* Translated with AI",
     ai_trans_badge: "AI Translated",
     empty_writing: "No articles published yet. Check back soon!",
-    empty_misc: "No notes published yet."
+    empty_misc: "No notes published yet.",
+    juzhang_sidebar_btn: "Juzhang (局长)",
+    juzhang_knocked_prefix: "knocked over:",
+    juzhang_swat_verb: "swat",
+    juzhang_story_link: "jailbreak \u2197"
   },
   zh: {
     role_sidebar: "软件工程师",
@@ -92,7 +96,11 @@ var I18N = {
     ai_trans_notice: "* 中文内容由 AI 翻译",
     ai_trans_badge: "AI 翻译",
     empty_writing: "暂未发布文章，敬请期待！",
-    empty_misc: "暂未发布随笔。"
+    empty_misc: "暂未发布随笔。",
+    juzhang_sidebar_btn: "局长 (Juzhang)",
+    juzhang_knocked_prefix: "已扒落:",
+    juzhang_swat_verb: "扒拉",
+    juzhang_story_link: "越狱实录 \u2197"
   }
 };
 
