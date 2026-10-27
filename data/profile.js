@@ -16,7 +16,7 @@ registerProfile({
     photos: [
       {
         src: "assets/images/chonk-juzhang.png",
-        pos: "center 45%",
+        pos: "center center",
         en: {
           title: "Executive Posture",
           caption: "Slouched on the couch like a bureau chief after a three-hour department meeting."
@@ -28,7 +28,7 @@ registerProfile({
       },
       {
         src: "assets/images/grinding-juzhang.jpeg",
-        pos: "center 65%",
+        pos: "center center",
         en: {
           title: "Staff PR Reviewer",
           caption: "Loafing behind the keyboard and silently judging every commit."
@@ -36,30 +36,6 @@ registerProfile({
         zh: {
           title: "特聘代码审查员",
           caption: "端坐键盘后方监工，冷静审视每一行新提交的代码。"
-        }
-      },
-      {
-        src: "assets/images/juzhang.jpg",
-        pos: "center 55%",
-        en: {
-          title: "10/10 Rotisserie Loaf",
-          caption: "Zero paws visible. Aerodynamic, unbothered, and waiting for dinner."
-        },
-        zh: {
-          title: "满分母鸡蹲",
-          caption: "四只爪子全藏，标准烤鸡流线型，雷打不动等开饭。"
-        }
-      },
-      {
-        src: "assets/images/juzhang_vet.jpg",
-        pos: "center 30%",
-        en: {
-          title: "Sunday Jailbreak Veteran",
-          caption: "Pushed open a window screen, won a street skirmish, and charmed the ER vet."
-        },
-        zh: {
-          title: "周日越狱老兵",
-          caption: "周日清晨破窗越狱、打赢街头遭遇战，顺便在宠物急诊室到处社交。"
         }
       }
     ],

@@ -1398,9 +1398,9 @@ a:hover {
 
 .juzhang-photo-img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  object-position: center 45%;
+  object-position: center center;
   display: block;
   transition: opacity 0.15s ease;
 }
