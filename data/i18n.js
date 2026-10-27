@@ -49,15 +49,9 @@ var I18N = {
     empty_writing: "No articles published yet. Check back soon!",
     empty_misc: "No notes published yet.",
     juzhang_sidebar_btn: "Juzhang (局长)",
-    juzhang_subtitle: "4 y/o · Orange Boy · Chief of Chaos",
-    juzhang_next_photo: "Next photo \u21bb",
-    juzhang_stat_crimes: "Crimes Committed",
-    juzhang_stat_knocked: "Objects Knocked Over",
-    juzhang_stat_fights: "Street Fights",
-    juzhang_fights_val: "1\u20130",
-    juzhang_latest_label: "Latest incident:",
-    juzhang_knock_btn: "\ud83d\udc3e Knock over (+1)",
-    juzhang_story_link: "Jailbreak note \u2192"
+    juzhang_knocked_prefix: "knocked over:",
+    juzhang_swat_verb: "swat",
+    juzhang_story_link: "jailbreak \u2197"
   },
   zh: {
     role_sidebar: "软件工程师",
@@ -104,15 +98,9 @@ var I18N = {
     empty_writing: "暂未发布文章，敬请期待！",
     empty_misc: "暂未发布随笔。",
     juzhang_sidebar_btn: "局长 (Juzhang)",
-    juzhang_subtitle: "4岁 · 橘猫小男孩 · 家里一把手",
-    juzhang_next_photo: "切换照片 \u21bb",
-    juzhang_stat_crimes: "作案总数",
-    juzhang_stat_knocked: "扒落物品",
-    juzhang_stat_fights: "街头胜绩",
-    juzhang_fights_val: "1胜0负",
-    juzhang_latest_label: "最新案情：",
-    juzhang_knock_btn: "\ud83d\udc3e 扒拉一下 (+1)",
-    juzhang_story_link: "周日越狱实录 \u2192"
+    juzhang_knocked_prefix: "已扒落:",
+    juzhang_swat_verb: "扒拉",
+    juzhang_story_link: "越狱实录 \u2197"
   }
 };
 

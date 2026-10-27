@@ -1217,40 +1217,41 @@ a:hover {
 }
 
 /* ==========================================================================
-   Subtle Juzhang (局长) Easter Egg Triggers & Dossier Card
+   Subtle Juzhang (局长) Easter Egg — Minimal Polaroid & Desk Swatter
    ========================================================================== */
 .juzhang-inline-trigger {
   display: inline-flex;
-  align-items: center;
-  gap: 0.22rem;
+  align-items: baseline;
+  gap: 0.18rem;
   background: none;
   border: none;
-  border-bottom: 1px dashed #d97706;
-  padding: 0 0.12rem;
+  border-bottom: 1px dotted var(--text-dim);
+  padding: 0 0.05rem;
   margin: 0;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   color: inherit;
   cursor: pointer;
-  border-radius: 2px;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: border-color 0.15s ease;
 }
 
 .juzhang-inline-trigger:hover {
-  background-color: #fff7ed;
-  border-bottom-style: solid;
+  border-bottom: 1px solid var(--text);
 }
 
 .juzhang-paw-dot {
-  font-size: 0.82em;
+  font-size: 0.72em;
   line-height: 1;
   display: inline-block;
-  transition: transform 0.18s ease;
+  opacity: 0.7;
+  margin-left: 0.12rem;
+  transition: transform 0.18s ease, opacity 0.15s ease;
 }
 
 .juzhang-inline-trigger:hover .juzhang-paw-dot {
-  transform: rotate(-12deg) scale(1.12);
+  opacity: 1;
+  transform: rotate(-14deg) scale(1.15);
 }
 
 .juzhang-sidebar-btn {
@@ -1259,9 +1260,9 @@ a:hover {
   gap: 0.45rem;
   background: none;
   border: none;
-  padding: 0.15rem 0;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  padding: 0.1rem 0;
+  font-family: inherit;
+  font-size: 0.85rem;
   color: var(--text-dim);
   cursor: pointer;
   text-align: left;
@@ -1275,7 +1276,7 @@ a:hover {
 
 .juzhang-cat-icon {
   color: #d97706;
-  opacity: 0.85;
+  opacity: 0.75;
   flex-shrink: 0;
   transition: transform 0.18s ease, opacity 0.15s ease;
 }
@@ -1289,113 +1290,105 @@ a:hover {
   position: fixed;
   bottom: 1.5rem;
   right: 1.5rem;
-  width: 360px;
+  width: 300px;
   max-width: calc(100vw - 2rem);
   background: var(--bg);
   border: 1px solid var(--border-focus);
-  border-radius: 4px;
-  padding: 0.95rem;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  border-radius: 3px;
+  padding: 0.75rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   z-index: 200;
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
-  overflow: hidden;
+  gap: 0.55rem;
+  overflow: visible;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(8px) scale(0.98);
-  transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s ease;
+  transform: translateY(6px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
 }
 
 .juzhang-card.is-open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
 }
 
 .juzhang-card-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-}
-
-.juzhang-card-title-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-  min-width: 0;
 }
 
 .juzhang-card-name-row {
   display: flex;
   align-items: baseline;
-  gap: 0.35rem;
-  flex-wrap: wrap;
+  gap: 0.4rem;
+  min-width: 0;
 }
 
 .juzhang-card-name {
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: 0.88rem;
+  font-weight: 600;
   color: var(--text);
-  letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
-.juzhang-card-pronounce {
-  font-size: 0.72rem;
+.juzhang-mode-tag {
+  font-size: 0.68rem;
   font-family: var(--font-mono);
   color: var(--text-dim);
-}
-
-.juzhang-card-subtitle {
-  font-size: 0.7rem;
-  font-family: var(--font-mono);
-  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .juzhang-card-header-right {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.3rem;
   flex-shrink: 0;
 }
 
 .juzhang-photo-counter {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-family: var(--font-mono);
-  color: var(--text-dim);
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  padding: 0.08rem 0.42rem;
-  border-radius: 3px;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  padding: 0.1rem 0.25rem;
+  cursor: pointer;
   white-space: nowrap;
-  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.juzhang-photo-counter:hover {
+  color: var(--text);
 }
 
 .juzhang-close-btn {
   background: none;
-  border: 1px solid transparent;
+  border: none;
   color: var(--text-dim);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   line-height: 1;
-  padding: 0.05rem 0.3rem;
-  border-radius: 3px;
+  padding: 0 0.15rem;
   cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition: color 0.15s ease;
 }
 
 .juzhang-close-btn:hover {
   color: var(--text);
-  border-color: var(--border);
 }
 
 .juzhang-photo-frame {
   position: relative;
   width: 100%;
   border: 1px solid var(--border);
-  border-radius: 3px;
+  border-radius: 2px;
   overflow: hidden;
   background: var(--bg-subtle);
   cursor: pointer;
@@ -1408,167 +1401,174 @@ a:hover {
   object-fit: cover;
   object-position: center center;
   display: block;
-  transition: opacity 0.15s ease;
+  transition: transform 0.2s ease;
 }
 
-.juzhang-photo-bar {
+.juzhang-photo-frame:active .juzhang-photo-img {
+  transform: scale(0.985);
+}
+
+.juzhang-floating-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.juzhang-thought-bubble {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  background: rgba(17, 17, 17, 0.86);
+  color: #ffffff;
+  padding: 0.16rem 0.45rem;
+  border-radius: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: floatCatThought 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes floatCatThought {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -20%) scale(0.9);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -60%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -145%) scale(0.96);
+  }
+}
+
+.juzhang-photo-caption {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.42;
+  margin: 0;
+  min-height: 2.2em;
+}
+
+.juzhang-desk-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  padding: 0.38rem 0.55rem;
-  background: var(--bg-subtle);
+  padding-top: 0.45rem;
   border-top: 1px solid var(--border);
-}
-
-.juzhang-photo-title {
-  font-size: 0.76rem;
   font-family: var(--font-mono);
-  font-weight: 600;
-  color: var(--text);
+  font-size: 0.7rem;
+  color: var(--text-dim);
 }
 
-.juzhang-next-btn {
-  font-size: 0.72rem;
-  font-family: var(--font-mono);
-  color: var(--text-muted);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  padding: 0.1rem 0.42rem;
-  border-radius: 2px;
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: all 0.15s ease;
-}
-
-.juzhang-next-btn:hover {
-  color: var(--bg);
-  background: var(--text);
-  border-color: var(--text);
-}
-
-.juzhang-photo-caption {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  line-height: 1.45;
-  margin: 0;
-}
-
-.juzhang-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  background: var(--bg-subtle);
-  overflow: hidden;
-}
-
-.juzhang-stat-cell {
+.juzhang-desk-meta {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 0.45rem 0.3rem;
-  text-align: center;
-  border-right: 1px solid var(--border);
+  gap: 0.3rem;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
-.juzhang-stat-cell:last-child {
-  border-right: none;
-}
-
-.juzhang-stat-val {
-  font-family: var(--font-mono);
-  font-size: 0.92rem;
-  font-weight: 700;
+.juzhang-desk-meta strong {
   color: var(--text);
-  line-height: 1.2;
+  font-weight: 600;
+  display: inline-block;
   transition: transform 0.15s ease, color 0.15s ease;
 }
 
-.juzhang-stat-val.stat-bump {
+.juzhang-desk-meta strong.stat-bump {
   transform: scale(1.22);
   color: #d97706;
 }
 
-.juzhang-stat-label {
-  font-family: var(--font-mono);
-  font-size: 0.64rem;
-  color: var(--text-dim);
-  margin-top: 0.12rem;
-  line-height: 1.2;
-}
-
-.juzhang-incident-box {
-  border-left: 2px solid #d97706;
-  background: var(--bg-subtle);
-  padding: 0.42rem 0.6rem;
-  border-radius: 0 3px 3px 0;
-  font-size: 0.76rem;
-  line-height: 1.4;
-  color: var(--text-muted);
-}
-
-.juzhang-incident-label {
+.juzhang-story-link {
+  background: none;
+  border: none;
+  padding: 0;
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--text);
-  margin-right: 0.25rem;
-}
-
-.juzhang-card-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: 0.1rem;
-  width: 100%;
-}
-
-.juzhang-action-btn {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  padding: 0.34rem 0.55rem;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-  text-align: center;
-  max-width: 100%;
-}
-
-.juzhang-action-btn.primary {
-  background: var(--text);
-  color: var(--bg);
-  border: 1px solid var(--text);
-  flex: 1 1 auto;
-}
-
-.juzhang-action-btn.primary:hover {
-  opacity: 0.88;
-}
-
-.juzhang-action-btn.secondary {
-  background: var(--bg);
   color: var(--text-muted);
-  border: 1px solid var(--border);
-  flex: 0 1 auto;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
-.juzhang-action-btn.secondary:hover {
+.juzhang-story-link:hover {
   color: var(--text);
+}
+
+.juzhang-swat-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  padding: 0.18rem 0.48rem;
+  border-radius: 2px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.juzhang-swat-btn:hover {
   border-color: var(--text);
+  background: var(--bg);
+}
+
+.juzhang-swat-paw {
+  display: inline-block;
+  font-size: 0.78rem;
+  transition: transform 0.14s ease;
+}
+
+.juzhang-swat-paw.is-swatting {
+  transform: translateX(5px) rotate(24deg) scale(1.2);
+}
+
+.juzhang-target-emoji {
+  display: inline-block;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.juzhang-falling-emoji {
+  position: absolute;
+  right: 0.35rem;
+  bottom: 0.4rem;
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 250;
+  animation: swatOffDesk 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes swatOffDesk {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  30% {
+    opacity: 1;
+    transform: translate(18px, -12px) rotate(45deg) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(54px, 68px) rotate(220deg) scale(0.75);
+  }
 }
 
 @media (max-width: 768px) {
   .juzhang-card {
     right: 1rem;
-    left: 1rem;
     bottom: 1rem;
-    width: auto;
-    max-width: none;
+    width: 290px;
   }
 }
+
